@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---- Surface / text ---- */
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+  --color-muted: #64748b;
+  --color-subtle: #f8fafc;
+  --color-line: #e2e8f0;
+
+  /* ---- Brand blue ramp ---- */
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-900: #1e3a8a;
+
+  /* ---- Deep navy hero / panel ---- */
+  --color-ink: #2a2c5e;
+  --color-panel: #0b1030;
+  --color-hero-950: #060e2b;
+  --color-hero-900: #0b1a4d;
+  --color-hero-800: #123285;
+  --color-hero-600: #1c53d1;
+  --color-hero-glow: #2f7dff;
+  --color-logo: #0c1f6c;
+
+  /* ---- Accents ---- */
+  --color-accent-400: #22d3ee;
+  --color-accent-500: #0ea5e9;
+  --color-accent-glow: #00d4ff;
+  --color-accent-yellow: #ffd23f;
+
+  /* ---- Light-panel tints ---- */
+  --color-up-ink: #0b1a4d;
+  --color-up-muted: #48557a;
+  --color-up-line: #ccd6ea;
+  --color-up-accent: #1c53d1;
+  --color-up-bright: #2f7dff;
+  --color-up-soft: #a9c4ff;
+  --color-up-gold: #ffd23f;
+
+  /* ---- Type ---- */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-face), var(--font-inter), sans-serif;
+
+  /* ---- Motion ---- */
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 3.5s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.08);
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* `clip`, not `hidden`: overflow-x:hidden turns <body> into a scroll
+       container, which breaks position:sticky and scroll-linked animation in
+       several browsers. `clip` contains the overflow without that side effect. */
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-hero-glow);
+    color: #fff;
+  }
+
+  /* Lenis smooth-scroll requirements */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 1024px) {
+    .container-x {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Radial glow blobs used behind dark sections */
+  .glow-blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  .grid-lines {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 40%, transparent 100%);
+  }
+
+  .grid-lines-light {
+    background-image:
+      linear-gradient(to right, rgba(11, 26, 77, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(11, 26, 77, 0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 100%);
+  }
+
+  .text-gradient {
+    background: linear-gradient(
+      100deg,
+      var(--color-accent-glow) 0%,
+      var(--color-hero-glow) 45%,
+      var(--color-up-soft) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .card-hover {
+    transition:
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.3s ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px -24px rgba(11, 26, 77, 0.35);
+  }
+}
+
+/* Elements animated by GSAP start hidden ONLY while the animation system is
+   armed — a tiny inline script in <head> adds `.anim-armed` before first paint
+   and a watchdog removes it if the Animator never boots. So if JS is disabled,
+   the GSAP chunk fails to load, or anything else goes wrong, the class is
+   absent and every section is simply visible. Content is never gated behind an
+   animation that might not run. */
+html.anim-armed [data-anim] {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-subtle);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--color-hero-600), var(--color-hero-900));
+  border-radius: 9999px;
+}

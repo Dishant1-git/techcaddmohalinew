@@ -1,0 +1,33 @@
+import Hero from "@/components/home/Hero";
+import StatsBar from "@/components/home/StatsBar";
+import Categories from "@/components/home/Categories";
+import AiSpotlight from "@/components/home/AiSpotlight";
+import AboutStrip from "@/components/home/AboutStrip";
+import Durations from "@/components/home/Durations";
+import Process from "@/components/home/Process";
+import FeaturedCourses from "@/components/home/FeaturedCourses";
+import WhyUs from "@/components/home/WhyUs";
+import Testimonials from "@/components/home/Testimonials";
+import TechMarquee from "@/components/home/TechMarquee";
+import Faq from "@/components/home/Faq";
+import CtaBanner from "@/components/home/CtaBanner";
+
+export default function Home() {
+  return (
+    <>
+      <Hero />
+      <StatsBar />
+      <Categories />
+      <AiSpotlight />
+      <AboutStrip />
+      <Durations />
+      <Process />
+      <FeaturedCourses />
+      <WhyUs />
+      <Testimonials />
+      <TechMarquee />
+      <Faq />
+      <CtaBanner />
+    </>
+  );
+}
