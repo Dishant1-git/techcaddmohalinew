@@ -80,6 +80,58 @@ const paths: Record<string, React.ReactNode> = {
   whatsapp: (
     <path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3Zm4.6 12.4c-.2.6-1.2 1.1-1.7 1.1-.4 0-1 .1-3-.8a10.6 10.6 0 0 1-4.3-4c-.3-.5-.8-1.4-.8-2.3s.5-1.4.7-1.6a.8.8 0 0 1 .6-.3h.4c.2 0 .4 0 .5.4l.7 1.7c.1.2 0 .4-.1.5l-.3.4c-.1.2-.3.3-.1.6a8 8 0 0 0 3.4 2.9c.3.1.4.1.6-.1l.7-.9c.2-.2.3-.2.5-.1l1.6.8c.2.1.4.2.4.3v.9Z" />
   ),
+  instagram: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <path d="M17.3 6.7h.01" strokeWidth={2.4} />
+    </>
+  ),
+  youtube: (
+    <>
+      <rect x="2.5" y="5.5" width="19" height="13" rx="4" />
+      <path d="m10.2 9.4 5 2.6-5 2.6V9.4Z" />
+    </>
+  ),
+  linkedin: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="3.5" />
+      <path d="M7.6 10.6V17M7.6 7.4h.01M11.4 17v-3.6a2.5 2.5 0 0 1 5 0V17" />
+    </>
+  ),
+  search: (
+    <>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m20 20-4.3-4.3" />
+    </>
+  ),
+  chevronDown: <path d="m6 9 6 6 6-6" />,
+  cloud: <path d="M7 18a4 4 0 0 1-.5-8 5.5 5.5 0 0 1 10.6-1.3A3.9 3.9 0 0 1 17.5 18H7Z" />,
+  chart: (
+    <>
+      <path d="M4 20V4M4 20h16" />
+      <path d="M8 16v-4M12 16V8M16 16v-6M20 16v-9" />
+    </>
+  ),
+  rocket: (
+    <>
+      <path d="M12 3c3.5 2 5.5 5.5 5.5 9.5L15 15H9l-2.5-2.5C6.5 8.5 8.5 5 12 3Z" />
+      <path d="M9 15l-2 4 3-1M15 15l2 4-3-1" />
+      <circle cx="12" cy="10" r="1.6" />
+    </>
+  ),
+  layers: (
+    <>
+      <path d="m12 3 8.5 4.5L12 12 3.5 7.5 12 3Z" />
+      <path d="m4 12 8 4.3 8-4.3M4 16.3l8 4.3 8-4.3" />
+    </>
+  ),
+  monitor: (
+    <>
+      <rect x="2.5" y="4" width="19" height="13" rx="2" />
+      <path d="M9 21h6M12 17v4" />
+    </>
+  ),
 };
 
 export type IconName = keyof typeof paths;

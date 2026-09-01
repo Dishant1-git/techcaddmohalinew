@@ -12,7 +12,7 @@ const included = [
 
 export default function WhyUs() {
   return (
-    <section className="relative overflow-hidden py-24 lg:py-32">
+    <section id="why" className="relative scroll-mt-32 overflow-hidden py-24 lg:py-32">
       <div className="absolute right-[-10%] top-1/4 h-[420px] w-[420px] rounded-full bg-brand-100/50 blur-[100px]" />
 
       <div className="container-x relative">

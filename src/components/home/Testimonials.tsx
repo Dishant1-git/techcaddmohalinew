@@ -34,7 +34,7 @@ export default function Testimonials() {
   const rowB = testimonials.slice(3);
 
   return (
-    <section className="relative overflow-hidden bg-subtle py-24 lg:py-32">
+    <section id="reviews" className="relative scroll-mt-32 overflow-hidden bg-subtle py-24 lg:py-32">
       <div className="container-x">
         <SectionHeading
           align="center"

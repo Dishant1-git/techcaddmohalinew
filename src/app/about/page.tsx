@@ -127,7 +127,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="bg-subtle py-24 lg:py-32">
+      <section id="values" className="scroll-mt-32 bg-subtle py-24 lg:py-32">
         <div className="container-x">
           <SectionHeading
             align="center"
@@ -150,7 +150,7 @@ export default function AboutPage() {
       </section>
 
       {/* Campus */}
-      <section className="py-24 lg:py-32">
+      <section id="campus" className="scroll-mt-32 py-24 lg:py-32">
         <div className="container-x">
           <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
             <div data-anim="left" className="relative overflow-hidden rounded-[1.75rem] bg-hero-950 p-10 text-white">
@@ -196,6 +196,59 @@ export default function AboutPage() {
                   >
                     <Icon name="check" size={15} strokeWidth={3} className="shrink-0 text-up-accent" />
                     {f}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Founder — target of the "Founder" item in the main navigation */}
+      <section id="founder" className="scroll-mt-32 bg-subtle py-24 lg:py-32">
+        <div className="container-x">
+          <SectionHeading
+            align="center"
+            eyebrow="Leadership"
+            title="The person behind techcadd"
+            subtitle="One classroom in Jalandhar in 2016, now a multi-branch network across Punjab — including this campus in Mohali."
+          />
+
+          <div data-anim="up" className="mx-auto mt-14 max-w-4xl">
+            <div className="rounded-[1.75rem] border border-line bg-white p-8 lg:p-12">
+              <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
+                <span className="grid h-20 w-20 shrink-0 place-items-center rounded-3xl bg-gradient-to-br from-hero-600 to-hero-glow font-display text-2xl font-extrabold text-white shadow-lg shadow-hero-600/25">
+                  GG
+                </span>
+                <div className="text-center sm:text-left">
+                  <h3 className="font-display text-2xl font-extrabold text-up-ink">
+                    Mr. Gourav Gupta
+                  </h3>
+                  <p className="mt-1 text-sm font-semibold uppercase tracking-[0.14em] text-up-accent">
+                    Founder &amp; CEO, techcadd
+                  </p>
+                  <p className="mt-5 text-sm leading-relaxed text-up-muted">
+                    He started techcadd in 2016 to give young people in Punjab technology skills and
+                    the confidence to use them. The method has not changed since that first
+                    classroom: practising engineers as trainers, project work instead of slide
+                    decks, and a curriculum rewritten whenever the industry moves — which is how AI,
+                    cloud and cyber security joined the syllabus.
+                  </p>
+                  <blockquote className="mt-6 border-l-2 border-up-accent pl-5 text-left font-display text-lg font-bold leading-snug text-up-ink">
+                    “The future belongs to learners who continuously adapt, innovate and build.”
+                  </blockquote>
+                </div>
+              </div>
+
+              <div className="mt-9 grid gap-4 border-t border-line pt-8 sm:grid-cols-3">
+                {[
+                  { title: "Practitioner-led", body: "Every trainer still builds for a living." },
+                  { title: "Industry-aligned", body: "Curriculum reviewed against live hiring briefs." },
+                  { title: "Career-integrated", body: "Placement support is part of the course, not an add-on." },
+                ].map((p) => (
+                  <div key={p.title}>
+                    <p className="text-sm font-bold text-up-ink">{p.title}</p>
+                    <p className="mt-1.5 text-sm leading-relaxed text-up-muted">{p.body}</p>
                   </div>
                 ))}
               </div>

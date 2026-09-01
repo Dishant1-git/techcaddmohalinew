@@ -10,7 +10,7 @@ export default function Faq() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="relative py-24 lg:py-32">
+    <section id="faqs" className="relative scroll-mt-32 py-24 lg:py-32">
       <div className="container-x">
         <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
           <div className="lg:sticky lg:top-32 lg:self-start">

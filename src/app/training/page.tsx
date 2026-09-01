@@ -101,7 +101,7 @@ export default function TrainingPage() {
       <Process />
 
       {/* Deliverables */}
-      <section className="bg-subtle py-24 lg:py-32">
+      <section id="deliverables" className="scroll-mt-32 bg-subtle py-24 lg:py-32">
         <div className="container-x">
           <SectionHeading
             eyebrow="What you leave with"

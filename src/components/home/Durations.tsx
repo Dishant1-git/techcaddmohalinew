@@ -5,7 +5,7 @@ import Icon from "@/components/ui/Icon";
 
 export default function Durations() {
   return (
-    <section className="relative bg-subtle py-24 lg:py-32">
+    <section id="durations" className="relative scroll-mt-32 bg-subtle py-24 lg:py-32">
       <div className="container-x">
         <SectionHeading
           align="center"
