@@ -7,6 +7,8 @@ import Icon from "@/components/ui/Icon";
 import SectionTitle from "@/components/courses/detail/SectionTitle";
 import { EASE, Reveal, Stagger, StaggerItem } from "@/components/courses/detail/Motion";
 import SectionLink from "@/components/courses/detail/SectionLink";
+import SpotlightCard from "@/components/courses/detail/SpotlightCard";
+import HudCorners from "@/components/courses/detail/HudCorners";
 
 /**
  * Who can join — audience cards on the left, eligibility checklist on the
@@ -31,20 +33,18 @@ export default function WhoCanJoin({ course }: { course: Course }) {
           <Stagger className="grid gap-5 sm:grid-cols-2" amount={0.1}>
             {audience.map((a) => (
               <StaggerItem key={a.title}>
-                <motion.div
-                  whileHover={reduce ? undefined : { y: -6 }}
-                  transition={{ duration: 0.35, ease: EASE }}
-                  className="group relative h-full overflow-hidden rounded-3xl border border-line bg-white p-7 transition-colors hover:border-up-accent/40"
+                <SpotlightCard
+                  className="group h-full rounded-3xl border border-line bg-white p-7 text-up-accent transition-colors hover:border-up-accent/40"
                 >
-                  <span className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-brand-50 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
+                  <HudCorners onGroupHover className="text-up-accent/35" inset="0.65rem" />
 
-                  <span className="relative grid h-12 w-12 place-items-center rounded-2xl bg-brand-50 text-up-accent transition-all duration-500 group-hover:bg-gradient-to-br group-hover:from-hero-600 group-hover:to-hero-glow group-hover:text-white">
+                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-50 text-up-accent transition-all duration-500 group-hover:bg-gradient-to-br group-hover:from-hero-600 group-hover:to-hero-glow group-hover:text-white">
                     <Icon name={a.icon} size={21} />
                   </span>
 
-                  <h3 className="relative mt-5 text-base font-bold text-up-ink">{a.title}</h3>
-                  <p className="relative mt-2.5 text-sm leading-relaxed text-up-muted">{a.body}</p>
-                </motion.div>
+                  <h3 className="mt-5 text-base font-bold text-up-ink">{a.title}</h3>
+                  <p className="mt-2.5 text-sm leading-relaxed text-up-muted">{a.body}</p>
+                </SpotlightCard>
               </StaggerItem>
             ))}
           </Stagger>

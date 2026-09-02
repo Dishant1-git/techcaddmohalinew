@@ -10,8 +10,12 @@ import { EASE, Reveal } from "@/components/courses/detail/Motion";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
+/**
+ * Focus is signalled three ways at once — border, fill and a cyan ring —
+ * because on a dark glass panel a single one of them is easy to miss.
+ */
 const fieldBase =
-  "w-full rounded-xl border border-white/15 bg-white/[0.06] px-4 py-3.5 text-sm text-white outline-none transition-all placeholder:text-up-soft/40 focus:border-accent-glow/70 focus:bg-white/[0.09] focus:ring-2 focus:ring-accent-glow/20";
+  "w-full rounded-xl border border-white/15 bg-white/[0.06] px-4 py-3.5 text-sm text-white outline-none transition-all duration-300 placeholder:text-up-soft/40 hover:border-white/25 focus:border-accent-glow/70 focus:bg-white/[0.09] focus:ring-2 focus:ring-accent-glow/25 focus:shadow-[0_0_24px_-6px_rgba(0,212,255,0.45)]";
 
 const labelBase =
   "mb-2 block text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-up-soft/70";

@@ -134,7 +134,16 @@ export default function SectionRail() {
       />
 
       <div className="container-x">
-        <div className="relative">
+        <div className="relative flex items-center gap-4">
+          {/* Position readout — which of the nine sections you are reading. */}
+          <span className="hidden shrink-0 items-center gap-2 font-display text-[0.7rem] font-bold tabular-nums tracking-[0.14em] text-up-muted/70 lg:flex">
+            <span className="text-up-accent">
+              {String(courseSections.findIndex((s) => s.id === active) + 1).padStart(2, "0")}
+            </span>
+            <span className="h-3 w-px bg-line" />
+            <span>{String(courseSections.length).padStart(2, "0")}</span>
+          </span>
+
           {/* Edge fades, so a cut-off pill reads as "more this way". */}
           <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-white to-transparent sm:hidden" />
           <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-white to-transparent sm:hidden" />
@@ -160,9 +169,13 @@ export default function SectionRail() {
                   {isActive && (
                     <motion.span
                       layoutId="course-rail-pill"
-                      className="absolute inset-0 rounded-full bg-up-ink"
+                      className="absolute inset-0 rounded-full bg-up-ink shadow-[0_6px_20px_-8px_rgba(11,26,77,0.9)]"
                       transition={{ type: "spring", stiffness: 380, damping: 34 }}
-                    />
+                    >
+                      {/* Hairline along the pill's top edge, so the active
+                          item catches light like the cards below it. */}
+                      <span className="absolute inset-x-3 top-0 h-px rounded-full bg-gradient-to-r from-transparent via-accent-glow/70 to-transparent" />
+                    </motion.span>
                   )}
                   <span className="relative">{s.label}</span>
                 </a>

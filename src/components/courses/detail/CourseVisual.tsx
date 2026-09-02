@@ -8,6 +8,7 @@ import { categoryArt, courseImage, ratingSummary } from "@/lib/coursePage";
 import Icon from "@/components/ui/Icon";
 import { EASE } from "@/components/courses/detail/Motion";
 import CourseCircuit from "@/components/courses/detail/CourseCircuit";
+import HudCorners from "@/components/courses/detail/HudCorners";
 
 /**
  * The image beside the course overview.
@@ -70,6 +71,8 @@ export default function CourseVisual({ course }: { course: Course }) {
 
           {/* Scrim, so the caption stays legible over a photo or the artwork. */}
           <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-hero-950 via-hero-950/70 to-transparent" />
+
+          <HudCorners className="text-accent-glow/50" size="1.4rem" inset="0.9rem" />
 
           <div className="absolute left-6 top-6">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-hero-950/50 px-3.5 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-white backdrop-blur-md">

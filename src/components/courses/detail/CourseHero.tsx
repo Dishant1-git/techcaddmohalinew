@@ -10,6 +10,7 @@ import Icon from "@/components/ui/Icon";
 import { EASE } from "@/components/courses/detail/Motion";
 import SectionLink from "@/components/courses/detail/SectionLink";
 import CircuitRibbon from "@/components/courses/detail/CircuitRibbon";
+import HudCorners from "@/components/courses/detail/HudCorners";
 
 /**
  * The dark hero at the top of a course page.
@@ -160,6 +161,7 @@ export default function CourseHero({
               className="group relative overflow-hidden rounded-2xl border border-white/12 bg-white/[0.045] p-4 backdrop-blur-sm transition-colors hover:border-accent-glow/40"
             >
               <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-accent-glow/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+              <HudCorners onGroupHover className="text-accent-glow/55" size="0.8rem" inset="0.45rem" />
               <Icon name={h.icon} size={17} className="text-accent-glow" />
               <p className="mt-3 font-display text-base font-extrabold leading-tight text-white">
                 {h.value}

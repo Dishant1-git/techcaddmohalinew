@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import type { Course } from "@/lib/courses";
-import { courseReviews, ratingSummary } from "@/lib/coursePage";
+import { courseReviews, ratingBreakdown } from "@/lib/coursePage";
 import Icon from "@/components/ui/Icon";
 import SectionTitle from "@/components/courses/detail/SectionTitle";
 import { EASE, Reveal, Stagger, StaggerItem } from "@/components/courses/detail/Motion";
@@ -31,7 +31,7 @@ function Stars({ value, size = 14 }: { value: number; size?: number }) {
 export default function Reviews({ course }: { course: Course }) {
   const reduce = useReducedMotion();
   const reviews = courseReviews(course);
-  const { average, reviewCount } = ratingSummary(course);
+  const { average, reviewCount, buckets: distribution } = ratingBreakdown(course);
 
   return (
     <section id="reviews" className="relative scroll-mt-36 bg-subtle py-20 lg:py-28">
@@ -44,7 +44,7 @@ export default function Reviews({ course }: { course: Course }) {
           />
 
           <Reveal direction="left" delay={0.12}>
-            <div className="flex items-center gap-6 rounded-3xl border border-line bg-white px-7 py-6">
+            <div className="flex flex-wrap items-center gap-x-7 gap-y-5 rounded-3xl border border-line bg-white px-7 py-6">
               <div>
                 <p className="font-display text-4xl font-extrabold leading-none text-up-ink">
                   {average}
@@ -52,11 +52,34 @@ export default function Reviews({ course }: { course: Course }) {
                 <div className="mt-2">
                   <Stars value={5} size={15} />
                 </div>
+                <p className="mt-2 text-xs text-up-muted">{reviewCount} reviews</p>
               </div>
-              <div className="h-12 w-px bg-line" />
-              <div className="text-sm">
-                <p className="font-bold text-up-ink">{reviewCount} reviews</p>
-                <p className="mt-1 text-xs text-up-muted">Google, Justdial & alumni surveys</p>
+
+              <div className="h-20 w-px bg-line max-sm:hidden" />
+
+              {/* Score distribution. Bars grow from the left as the block
+                  arrives, which turns a static number into evidence. */}
+              <div className="min-w-[11rem] flex-1 space-y-1.5">
+                {distribution.map((d, i) => (
+                  <div key={d.stars} className="flex items-center gap-2.5">
+                    <span className="w-3 text-right text-[0.68rem] font-semibold tabular-nums text-up-muted">
+                      {d.stars}
+                    </span>
+                    <Icon name="star" size={10} className="fill-accent-yellow text-accent-yellow" />
+                    <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-subtle">
+                      <motion.span
+                        className="block h-full rounded-full bg-gradient-to-r from-up-accent to-hero-glow"
+                        initial={reduce ? false : { width: 0 }}
+                        whileInView={{ width: `${d.percent}%` }}
+                        viewport={{ once: true, amount: 0.6 }}
+                        transition={{ duration: 1, delay: 0.2 + i * 0.09, ease: EASE }}
+                      />
+                    </span>
+                    <span className="w-8 text-right text-[0.68rem] tabular-nums text-up-muted/80">
+                      {d.percent}%
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           </Reveal>

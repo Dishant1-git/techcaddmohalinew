@@ -7,8 +7,10 @@ import { whyChoose } from "@/lib/coursePage";
 import { stats } from "@/lib/site";
 import Icon from "@/components/ui/Icon";
 import SectionTitle from "@/components/courses/detail/SectionTitle";
-import { EASE, Stagger, StaggerItem } from "@/components/courses/detail/Motion";
+import { Stagger, StaggerItem } from "@/components/courses/detail/Motion";
 import CountUp from "@/components/courses/detail/CountUp";
+import SpotlightCard from "@/components/courses/detail/SpotlightCard";
+import HudCorners from "@/components/courses/detail/HudCorners";
 
 /**
  * Why choose techcadd for this course — the dark section that breaks up the
@@ -55,12 +57,12 @@ export default function WhyChoose({ course }: { course: Course }) {
         <Stagger className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3" amount={0.08}>
           {reasons.map((r) => (
             <StaggerItem key={r.title}>
-              <motion.div
-                whileHover={reduce ? undefined : { y: -8 }}
-                transition={{ duration: 0.35, ease: EASE }}
-                className="group relative h-full overflow-hidden rounded-3xl border border-white/12 bg-white/[0.04] p-7 backdrop-blur-sm transition-colors hover:border-accent-glow/40"
+              <SpotlightCard
+                tone="dark"
+                lift={8}
+                className="group h-full rounded-3xl border border-white/12 bg-white/[0.04] p-7 text-accent-glow backdrop-blur-sm transition-colors hover:border-accent-glow/40"
               >
-                <span className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-accent-glow to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <HudCorners onGroupHover className="text-accent-glow/50" inset="0.65rem" />
 
                 <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-hero-600 to-hero-glow text-white shadow-lg shadow-hero-600/30 transition-transform duration-500 group-hover:scale-110">
                   <Icon name={r.icon} size={21} />
@@ -68,7 +70,7 @@ export default function WhyChoose({ course }: { course: Course }) {
 
                 <h3 className="mt-6 text-lg font-bold text-white">{r.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-up-soft/70">{r.body}</p>
-              </motion.div>
+              </SpotlightCard>
             </StaggerItem>
           ))}
         </Stagger>

@@ -391,9 +391,48 @@ export function courseReviews(course: Course): CourseReview[] {
   });
 }
 
-export function ratingSummary(course: Course) {
+/**
+ * The star breakdown, and the headline average computed *from* it.
+ *
+ * Deriving the average out of the buckets rather than generating the two
+ * separately is the point: a 4.8 headline sitting above bars that average 4.5
+ * is the kind of detail a sceptical reader notices. The buckets always total
+ * exactly 100, so the bars fill the track.
+ */
+export function ratingBreakdown(course: Course) {
   const rnd = seeded(`${course.slug}:rating`);
-  const reviewCount = 120 + Math.floor(rnd() * 340);
-  const average = (4.6 + rnd() * 0.35).toFixed(1);
+
+  const five = 74 + Math.floor(rnd() * 13); // 74–86
+  const rest = 100 - five;
+
+  let four = Math.round(rest * 0.62);
+  const three = Math.round(rest * 0.22);
+  const two = Math.round(rest * 0.1);
+  let one = rest - four - three - two;
+
+  // Rounding can overshoot; the top non-five bucket absorbs the drift so the
+  // buckets still sum to 100 and none goes negative.
+  if (one < 0) {
+    four += one;
+    one = 0;
+  }
+
+  const buckets = [
+    { stars: 5, percent: five },
+    { stars: 4, percent: four },
+    { stars: 3, percent: three },
+    { stars: 2, percent: two },
+    { stars: 1, percent: one },
+  ];
+
+  const average = (
+    buckets.reduce((sum, b) => sum + b.stars * b.percent, 0) / 100
+  ).toFixed(1);
+
+  return { buckets, average, reviewCount: 120 + Math.floor(rnd() * 340) };
+}
+
+export function ratingSummary(course: Course) {
+  const { average, reviewCount } = ratingBreakdown(course);
   return { average, reviewCount };
 }

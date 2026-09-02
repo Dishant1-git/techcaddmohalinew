@@ -1,11 +1,11 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
 import type { Course } from "@/lib/courses";
 import { learningPoints } from "@/lib/coursePage";
 import Icon from "@/components/ui/Icon";
 import SectionTitle from "@/components/courses/detail/SectionTitle";
-import { EASE, Reveal, Stagger, StaggerItem } from "@/components/courses/detail/Motion";
+import { Reveal, Stagger, StaggerItem } from "@/components/courses/detail/Motion";
+import SpotlightCard from "@/components/courses/detail/SpotlightCard";
 
 /**
  * "What we learn in this program" — the flat skill list.
@@ -15,7 +15,6 @@ import { EASE, Reveal, Stagger, StaggerItem } from "@/components/courses/detail/
  * the one thing they came for.
  */
 export default function LearnPoints({ course }: { course: Course }) {
-  const reduce = useReducedMotion();
   const points = learningPoints(course);
 
   return (
@@ -48,10 +47,10 @@ export default function LearnPoints({ course }: { course: Course }) {
         <Stagger className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" amount={0.05}>
           {points.map((p, i) => (
             <StaggerItem key={`${p.point}-${i}`}>
-              <motion.div
-                whileHover={reduce ? undefined : { y: -4 }}
-                transition={{ duration: 0.35, ease: EASE }}
-                className="group h-full rounded-2xl border border-line bg-white p-6 transition-all duration-300 hover:border-up-accent/40 hover:shadow-[0_20px_45px_-30px_rgba(11,26,77,0.45)]"
+              <SpotlightCard
+                lift={4}
+                radius={14}
+                className="group h-full rounded-2xl border border-line bg-white p-6 text-up-accent transition-all duration-300 hover:border-up-accent/40 hover:shadow-[0_20px_45px_-30px_rgba(11,26,77,0.45)]"
               >
                 <div className="flex items-start gap-4">
                   <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-brand-50 font-display text-[0.7rem] font-extrabold text-up-accent transition-colors group-hover:bg-up-accent group-hover:text-white">
@@ -64,7 +63,7 @@ export default function LearnPoints({ course }: { course: Course }) {
                     </p>
                   </div>
                 </div>
-              </motion.div>
+              </SpotlightCard>
             </StaggerItem>
           ))}
         </Stagger>
