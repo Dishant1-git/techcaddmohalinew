@@ -23,7 +23,77 @@ import { courseChromeOffset } from "@/components/courses/detail/SectionLink";
  *     reaching <Animator/>'s global anchor handler and routed through the same
  *     Lenis instance with the offset this page actually needs.
  */
-export default function SectionRail() {
+export type RailSkin = "catalogue" | "certificate" | "pathway";
+
+/**
+ * Appearance only — the behaviour above is identical across the three course
+ * page designs, and duplicating that scroll/offset logic per design is exactly
+ * how the three would drift apart.
+ *
+ * `catalogue` is the default and reproduces the original rail exactly.
+ */
+const SKINS: Record<
+  RailSkin,
+  {
+    shell: string;
+    progress: string;
+    readout: string;
+    readoutIndex: string;
+    readoutRule: string;
+    fade: string;
+    item: string;
+    itemIdle: string;
+    itemActive: string;
+    indicator: string;
+    indicatorInner?: string;
+  }
+> = {
+  catalogue: {
+    shell: "border-b border-line bg-white/90 backdrop-blur-xl",
+    progress: "bg-gradient-to-r from-up-accent via-hero-glow to-accent-glow",
+    readout: "text-up-muted/70",
+    readoutIndex: "text-up-accent",
+    readoutRule: "bg-line",
+    fade: "from-white to-transparent",
+    item: "rounded-full px-4 py-2 text-[0.8rem] font-semibold tracking-tight",
+    itemIdle: "text-up-muted hover:text-up-ink",
+    itemActive: "text-white",
+    indicator: "inset-0 rounded-full bg-up-ink shadow-[0_6px_20px_-8px_rgba(11,26,77,0.9)]",
+    indicatorInner:
+      "absolute inset-x-3 top-0 h-px rounded-full bg-gradient-to-r from-transparent via-accent-glow/70 to-transparent",
+  },
+
+  /* Document register: no pill, a ruled gold underline like a tabbed file. */
+  certificate: {
+    shell: "border-b border-up-line bg-subtle/95 backdrop-blur-xl",
+    progress: "bg-gradient-to-r from-up-gold via-up-accent to-up-ink",
+    readout: "text-up-muted/70",
+    readoutIndex: "text-up-ink",
+    readoutRule: "bg-up-line",
+    fade: "from-subtle to-transparent",
+    item: "px-3.5 py-2.5 text-[0.7rem] font-bold uppercase tracking-[0.12em]",
+    itemIdle: "text-up-muted hover:text-up-ink",
+    itemActive: "text-up-ink",
+    indicator: "inset-x-1 bottom-0 h-[3px] rounded-full bg-up-gold",
+  },
+
+  /* Route-map register: a bright capsule that glows, on a dark bar. */
+  pathway: {
+    shell: "border-b border-white/10 bg-hero-950/85 backdrop-blur-xl",
+    progress: "bg-gradient-to-r from-accent-yellow via-accent-glow to-hero-glow",
+    readout: "text-up-soft/50",
+    readoutIndex: "text-accent-yellow",
+    readoutRule: "bg-white/20",
+    fade: "from-hero-950 to-transparent",
+    item: "rounded-full px-4 py-2 text-[0.8rem] font-bold tracking-tight",
+    itemIdle: "text-up-soft/60 hover:text-white",
+    itemActive: "text-hero-950",
+    indicator:
+      "inset-0 rounded-full bg-gradient-to-r from-accent-yellow to-accent-glow shadow-[0_0_22px_-4px_rgba(0,212,255,0.9)]",
+  },
+};
+
+export default function SectionRail({ skin = "catalogue" }: { skin?: RailSkin } = {}) {
   const [active, setActive] = useState(courseSections[0].id);
   const railRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
@@ -120,64 +190,70 @@ export default function SectionRail() {
     scrollToElement(target, chromeHeight());
   }
 
+  const s = SKINS[skin];
+
   return (
     /* Pinned under the scrolled navbar, which floats as a 4.25rem pill inside
        0.75rem (lg: 1rem) of padding. z-40 keeps it below the navbar itself. */
     <div
       ref={railRef}
       data-course-rail
-      className="sticky top-[5.15rem] z-40 border-b border-line bg-white/90 backdrop-blur-xl lg:top-[5.4rem]"
+      className={`sticky top-[5.15rem] z-40 lg:top-[5.4rem] ${s.shell}`}
     >
       <motion.div
-        className="absolute inset-x-0 top-0 h-[2px] origin-left bg-gradient-to-r from-up-accent via-hero-glow to-accent-glow"
+        className={`absolute inset-x-0 top-0 h-[2px] origin-left ${s.progress}`}
         style={{ scaleX: progress }}
       />
 
       <div className="container-x">
         <div className="relative flex items-center gap-4">
           {/* Position readout — which of the nine sections you are reading. */}
-          <span className="hidden shrink-0 items-center gap-2 font-display text-[0.7rem] font-bold tabular-nums tracking-[0.14em] text-up-muted/70 lg:flex">
-            <span className="text-up-accent">
-              {String(courseSections.findIndex((s) => s.id === active) + 1).padStart(2, "0")}
+          <span
+            className={`hidden shrink-0 items-center gap-2 font-display text-[0.7rem] font-bold tabular-nums tracking-[0.14em] lg:flex ${s.readout}`}
+          >
+            <span className={s.readoutIndex}>
+              {String(courseSections.findIndex((x) => x.id === active) + 1).padStart(2, "0")}
             </span>
-            <span className="h-3 w-px bg-line" />
+            <span className={`h-3 w-px ${s.readoutRule}`} />
             <span>{String(courseSections.length).padStart(2, "0")}</span>
           </span>
 
           {/* Edge fades, so a cut-off pill reads as "more this way". */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-white to-transparent sm:hidden" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-white to-transparent sm:hidden" />
+          <div
+            className={`pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r sm:hidden ${s.fade}`}
+          />
+          <div
+            className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l sm:hidden ${s.fade}`}
+          />
 
           <nav
             ref={listRef}
             aria-label="Course sections"
             className="flex gap-1 overflow-x-auto py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            {courseSections.map((s) => {
-              const isActive = active === s.id;
+            {courseSections.map((section) => {
+              const isActive = active === section.id;
               return (
                 <a
-                  key={s.id}
-                  href={`#${s.id}`}
-                  data-section={s.id}
-                  onClick={(e) => onSelect(e, s.id)}
+                  key={section.id}
+                  href={`#${section.id}`}
+                  data-section={section.id}
+                  onClick={(e) => onSelect(e, section.id)}
                   aria-current={isActive ? "true" : undefined}
-                  className={`relative shrink-0 rounded-full px-4 py-2 text-[0.8rem] font-semibold tracking-tight transition-colors duration-200 ${
-                    isActive ? "text-white" : "text-up-muted hover:text-up-ink"
+                  className={`relative shrink-0 transition-colors duration-200 ${s.item} ${
+                    isActive ? s.itemActive : s.itemIdle
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="course-rail-pill"
-                      className="absolute inset-0 rounded-full bg-up-ink shadow-[0_6px_20px_-8px_rgba(11,26,77,0.9)]"
+                      className={`absolute ${s.indicator}`}
                       transition={{ type: "spring", stiffness: 380, damping: 34 }}
                     >
-                      {/* Hairline along the pill's top edge, so the active
-                          item catches light like the cards below it. */}
-                      <span className="absolute inset-x-3 top-0 h-px rounded-full bg-gradient-to-r from-transparent via-accent-glow/70 to-transparent" />
+                      {s.indicatorInner && <span className={s.indicatorInner} />}
                     </motion.span>
                   )}
-                  <span className="relative">{s.label}</span>
+                  <span className="relative">{section.label}</span>
                 </a>
               );
             })}
