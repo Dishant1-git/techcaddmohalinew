@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
+import { getLenis } from "@/lib/lenis";
 import { capabilities, type Tool } from "@/lib/capabilities";
 import Icon from "@/components/ui/Icon";
 import TechMark from "@/components/ui/TechMark";
@@ -248,8 +249,8 @@ export default function Capabilities() {
     }
     const top = st.start + ((i + 0.5) / capabilities.length) * (st.end - st.start);
     // Route through Lenis when it is driving the page; a native smooth scroll
-    // would be fought by its rAF loop and land somewhere else.
-    const lenis = (window as Window & { __lenis?: { scrollTo: (t: number) => void } }).__lenis;
+    // would run its own animation alongside Lenis's and the two visibly fight.
+    const lenis = getLenis();
     if (lenis) lenis.scrollTo(top);
     else window.scrollTo({ top, behavior: "smooth" });
   };
