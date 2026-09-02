@@ -114,8 +114,6 @@ export type NavItem = {
   neverActive?: boolean;
 };
 
-const JALANDHAR = "https://techcaddjalandhar.com";
-
 export const navItems: NavItem[] = [
   { label: "Home", href: "/" },
 
@@ -362,12 +360,12 @@ export const navItems: NavItem[] = [
     neverActive: true,
     links: [
       { label: "Mohali", href: "/", desc: "Sector 75 — this centre" },
-      { label: "Jalandhar", href: JALANDHAR, external: true },
-      { label: "Ludhiana", href: `${JALANDHAR}/branches/ludhiana`, external: true },
-      { label: "Phagwara", href: `${JALANDHAR}/branches/phagwara`, external: true },
-      { label: "Maqsudan", href: `${JALANDHAR}/branches/maqsudan`, external: true },
-      { label: "Hoshiarpur", href: `${JALANDHAR}/branches/hoshiarpur`, external: true },
-      { label: "Amritsar", href: `${JALANDHAR}/branches/amritsar`, external: true },
+      { label: "Jalandhar", href: "/branches/jalandhar", desc: "Head office & flagship campus" },
+      { label: "Ludhiana", href: "/branches/ludhiana" },
+      { label: "Phagwara", href: "/branches/phagwara" },
+      { label: "Maqsudan", href: "/branches/maqsudan" },
+      { label: "Hoshiarpur", href: "/branches/hoshiarpur" },
+      { label: "Amritsar", href: "/branches/amritsar" },
     ],
   },
 
