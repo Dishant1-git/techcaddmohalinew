@@ -36,19 +36,21 @@ const childrenOf = (item: NavItem): NavChild[] => [
  * them and the open/close transitions would never play.
  * -------------------------------------------------------------------------- */
 
-const PANEL = "rounded-[1.75rem] bg-[#e9ebf5]/95 shadow-[0_45px_110px_-45px_rgba(6,14,43,0.85)] backdrop-blur-xl";
-const FOOT = "flex items-center justify-between gap-8 border-t border-up-line/60 bg-white/55 px-8 py-4";
+const PANEL =
+  "rounded-[1.75rem] border border-line bg-white/95 shadow-[0_45px_110px_-45px_rgba(6,14,43,0.85)] backdrop-blur-xl";
+const FOOT = "flex items-center justify-between gap-8 border-t border-line bg-subtle px-8 py-4";
 
+/** All four tones come from the theme ramp in globals.css. */
 const badgeTone: Record<NavBadge, string> = {
-  New: "bg-[#ede9fe] text-[#6d28d9]",
-  Hot: "bg-[#ffedd5] text-[#c2410c]",
-  Trending: "bg-[#cffafe] text-[#0e7490]",
+  New: "bg-brand-100 text-up-accent",
+  Hot: "bg-accent-yellow text-hero-950",
+  Trending: "bg-accent-400/25 text-hero-800",
 };
 
 const badgeToneDark: Record<NavBadge, string> = {
-  New: "bg-[#7c3aed] text-white",
-  Hot: "bg-[#f59e0b] text-hero-950",
-  Trending: "bg-[#22d3ee] text-hero-950",
+  New: "bg-accent-glow text-hero-950",
+  Hot: "bg-accent-yellow text-hero-950",
+  Trending: "bg-up-soft text-hero-950",
 };
 
 function Badge({ tone, dark }: { tone: NavBadge; dark?: boolean }) {
@@ -183,7 +185,7 @@ function PanelBody({ item }: { item: NavItem }) {
             <Row
               key={child.href + child.label}
               child={child}
-              className="group/link flex items-center justify-between gap-3 rounded-2xl px-5 py-3 transition-colors hover:bg-white/70"
+              className="group/link flex items-center justify-between gap-3 rounded-2xl px-5 py-3 transition-colors hover:bg-brand-50"
             >
               <span className="flex flex-col">
                 <span className="text-[0.95rem] font-medium text-up-ink/85 transition-colors group-hover/link:text-up-accent">
@@ -229,7 +231,7 @@ function PanelBody({ item }: { item: NavItem }) {
               <Row
                 key={child.href + child.label}
                 child={child}
-                className="group/card flex items-center gap-3.5 rounded-2xl bg-white/75 px-4 py-3.5 transition-all hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_16px_34px_-18px_rgba(11,26,77,0.5)]"
+                className="group/card flex items-center gap-3.5 rounded-2xl border border-line bg-subtle px-4 py-3.5 transition-all hover:-translate-y-0.5 hover:border-up-accent/40 hover:bg-white hover:shadow-[0_16px_34px_-18px_rgba(11,26,77,0.5)]"
               >
                 <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-up-accent transition-colors group-hover/card:bg-up-accent group-hover/card:text-white">
                   <Icon name={child.icon ?? "sparkles"} size={19} />
@@ -359,7 +361,7 @@ function PanelBody({ item }: { item: NavItem }) {
               </span>
               <span className="flex flex-1 flex-col gap-3 p-5">
                 {featured.kicker && (
-                  <span className="w-fit rounded-md bg-[#dc2626] px-2.5 py-1 text-[0.62rem] font-bold uppercase tracking-wide text-white">
+                  <span className="w-fit rounded-md bg-accent-yellow px-2.5 py-1 text-[0.62rem] font-bold uppercase tracking-wide text-hero-950">
                     {featured.kicker}
                   </span>
                 )}
@@ -498,7 +500,7 @@ export default function Navbar() {
         <div
           className={`mx-auto transition-all duration-500 ease-out ${
             scrolled
-              ? "max-w-[92rem] rounded-full border border-white/70 bg-[#eef0fb]/85 shadow-[0_20px_60px_-25px_rgba(6,14,43,0.55)] backdrop-blur-xl"
+              ? "max-w-[92rem] rounded-full border border-line bg-white/85 shadow-[0_20px_60px_-25px_rgba(6,14,43,0.55)] backdrop-blur-xl"
               : "max-w-full rounded-none border border-transparent bg-transparent"
           }`}
         >

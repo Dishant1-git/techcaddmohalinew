@@ -196,6 +196,35 @@
     transform: translateY(-6px);
     box-shadow: 0 24px 60px -24px rgba(11, 26, 77, 0.35);
   }
+
+  /* Light travelling down a circuit trace in the hero diagram. Paths carry
+     pathLength="1", so one keyframe drives every trace regardless of its real
+     length; duration and delay are set per-trace inline. */
+  .circuit-pulse {
+    stroke-dasharray: 0.08 1;
+    animation: circuit-pulse 3.4s linear infinite;
+  }
+
+  /* Marching ants along the connectors in the capabilities flow. */
+  .flow-dash {
+    stroke-dasharray: 3 6;
+    animation: flow-dash 2.4s linear infinite;
+  }
+}
+
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -9;
+  }
+}
+
+@keyframes circuit-pulse {
+  from {
+    stroke-dashoffset: 0.08;
+  }
+  to {
+    stroke-dashoffset: -1;
+  }
 }
 
 /* Elements animated by GSAP start hidden ONLY while the animation system is

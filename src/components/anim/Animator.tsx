@@ -101,6 +101,11 @@ export default function Animator() {
 
     lenis.on("scroll", ScrollTrigger.update);
 
+    // Exposed so components that scroll programmatically (the pinned
+    // Capabilities rail) can go through Lenis instead of fighting it with a
+    // native smooth scroll.
+    (window as Window & { __lenis?: Lenis }).__lenis = lenis;
+
     const raf = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
@@ -121,6 +126,7 @@ export default function Animator() {
     return () => {
       document.removeEventListener("click", onClick);
       gsap.ticker.remove(raf);
+      delete (window as Window & { __lenis?: Lenis }).__lenis;
       lenis.destroy();
     };
   }, []);
