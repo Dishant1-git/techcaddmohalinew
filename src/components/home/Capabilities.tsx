@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
 import { capabilities, type Tool } from "@/lib/capabilities";
@@ -9,6 +9,13 @@ import TechMark from "@/components/ui/TechMark";
 
 /** How much scroll each track gets while the section is pinned, in viewports. */
 const VH_PER_TRACK = 0.5;
+
+/**
+ * The pin has to be torn down in the commit's mutation phase, before React
+ * detaches any DOM — a passive `useEffect` cleanup runs too late. On the server
+ * there is no layout to measure, so fall back and avoid React's warning.
+ */
+const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /* -------------------------------------------------------------------------- *
  * Flow canvas
@@ -171,7 +178,7 @@ export default function Capabilities() {
   const [active, setActive] = useState(0);
 
   /* ---- Scroll drives the track: pin the section, step through the six ---- */
-  useEffect(() => {
+  useIsoLayoutEffect(() => {
     if (prefersReducedMotion()) return;
 
     // Pinning only makes sense where the rail and board sit side by side. Below
@@ -197,9 +204,10 @@ export default function Capabilities() {
         },
       });
       trigger.current = st;
+      // Only drop the handle here. Killing the trigger outright would leave the
+      // pin-spacer in the DOM; mm.revert() below tears the pin down properly.
       return () => {
         trigger.current = null;
-        st.kill();
       };
     });
 
@@ -249,11 +257,17 @@ export default function Capabilities() {
   const current = capabilities[active];
 
   return (
-    <section
-      ref={root}
-      id="capabilities"
-      className="relative isolate flex min-h-screen items-center overflow-hidden bg-hero-950 py-20 text-white lg:py-0"
-    >
+    // The wrapper is deliberate. ScrollTrigger's pin injects a .pin-spacer and
+    // moves the <section> inside it, so the section's real parent stops matching
+    // the one React recorded. Keeping a plain div as the outermost node means
+    // React only ever removes the wrapper on unmount — the relocated section
+    // goes with it, instead of throwing NotFoundError from removeChild.
+    <div>
+      <section
+        ref={root}
+        id="capabilities"
+        className="relative isolate flex min-h-screen items-center overflow-hidden bg-hero-950 py-20 text-white lg:py-0"
+      >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_-10%,rgba(28,83,209,0.35),transparent_65%)]" />
       <div className="pointer-events-none absolute inset-0 grid-lines opacity-50" />
 
@@ -397,9 +411,10 @@ export default function Capabilities() {
                 <Icon name="arrowRight" size={15} />
               </span>
             </Link>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
