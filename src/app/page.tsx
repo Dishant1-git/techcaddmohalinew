@@ -9,7 +9,7 @@ import Process from "@/components/home/Process";
 import FeaturedCourses from "@/components/home/FeaturedCourses";
 import WhyUs from "@/components/home/WhyUs";
 import Testimonials from "@/components/home/Testimonials";
-import TechMarquee from "@/components/home/TechMarquee";
+import TechOrbit from "@/components/home/TechOrbit";
 import Faq from "@/components/home/Faq";
 import CtaBanner from "@/components/home/CtaBanner";
 
@@ -27,7 +27,7 @@ export default function Home() {
       <FeaturedCourses />
       <WhyUs />
       <Testimonials />
-      <TechMarquee />
+      <TechOrbit />
       <Faq />
       <CtaBanner />
     </>

@@ -93,11 +93,15 @@ export default function Animator() {
     // every section renders in its final state.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    // Lerp-based smoothing rather than duration + easing: a duration restarts
+    // its curve on every wheel event, which reads as a stutter under a
+    // continuous trackpad scroll. A single interpolation factor keeps the
+    // motion continuous no matter how the input arrives.
     const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.09,
       smoothWheel: true,
-      touchMultiplier: 1.6,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.5,
     });
 
     lenis.on("scroll", ScrollTrigger.update);

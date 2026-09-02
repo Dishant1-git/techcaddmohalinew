@@ -185,6 +185,17 @@
     color: transparent;
   }
 
+  /* The learn rail scrolls by swipe on small screens; its scrollbar would sit
+     under the tilted cards, so it is hidden and the row keeps snap points. */
+  .rail-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .rail-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
   .card-hover {
     transition:
       transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),

@@ -478,6 +478,148 @@ export const technologies = [
   "FastAPI", "Express", "TypeScript", "C++", "Terraform", "Jenkins", "Excel",
 ];
 
+/**
+ * The stack, grouped the way a student picks it: by what the tool is for. The
+ * home-page board treats these as filters, not as fixed positions — the rings
+ * are only a layout shell that whatever is on screen gets spread across.
+ *
+ * `mark` names a brand icon in `TechMark`. Anything without one carries
+ * `short` + `color` instead and is drawn as a wordmark in the brand's colour;
+ * a space in `short` is where the label is allowed to wrap.
+ */
+export type TechItem = {
+  name: string;
+  mark?: string;
+  short?: string;
+  color?: string;
+};
+
+export const techCategories: {
+  key: string;
+  label: string;
+  dot: string;
+  items: TechItem[];
+}[] = [
+  {
+    key: "programming",
+    label: "Programming",
+    dot: "bg-accent-glow",
+    items: [
+      { name: "Python", mark: "python" },
+      { name: "Java", short: "Java", color: "#e76f00" },
+      { name: "JavaScript", short: "JS", color: "#c9a800" },
+      { name: "TypeScript", short: "TS", color: "#3178c6" },
+      { name: "C++", short: "C++", color: "#00599c" },
+      { name: "C", short: "C", color: "#5c6bc0" },
+      { name: "C#", short: "C#", color: "#68217a" },
+      { name: "PHP", short: "PHP", color: "#777bb4" },
+    ],
+  },
+  {
+    key: "frameworks",
+    label: "Frameworks",
+    dot: "bg-hero-glow",
+    items: [
+      { name: "React", mark: "react" },
+      { name: "Next.js", short: "Next.js", color: "#0b1a4d" },
+      { name: "Node.js", mark: "node" },
+      { name: "Angular", short: "Angu lar", color: "#dd0031" },
+      { name: "Vue.js", short: "Vue", color: "#42b883" },
+      { name: "Express", short: "express", color: "#111827" },
+      { name: "Django", short: "Djan go", color: "#092e20" },
+      { name: "Spring Boot", short: "Spring", color: "#6db33f" },
+      { name: "Laravel", short: "Lara vel", color: "#ff2d20" },
+      { name: "Tailwind CSS", mark: "tailwind" },
+    ],
+  },
+  {
+    key: "ai-ml",
+    label: "AI & ML",
+    dot: "bg-up-soft",
+    items: [
+      { name: "TensorFlow", mark: "tensorflow" },
+      { name: "PyTorch", mark: "pytorch" },
+      { name: "scikit-learn", short: "scikit", color: "#f7931e" },
+      { name: "pandas", mark: "pandas" },
+      { name: "NumPy", short: "NumPy", color: "#4d77cf" },
+      { name: "Keras", short: "Keras", color: "#d00000" },
+      { name: "OpenCV", short: "Open CV", color: "#5c3ee8" },
+      { name: "LangChain", short: "Lang Chain", color: "#1c3c3c" },
+      { name: "Hugging Face", short: "Hugging Face", color: "#d98200" },
+      { name: "Jupyter", mark: "jupyter" },
+    ],
+  },
+  {
+    key: "cad-cam",
+    label: "CAD / CAM",
+    dot: "bg-accent-yellow",
+    items: [
+      { name: "AutoCAD", short: "Auto CAD", color: "#e51050" },
+      { name: "SolidWorks", short: "Solid Works", color: "#d3232f" },
+      { name: "Revit", short: "Revit", color: "#0696d7" },
+      { name: "3ds Max", short: "3ds Max", color: "#1c8fc4" },
+      { name: "CATIA", short: "CATIA", color: "#005386" },
+      { name: "Creo", short: "Creo", color: "#2b9c8f" },
+      { name: "Fusion 360", short: "Fusion 360", color: "#e07a00" },
+      { name: "ANSYS", short: "ANSYS", color: "#c08a00" },
+      { name: "STAAD Pro", short: "STAAD Pro", color: "#003087" },
+    ],
+  },
+  {
+    key: "databases",
+    label: "Databases",
+    dot: "bg-accent-400",
+    items: [
+      { name: "MySQL", short: "MySQL", color: "#00758f" },
+      { name: "PostgreSQL", short: "Postgres", color: "#336791" },
+      { name: "MongoDB", mark: "mongodb" },
+      { name: "Redis", short: "Redis", color: "#dc382d" },
+      { name: "SQLite", short: "SQLite", color: "#003b57" },
+      { name: "Oracle", short: "Oracle", color: "#c74634" },
+      { name: "Firebase", short: "Fire base", color: "#c98a00" },
+      { name: "SQL Server", short: "SQL Server", color: "#cc2927" },
+    ],
+  },
+  {
+    key: "devops",
+    label: "DevOps",
+    dot: "bg-brand-400",
+    items: [
+      { name: "Docker", mark: "docker" },
+      { name: "Kubernetes", mark: "kubernetes" },
+      { name: "Git", mark: "git" },
+      { name: "GitHub", short: "GitHub", color: "#111827" },
+      { name: "Jenkins", short: "Jenkins", color: "#d33833" },
+      { name: "Terraform", short: "Terra form", color: "#7b42bc" },
+      { name: "Ansible", short: "Ansi ble", color: "#111827" },
+      { name: "Linux", short: "Linux", color: "#111827" },
+      { name: "Nginx", short: "Nginx", color: "#009639" },
+    ],
+  },
+  {
+    key: "cloud",
+    label: "Cloud",
+    dot: "bg-up-gold",
+    items: [
+      { name: "AWS", short: "aws", color: "#e88b00" },
+      { name: "Microsoft Azure", short: "Azure", color: "#0078d4" },
+      { name: "Google Cloud", short: "Google Cloud", color: "#4285f4" },
+      { name: "Vercel", short: "Vercel", color: "#111827" },
+      { name: "Netlify", short: "Netlify", color: "#009c92" },
+      { name: "Cloudflare", short: "Cloud flare", color: "#f38020" },
+      { name: "DigitalOcean", short: "Digital Ocean", color: "#0080ff" },
+    ],
+  },
+];
+
+/** Decorative rings the board lays its nodes out on, innermost first. */
+export const orbitRings = [
+  { key: "r1", stroke: "#00d4ff" },
+  { key: "r2", stroke: "#2f7dff" },
+  { key: "r3", stroke: "#a9c4ff" },
+  { key: "r4", stroke: "#ffd23f" },
+];
+
 export const faqs = [
   {
     q: "Do I need a technical background to join?",
@@ -577,24 +719,38 @@ export const whyUs = [
   },
 ];
 
-export const process = [
+export const process: {
+  step: string;
+  title: string;
+  body: string;
+  icon: string;
+  when: string;
+}[] = [
   {
     step: "01",
     title: "Free counselling",
+    icon: "users",
+    when: "Day 0",
     body: "Tell us your background and where you want to be. We map that to a specific track, batch and timeline — no generic brochure.",
   },
   {
     step: "02",
+    icon: "code",
+    when: "Weeks 1-8",
     title: "Learn by building",
     body: "Concepts in the morning, code in the afternoon. Each module ends in something that runs, gets reviewed and goes into your portfolio.",
   },
   {
     step: "03",
+    icon: "rocket",
+    when: "Weeks 9-12",
     title: "Live project & internship",
     body: "Join a project team with real requirements and deadlines, mentored by a working engineer, and earn an internship letter.",
   },
   {
     step: "04",
+    icon: "briefcase",
+    when: "Week 12+",
     title: "Interview & placement",
     body: "Resume rebuild, mock interviews, aptitude practice, then introductions to hiring partners and continuous placement drives.",
   },
