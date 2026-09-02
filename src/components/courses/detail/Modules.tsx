@@ -32,15 +32,45 @@ export default function Modules({ course }: { course: Course }) {
         />
 
         <div className="relative mt-14">
-          {/* Timeline spine — fills as the list scrolls past. */}
+          {/* Timeline spine — fills as the list scrolls past, then carries a
+              travelling light down it, on the same circuit language as the
+              hero ribbon and the course diagram. */}
           <div className="absolute left-[1.55rem] top-4 hidden h-[calc(100%-2rem)] w-px bg-line sm:block">
             <motion.div
-              className="h-full w-full origin-top bg-gradient-to-b from-up-accent via-hero-glow to-accent-glow"
+              className="relative h-full w-full origin-top bg-gradient-to-b from-up-accent via-hero-glow to-accent-glow"
               initial={reduce ? false : { scaleY: 0 }}
               whileInView={{ scaleY: 1 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 1.6, ease: "easeOut" }}
             />
+            <svg
+              aria-hidden="true"
+              preserveAspectRatio="none"
+              viewBox="0 0 2 100"
+              className="absolute inset-0 h-full w-[3px] -translate-x-[1px] overflow-visible"
+            >
+              <path
+                d="M1 0 V100"
+                pathLength={1}
+                fill="none"
+                stroke="#00d4ff"
+                strokeOpacity="0.35"
+                strokeWidth="5"
+                strokeLinecap="round"
+                className="circuit-pulse"
+                style={{ animationDuration: "4.5s" }}
+              />
+              <path
+                d="M1 0 V100"
+                pathLength={1}
+                fill="none"
+                stroke="#00d4ff"
+                strokeWidth="2"
+                strokeLinecap="round"
+                className="circuit-pulse"
+                style={{ animationDuration: "4.5s" }}
+              />
+            </svg>
           </div>
 
           <Stagger className="space-y-3.5" amount={0.05}>

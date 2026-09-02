@@ -7,6 +7,7 @@ import type { Course } from "@/lib/courses";
 import { categoryArt, courseImage, ratingSummary } from "@/lib/coursePage";
 import Icon from "@/components/ui/Icon";
 import { EASE } from "@/components/courses/detail/Motion";
+import CourseCircuit from "@/components/courses/detail/CourseCircuit";
 
 /**
  * The image beside the course overview.
@@ -57,23 +58,13 @@ export default function CourseVisual({ course }: { course: Course }) {
             />
           ) : (
             <>
-              <div className={`absolute inset-0 bg-gradient-to-br ${art.gradient} opacity-90`} />
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_30%_20%,rgba(6,14,43,0.15)_0%,rgba(6,14,43,0.75)_100%)]" />
+              <div className={`absolute inset-0 bg-gradient-to-br ${art.gradient} opacity-25`} />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_30%_20%,rgba(6,14,43,0.55)_0%,rgba(6,14,43,0.92)_100%)]" />
               <div className="absolute inset-0 grid-lines opacity-70" />
 
-              <motion.div
-                aria-hidden
-                className="absolute inset-0 grid place-items-center"
-                animate={reduce ? undefined : { scale: [1, 1.04, 1] }}
-                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <Icon
-                  name={art.icon}
-                  size={200}
-                  strokeWidth={0.6}
-                  className="text-white/25"
-                />
-              </motion.div>
+              {/* The programme drawn as a live circuit — modules feeding the
+                  qualification, with the stack it teaches in orbit. */}
+              <CourseCircuit course={course} />
             </>
           )}
 

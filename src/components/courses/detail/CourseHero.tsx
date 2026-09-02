@@ -9,6 +9,7 @@ import { site } from "@/lib/site";
 import Icon from "@/components/ui/Icon";
 import { EASE } from "@/components/courses/detail/Motion";
 import SectionLink from "@/components/courses/detail/SectionLink";
+import CircuitRibbon from "@/components/courses/detail/CircuitRibbon";
 
 /**
  * The dark hero at the top of a course page.
@@ -66,6 +67,9 @@ export default function CourseHero({
         aria-hidden
         className="glow-blob bottom-[-10%] left-[-6%] h-[380px] w-[380px] bg-hero-glow/20"
       />
+
+      {/* Circuit bus running along the bottom edge, into the admissions bar. */}
+      <CircuitRibbon />
 
       {/* ---- Copy -------------------------------------------------------- */}
       <motion.div
