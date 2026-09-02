@@ -23,8 +23,11 @@ export default function CourseFaqs({ course }: { course: Course }) {
       <div className="pointer-events-none absolute inset-0 grid-lines-light opacity-60" />
 
       <div className="container-x relative">
-        <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
-          <div className="lg:sticky lg:top-40 lg:self-start">
+        {/* `items-start`, and no sticky on the left column: the heading block
+            sits at the top of the section and scrolls away with it, rather
+            than pinning and floating alongside the list. */}
+        <div className="grid items-start gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+          <div>
             <SectionTitle
               eyebrow="FAQs"
               title="Questions about this course"

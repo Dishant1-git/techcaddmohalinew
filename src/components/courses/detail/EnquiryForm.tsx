@@ -125,9 +125,12 @@ export default function EnquiryForm({ course }: { course: Course }) {
       />
 
       <div className="container-x relative">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
+        {/* `items-start`, and no sticky on the left column: the heading and
+            contact block sit at the top of the section and scroll away with
+            it, rather than pinning and floating alongside the form. */}
+        <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
           {/* ---- Left rail ------------------------------------------------ */}
-          <div className="lg:sticky lg:top-40 lg:self-start">
+          <div>
             <SectionTitle
               tone="dark"
               eyebrow="Enquire"

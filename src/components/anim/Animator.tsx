@@ -102,8 +102,15 @@ export default function Animator() {
 
     lenis.on("scroll", ScrollTrigger.update);
 
+<<<<<<< Updated upstream
     // Published so page-level components can scroll through this instance
     // instead of running a second, competing animation. See `@/lib/lenis`.
+=======
+    // Published so components that scroll programmatically — the pinned
+    // Capabilities rail on the home page, the course page's section rail — can
+    // go through this instance instead of fighting it with a native smooth
+    // scroll, which its rAF loop would drag off target. See `@/lib/lenis`.
+>>>>>>> Stashed changes
     setLenis(lenis);
 
     const raf = (time: number) => lenis.raf(time * 1000);
