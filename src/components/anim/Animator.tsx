@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { setLenis } from "@/lib/lenis";
 
 /**
  * A single global animation driver.
@@ -101,10 +102,16 @@ export default function Animator() {
 
     lenis.on("scroll", ScrollTrigger.update);
 
+<<<<<<< Updated upstream
     // Exposed so components that scroll programmatically (the pinned
     // Capabilities rail) can go through Lenis instead of fighting it with a
     // native smooth scroll.
     (window as Window & { __lenis?: Lenis }).__lenis = lenis;
+=======
+    // Published so page-level components can scroll through this instance
+    // instead of running a second, competing animation. See `@/lib/lenis`.
+    setLenis(lenis);
+>>>>>>> Stashed changes
 
     const raf = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
@@ -126,7 +133,11 @@ export default function Animator() {
     return () => {
       document.removeEventListener("click", onClick);
       gsap.ticker.remove(raf);
+<<<<<<< Updated upstream
       delete (window as Window & { __lenis?: Lenis }).__lenis;
+=======
+      setLenis(undefined);
+>>>>>>> Stashed changes
       lenis.destroy();
     };
   }, []);
