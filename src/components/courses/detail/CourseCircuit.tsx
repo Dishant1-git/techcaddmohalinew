@@ -88,6 +88,10 @@ export default function CourseCircuit({ course }: { course: Course }) {
   const art = categoryArt(course);
   const marks = courseMarks(course, 6);
   const modules = course.modules.slice(0, 4);
+  // Roughly the rendered width of the label at 14/800 with 2.2 tracking, plus
+  // padding — SVG cannot measure text at render, and the plate is centred, so
+  // an estimate a little wide is harmless.
+  const durationPlate = course.duration.length * 10.4 + 34;
 
   return (
     <div className="absolute inset-0 grid place-items-center">
@@ -199,28 +203,46 @@ export default function CourseCircuit({ course }: { course: Course }) {
           />
 
           {/* Nested <svg>: Icon spreads props last, so x/y/width/height win over
-              its own defaults and it positions in viewBox coordinates. */}
+              its own defaults and it positions in viewBox coordinates. At 104
+              square, even an icon whose art runs edge to edge stays inside the
+              hexagon's tapered corners, and it is centred on the hub rather
+              than sharing the space with the label. */}
           <Icon
             name={art.icon}
-            x={168}
-            y={172}
-            width={64}
-            height={64}
-            strokeWidth={1.1}
+            x={148}
+            y={148}
+            width={104}
+            height={104}
+            strokeWidth={1}
             className="text-accent-glow"
           />
 
-          <text
-            x={200}
-            y={252}
-            textAnchor="middle"
-            className="fill-white/60"
-            fontSize="12"
-            fontWeight="600"
-            letterSpacing="1.6"
-          >
-            {course.duration.toUpperCase()}
-          </text>
+          {/* The duration sits below the hub, clear of the rotating ring: inside
+              the hexagon it ran wider than the taper allows at that height. The
+              plate is sized off the string so it stays centred on any duration. */}
+          <g>
+            <rect
+              x={200 - durationPlate / 2}
+              y={294}
+              width={durationPlate}
+              height={26}
+              rx={13}
+              fill="#060e2b"
+              stroke="rgba(0,212,255,0.4)"
+              strokeWidth="1.2"
+            />
+            <text
+              x={200}
+              y={312}
+              textAnchor="middle"
+              className="fill-white"
+              fontSize="14"
+              fontWeight="800"
+              letterSpacing="2.2"
+            >
+              {course.duration.toUpperCase()}
+            </text>
+          </g>
         </svg>
 
         {/* ---- Module labels ------------------------------------------------ */}
@@ -259,7 +281,10 @@ export default function CourseCircuit({ course }: { course: Course }) {
               return (
                 <motion.span
                   key={mark}
-                  className="absolute grid h-9 w-9 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-xl border border-white/15 bg-hero-950/80 shadow-lg backdrop-blur-sm"
+                  /* Sized as a share of the stage rather than in px, so the
+                     marks keep the same weight on the board at every
+                     breakpoint — the square stage shrinks with the frame. */
+                  className="absolute grid h-[14.5%] w-[14.5%] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-2xl border border-white/20 bg-hero-950/85 shadow-lg backdrop-blur-sm"
                   style={{
                     left: `${50 + Math.cos(angle) * r}%`,
                     top: `${50 + Math.sin(angle) * r}%`,
@@ -268,7 +293,7 @@ export default function CourseCircuit({ course }: { course: Course }) {
                   animate={reduce ? undefined : { rotate: -360 }}
                   transition={{ duration: 44, repeat: Infinity, ease: "linear" }}
                 >
-                  <TechMark name={mark} size={18} />
+                  <TechMark name={mark} size={24} className="h-[60%] w-[60%]" />
                 </motion.span>
               );
             })}
