@@ -6,6 +6,7 @@ import WhyUs from "@/components/home/WhyUs";
 import Testimonials from "@/components/home/Testimonials";
 import CtaBanner from "@/components/home/CtaBanner";
 import Icon from "@/components/ui/Icon";
+import HowWeWork from "@/components/about/HowWeWork";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -47,28 +48,6 @@ const timeline = [
   },
 ];
 
-const values = [
-  {
-    icon: "target",
-    title: "Outcome over syllabus",
-    body: "A course is only finished when you can build the thing, explain it, and pass the interview about it.",
-  },
-  {
-    icon: "users",
-    title: "Small batches, real attention",
-    body: "12–18 students per batch so a trainer notices when someone is stuck instead of moving on.",
-  },
-  {
-    icon: "bolt",
-    title: "Current, not archived",
-    body: "Curriculum is reviewed every quarter against live job descriptions from our hiring partners.",
-  },
-  {
-    icon: "certificate",
-    title: "Honest guidance",
-    body: "If a track is wrong for you, our counsellors say so. We would rather lose an admission than a reputation.",
-  },
-];
 
 export default function AboutPage() {
   return (
@@ -126,28 +105,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Values */}
-      <section id="values" className="scroll-mt-32 bg-subtle py-24 lg:py-32">
-        <div className="container-x">
-          <SectionHeading
-            align="center"
-            eyebrow="How we work"
-            title="Four rules we do not bend"
-            subtitle="They sound obvious. Keeping them when a batch is full and a deadline is close is the actual work."
-          />
-          <div data-anim="up" data-anim-stagger className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((v) => (
-              <div key={v.title} className="card-hover rounded-3xl border border-line bg-white p-7">
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-hero-600 to-hero-glow text-white shadow-lg shadow-hero-600/25">
-                  <Icon name={v.icon} size={22} />
-                </span>
-                <h3 className="mt-5 text-base font-bold text-up-ink">{v.title}</h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-up-muted">{v.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <HowWeWork />
 
       {/* Campus */}
       <section id="campus" className="scroll-mt-32 py-24 lg:py-32">
