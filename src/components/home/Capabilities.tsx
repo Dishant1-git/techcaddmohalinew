@@ -178,7 +178,13 @@ export default function Capabilities() {
   const trigger = useRef<ScrollTrigger | null>(null);
   const [active, setActive] = useState(0);
 
-  /* ---- Scroll drives the track: pin the section, step through the six ---- */
+  /* ---- Scroll drives the track: pin the section, step through the six ----
+   * useIsoLayoutEffect, not useEffect: ScrollTrigger's `pin` re-parents `root`
+   * under a synthetic pin-spacer div. React must unwrap that (via st.kill()
+   * in cleanup) before its mutation phase removes `root` from the tree, or
+   * it calls removeChild on a node that is no longer where React thinks it
+   * is. Passive-effect cleanup runs too late for that; layout-effect cleanup
+   * runs in the same synchronous pass as the removal. */
   useIsoLayoutEffect(() => {
     if (prefersReducedMotion()) return;
 
