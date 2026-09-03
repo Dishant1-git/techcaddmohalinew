@@ -77,13 +77,14 @@ export type NavFeature = {
 
 /**
  * Which layout the dropdown uses:
- *  list    — narrow anchored column of plain links (Branches, Resources)
+ *  list    — narrow anchored column of plain links (Branches)
  *  columns — wide panel of numbered columns with headings (Courses, After 12th)
  *  cards   — wide grid of icon cards (Certificate Programs)
  *  feature — link rail beside picture cards (About)
  *  ai      — dark panel with icon columns, a featured card and a CTA card
+ *  mega    — link rail beside free-tool cards (Resources)
  */
-export type NavPanel = "list" | "columns" | "cards" | "feature" | "ai";
+export type NavPanel = "list" | "columns" | "cards" | "feature" | "ai" | "mega";
 
 export type NavItem = {
   label: string;
@@ -341,15 +342,17 @@ export const navItems: NavItem[] = [
   {
     label: "Resources",
     href: "/courses",
-    panel: "list",
+    panel: "mega",
     links: [
-      { label: "Course catalogue", href: "/courses", desc: "All 16 tracks with syllabus and duration" },
-      { label: "Industrial training", href: "/training", desc: "45 days to 9 months" },
-      { label: "Placement record", href: "/placements", desc: "Roles, recruiters and outcomes" },
-      { label: "Student FAQs", href: "/courses#faqs", desc: "Fees, batches, EMI and certificates" },
-      { label: "Talk to a counsellor", href: "/contact", desc: "Free 10-minute career mapping call" },
-      { label: "Privacy policy", href: "/privacy-policy" },
-      { label: "Terms of use", href: "/terms" },
+      { label: "Find My Career Track", href: "/tools/career-track", badge: "New" },
+      { label: "Training Matcher", href: "/tools/training-matcher", badge: "New" },
+      { label: "Salary Estimator", href: "/tools/salary-estimator", badge: "New" },
+      { label: "Blogs", href: "/blog" },
+      { label: "Events", href: "/events" },
+      { label: "Gallery", href: "/gallery" },
+      { label: "FAQ", href: "/#faqs" },
+      { label: "Reviews", href: "/#reviews" },
+      { label: "College Partnerships", href: "/college-partnerships" },
     ],
   },
 

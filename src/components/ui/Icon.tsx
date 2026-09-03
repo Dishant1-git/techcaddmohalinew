@@ -132,6 +132,18 @@ const paths: Record<string, React.ReactNode> = {
       <path d="M9 21h6M12 17v4" />
     </>
   ),
+  download: (
+    <>
+      <path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5" />
+      <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+    </>
+  ),
+  building: (
+    <>
+      <path d="M4 21V9l8-6 8 6v12" />
+      <path d="M9 21v-6h6v6M9 12h.01M15 12h.01M9 8.5h.01M15 8.5h.01" />
+    </>
+  ),
 };
 
 export type IconName = keyof typeof paths;

@@ -13,6 +13,7 @@ import {
 } from "@/lib/site";
 import Logo from "@/components/ui/Logo";
 import Icon from "@/components/ui/Icon";
+import ResourcesMegaMenu from "@/components/layout/ResourcesMegaMenu";
 
 const socialIcon: Record<string, string> = {
   Instagram: "instagram",
@@ -36,7 +37,7 @@ const childrenOf = (item: NavItem): NavChild[] => [
  * them and the open/close transitions would never play.
  * -------------------------------------------------------------------------- */
 
-const PANEL =
+export const PANEL =
   "rounded-[1.75rem] border border-line bg-white/95 shadow-[0_45px_110px_-45px_rgba(6,14,43,0.85)] backdrop-blur-xl";
 const FOOT = "flex items-center justify-between gap-8 border-t border-line bg-subtle px-8 py-4";
 
@@ -392,6 +393,10 @@ function PanelBody({ item }: { item: NavItem }) {
         </div>
       );
     }
+
+    /* -------------------------------- mega ------------------------------- */
+    case "mega":
+      return <ResourcesMegaMenu links={item.links ?? []} />;
 
     default:
       return null;
