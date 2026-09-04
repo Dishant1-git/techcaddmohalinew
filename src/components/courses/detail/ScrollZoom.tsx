@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from "motion/react";
 import Icon from "@/components/ui/Icon";
+import { site } from "@/lib/site";
 import { courseChromeOffset } from "@/components/courses/detail/SectionLink";
 
 /**
@@ -220,8 +221,15 @@ export default function ScrollZoom({ items, note }: { items: ZoomCard[]; note: s
 
   const headline = useTransform(grow, [0, 0.36], [1, 0]);
   const headlineY = useTransform(grow, [0, 0.36], [0, -44]);
-  const revealOpacity = useTransform(grow, [0.78, 0.97], [0, 1]);
-  const revealY = useTransform(grow, [0.78, 1], [44, 0]);
+
+  // The brand takes the middle of the expansion: it arrives once the field is
+  // big enough to hold it and is gone again before the cards land, so the three
+  // beats never share the screen.
+  const brand = useTransform(grow, [0.48, 0.6, 0.72, 0.84], [0, 1, 1, 0]);
+  const brandScale = useTransform(grow, [0.48, 0.84], [0.9, 1.06]);
+
+  const revealOpacity = useTransform(grow, [0.86, 0.98], [0, 1]);
+  const revealY = useTransform(grow, [0.86, 1], [44, 0]);
 
   useMotionValueEvent(grow, "change", (v) => setRevealed(v > 0.9));
 
@@ -302,6 +310,23 @@ export default function ScrollZoom({ items, note }: { items: ZoomCard[]; note: s
             <span className="h-[9%] w-[44%] rounded-full bg-white/50" />
             <span className="h-[9%] w-[58%] rounded-full bg-white/35" />
           </motion.span>
+        </motion.div>
+
+        {/* The brand, mid-expansion: the field is big enough to hold it, and
+            it is gone again before the cards land, so the three beats never
+            share the screen. */}
+        <motion.div
+          aria-hidden="true"
+          style={{ opacity: brand, scale: brandScale, paddingTop: chrome }}
+          className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center text-center"
+        >
+          <span className="font-display text-[2.75rem] font-extrabold leading-none tracking-tight text-white sm:text-[4.5rem] lg:text-[6rem]">
+            {site.name}
+            <span className="text-accent-glow">.</span>
+          </span>
+          <span className="mt-4 text-[0.6rem] font-semibold uppercase tracking-[0.35em] text-white/70 sm:mt-5 sm:text-xs sm:tracking-[0.45em]">
+            {site.tagline}
+          </span>
         </motion.div>
 
         {/* The cards, once the field is the whole screen. */}
