@@ -207,7 +207,7 @@ export default function SectionRail({ skin = "catalogue" }: { skin?: RailSkin } 
 
       <div className="container-x">
         <div className="relative flex items-center gap-4">
-          {/* Position readout — which of the nine sections you are reading. */}
+          {/* Position readout — how far through the sections you are. */}
           <span
             className={`hidden shrink-0 items-center gap-2 font-display text-[0.7rem] font-bold tabular-nums tracking-[0.14em] lg:flex ${s.readout}`}
           >

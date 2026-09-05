@@ -47,6 +47,9 @@ export const courseSections = [
   { id: "why", label: "Why choose us" },
   { id: "who", label: "Who can join" },
   { id: "tools", label: "Tools" },
+  { id: "certificate", label: "Certification" },
+  { id: "scope", label: "Future scope" },
+  { id: "compare", label: "Compare" },
   { id: "reviews", label: "Reviews" },
   { id: "faqs", label: "FAQs" },
   { id: "enquire", label: "Enquire" },
@@ -436,3 +439,224 @@ export function ratingSummary(course: Course) {
   const { average, reviewCount } = ratingBreakdown(course);
   return { average, reviewCount };
 }
+
+/* -------------------------------------------------------------------------- *
+ *                               Certification                                 *
+ * -------------------------------------------------------------------------- */
+
+/**
+ * What a student actually leaves with on paper.
+ *
+ * Three separate documents, not one: the course certificate proves the
+ * syllabus, the project certificate proves the work, and the internship letter
+ * is what an HR screen asks for. The wording matches the promise made in
+ * `whyChoose` — nothing here claims more than the batch delivers.
+ */
+export function certification(course: Course) {
+  return [
+    {
+      icon: "certificate",
+      title: "Course completion certificate",
+      meta: "ISO-certified",
+      body: `Issued on attendance and the final assessment of the ${course.title} programme, under our ISO-certified training registration — the document employers and universities ask to see.`,
+    },
+    {
+      icon: "layers",
+      title: "Project completion certificate",
+      meta: "Capstone",
+      body: "A separate certificate for the live project you build and defend, listing the brief, the stack and your role on the team — so the work is verifiable, not just claimed.",
+    },
+    {
+      icon: "briefcase",
+      title: "Internship letter",
+      meta: "Documented",
+      body: "A dated internship letter covering the weeks you spent on a project team with real requirements and code review — accepted for university internship credit.",
+    },
+  ];
+}
+
+/** The short lines under the certificate cards — how the paper is used. */
+export function certificationNotes(course: Course) {
+  return [
+    `Verifiable by roll number, so a recruiter can confirm your ${course.title} record with the institute.`,
+    "Shareable on LinkedIn and printable for interview files — soft copy in your student portal, hard copy at the campus.",
+    "Reissued free if you lose it; your training record stays on file permanently.",
+  ];
+}
+
+/* -------------------------------------------------------------------------- *
+ *                          Future scope & careers                             *
+ * -------------------------------------------------------------------------- */
+
+export type SalaryBand = { market: string; fresher: string; experienced: string };
+
+type ScopeProfile = {
+  /** One line on why this skill is being hired for right now. */
+  demand: string;
+  salary: SalaryBand[];
+  industries: string[];
+};
+
+/**
+ * Indicative pay and hiring context per category.
+ *
+ * The Punjab / Tricity band is the envelope of the matching roles in
+ * `src/lib/salaryData.ts`, and the other two markets apply that file's own
+ * multipliers (NCR ×1.25; remote ×1.05 fresher, ×1.35 after two years). The
+ * salary estimator and this section therefore quote the same money — a reader
+ * who checks one against the other finds them agreeing.
+ *
+ * They stay ranges because that is what they are: what alumni report back, not
+ * a promise. Every component that renders them also renders the caveat.
+ */
+const scopeByCategory: Record<CategoryKey, ScopeProfile> = {
+  "ai-data": {
+    demand:
+      "Every analytics team in the Tricity is now hiring for Python, SQL and a model that runs in production — and the same profile is the most portable one on remote job boards.",
+    salary: [
+      { market: "Punjab / Tricity", fresher: "₹3 – 6 LPA", experienced: "₹6 – 13 LPA" },
+      { market: "Delhi NCR", fresher: "₹3.8 – 7.5 LPA", experienced: "₹7.5 – 16 LPA" },
+      { market: "Remote / Freelance", fresher: "₹3.2 – 6.3 LPA", experienced: "₹8 – 17.5 LPA" },
+    ],
+    industries: [
+      "AI and ML product startups",
+      "IT services and consulting",
+      "Fintech and banking analytics",
+      "Healthcare and pharma data",
+      "E-commerce and logistics",
+    ],
+  },
+  development: {
+    demand:
+      "Product companies around Mohali and Chandigarh hire full-stack developers year round, and a deployed application in your portfolio moves you past the resume screen faster than any score.",
+    salary: [
+      { market: "Punjab / Tricity", fresher: "₹2.4 – 4.5 LPA", experienced: "₹5 – 9 LPA" },
+      { market: "Delhi NCR", fresher: "₹3 – 5.6 LPA", experienced: "₹6.3 – 11.3 LPA" },
+      { market: "Remote / Freelance", fresher: "₹2.5 – 4.7 LPA", experienced: "₹6.8 – 12 LPA" },
+    ],
+    industries: [
+      "SaaS and product engineering",
+      "IT services and agencies",
+      "E-commerce platforms",
+      "EdTech and health tech",
+      "Freelance and studio work",
+    ],
+  },
+  "cyber-cloud": {
+    demand:
+      "Compliance requirements have made security and cloud roles the hardest ones for local companies to fill — certification plus hands-on lab work is what closes that gap.",
+    salary: [
+      { market: "Punjab / Tricity", fresher: "₹2.8 – 5 LPA", experienced: "₹5.5 – 11 LPA" },
+      { market: "Delhi NCR", fresher: "₹3.5 – 6.3 LPA", experienced: "₹6.9 – 13.8 LPA" },
+      { market: "Remote / Freelance", fresher: "₹2.9 – 5.3 LPA", experienced: "₹7.4 – 15 LPA" },
+    ],
+    industries: [
+      "Managed security providers",
+      "Cloud and DevOps teams",
+      "Banking and fintech",
+      "Government and defence vendors",
+      "IT infrastructure services",
+    ],
+  },
+  "digital-marketing": {
+    demand:
+      "Every business in the region now runs paid campaigns, and the people who can prove a return on that spend — not just run the ads — are the ones who get retained.",
+    salary: [
+      { market: "Punjab / Tricity", fresher: "₹2.2 – 3.6 LPA", experienced: "₹4.5 – 7.5 LPA" },
+      { market: "Delhi NCR", fresher: "₹2.8 – 4.5 LPA", experienced: "₹5.6 – 9.4 LPA" },
+      { market: "Remote / Freelance", fresher: "₹2.3 – 3.8 LPA", experienced: "₹6 – 10 LPA" },
+    ],
+    industries: [
+      "Digital agencies",
+      "D2C and e-commerce brands",
+      "Real estate and education",
+      "Healthcare and hospitality",
+      "Independent client retainers",
+    ],
+  },
+  "cad-design": {
+    demand:
+      "Manufacturing and construction across Punjab run on drawings, and a designer who can model, detail and hand over a production-ready file is billed on every project.",
+    salary: [
+      { market: "Punjab / Tricity", fresher: "₹2 – 3.5 LPA", experienced: "₹4 – 6.5 LPA" },
+      { market: "Delhi NCR", fresher: "₹2.5 – 4.4 LPA", experienced: "₹5 – 8.1 LPA" },
+      { market: "Project & freelance work", fresher: "₹2.1 – 3.7 LPA", experienced: "₹5.4 – 8.8 LPA" },
+    ],
+    industries: [
+      "Manufacturing and auto components",
+      "Architecture and interiors",
+      "Civil and infrastructure firms",
+      "Product design studios",
+      "Fabrication and tooling units",
+    ],
+  },
+  programming: {
+    demand:
+      "Fundamentals are what every technical interview is actually built on — the language on the job may change, but this is the profile that clears the first two rounds.",
+    salary: [
+      { market: "Punjab / Tricity", fresher: "₹2.5 – 4.4 LPA", experienced: "₹5 – 9 LPA" },
+      { market: "Delhi NCR", fresher: "₹3.1 – 5.5 LPA", experienced: "₹6.3 – 11.3 LPA" },
+      { market: "Remote / Freelance", fresher: "₹2.6 – 4.6 LPA", experienced: "₹6.8 – 12 LPA" },
+    ],
+    industries: [
+      "IT services and consulting",
+      "Product and SaaS companies",
+      "Startups and early teams",
+      "Campus and government hiring",
+      "Freelance development",
+    ],
+  },
+};
+
+export function futureScope(course: Course) {
+  const profile = scopeByCategory[course.category];
+  return { roles: course.roles, ...profile };
+}
+
+/* -------------------------------------------------------------------------- *
+ *                       techcadd vs a typical institute                       *
+ * -------------------------------------------------------------------------- */
+
+/**
+ * The comparison people actually make while shortlisting. It is written as
+ * "most institutes" rather than naming anyone, and every claim on our side is
+ * one the batch has to deliver.
+ */
+export const comparison: { aspect: string; icon: string; us: string; them: string }[] = [
+  {
+    aspect: "Who teaches",
+    icon: "users",
+    us: "Trainers who still work on client projects in the same stack.",
+    them: "Full-time faculty teaching from a fixed slide deck.",
+  },
+  {
+    aspect: "What you build",
+    icon: "rocket",
+    us: "A live project with real requirements, deadlines and code review.",
+    them: "A demo project copied from the same manual every batch uses.",
+  },
+  {
+    aspect: "Batch size",
+    icon: "layers",
+    us: "Small batches with open lab hours and daily doubt clearing.",
+    them: "Large halls where questions wait for the next session.",
+  },
+  {
+    aspect: "Course material",
+    icon: "monitor",
+    us: "Curriculum revised against what local companies are hiring for.",
+    them: "Notes that have not changed in several years.",
+  },
+  {
+    aspect: "What you leave with",
+    icon: "certificate",
+    us: "Certificate, project letter, internship letter and a portfolio.",
+    them: "A certificate, and nothing to show behind it.",
+  },
+  {
+    aspect: "After the course",
+    icon: "briefcase",
+    us: "Placement cell that keeps calling drives until you are hired.",
+    them: "A list of contacts handed over on the last day.",
+  },
+];
