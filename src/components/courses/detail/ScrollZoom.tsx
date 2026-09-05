@@ -30,6 +30,14 @@ export type ZoomCard = { icon: string; title: string; body: string };
 const FIELD =
   "bg-[linear-gradient(135deg,#123285_0%,#1c53d1_38%,#2f7dff_70%,#00d4ff_100%)]";
 
+/** The short proof line under the headline, while the stage is still held. */
+const PROOF = [
+  "Trainers from the industry",
+  "Live projects from week three",
+  "ISO-certified certification",
+  "Placement support until you are hired",
+];
+
 /**
  * What the expanded field carries: the section's own cards, frosted over the
  * gradient.
@@ -82,8 +90,17 @@ function Cards({ items, note }: { items: ZoomCard[]; note: string }) {
   );
 }
 
-/** The stage-one typography. `inline` is the slot the card grows out of. */
-function Headline({ inline }: { inline: React.ReactNode }) {
+/**
+ * The stage-one typography. `inline` is the slot the card grows out of.
+ *
+ * Below the headline the stage would otherwise hold a screen of empty
+ * gradient, so the lead line, the proof row and the scroll cue fill it. They
+ * live inside the same block as the headline, which means they fade on the
+ * same `grow` value — the card still meets a clear screen. The row and the cue
+ * are held back below `sm`: a phone screen has no room to spare once the
+ * headline has wrapped.
+ */
+function Headline({ inline, lead }: { inline: React.ReactNode; lead: string }) {
   return (
     <>
       <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-4 py-1.5 text-[0.66rem] font-bold uppercase tracking-[0.2em] text-up-soft/80">
@@ -91,14 +108,46 @@ function Headline({ inline }: { inline: React.ReactNode }) {
         Why choose us
       </span>
       <h2 className="mt-7 font-display text-[1.9rem] font-extrabold leading-[1.15] tracking-tight text-white sm:text-5xl lg:text-[3.4rem] lg:leading-[1.12]">
-        Finish with a portfolio, {inline} an internship letter and interviews —
-        <span className="text-up-soft/60"> not just a certificate.</span>
+        Graduate with a portfolio {inline} and interview preparation —
+        <span className="text-up-soft/60"> outcomes employers can verify.</span>
       </h2>
+
+      <p className="mx-auto mt-6 max-w-2xl text-[0.85rem] leading-relaxed text-up-soft/70 sm:mt-7 sm:text-base">
+        {lead}
+      </p>
+
+      <ul className="mx-auto mt-7 hidden max-w-3xl flex-wrap items-center justify-center gap-2 sm:mt-8 sm:flex sm:gap-3">
+        {PROOF.map((t) => (
+          <li
+            key={t}
+            className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.05] px-3.5 py-1.5 text-[0.68rem] font-semibold tracking-wide text-up-soft/80 backdrop-blur-sm sm:px-4 sm:py-2 sm:text-xs"
+          >
+            <span className="h-1 w-1 rounded-full bg-accent-glow" />
+            {t}
+          </li>
+        ))}
+      </ul>
+
+      <span
+        aria-hidden="true"
+        className="mt-8 hidden items-center gap-2 text-[0.6rem] font-semibold uppercase tracking-[0.28em] text-up-soft/45 sm:mt-10 sm:inline-flex"
+      >
+        Keep scrolling
+        <Icon name="arrowRight" size={13} className="rotate-90" />
+      </span>
     </>
   );
 }
 
-export default function ScrollZoom({ items, note }: { items: ZoomCard[]; note: string }) {
+export default function ScrollZoom({
+  items,
+  note,
+  lead,
+}: {
+  items: ZoomCard[];
+  note: string;
+  lead: string;
+}) {
   // Read after mount, not during render: the server has no media query, so
   // branching on it in the first render would hand React a tree that does not
   // match the HTML it is hydrating.
@@ -239,6 +288,7 @@ export default function ScrollZoom({ items, note }: { items: ZoomCard[]; note: s
       <div className="container-x relative">
         <div className="mx-auto max-w-4xl text-center">
           <Headline
+            lead={lead}
             inline={
               <span
                 className={`mx-1.5 inline-block h-[1.05em] w-[1.95em] translate-y-[0.1em] rounded-xl align-middle ${FIELD}`}
@@ -271,6 +321,7 @@ export default function ScrollZoom({ items, note }: { items: ZoomCard[]; note: s
         >
           <div className="mx-auto max-w-4xl">
             <Headline
+              lead={lead}
               inline={
                 // A placeholder that only reserves the space: the card itself is
                 // absolutely positioned so growing it never reflows the text.

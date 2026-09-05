@@ -1,8 +1,19 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import { DrawLine, EASE } from "@/components/courses/detail/Motion";
+
+/** The heading's words rise out of their masks one after the other. */
+const wordsContainer: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.045 } },
+};
+
+const wordVariants: Variants = {
+  hidden: { y: "112%", opacity: 0 },
+  show: { y: "0%", opacity: 1, transition: { duration: 0.8, ease: EASE } },
+};
 
 /**
  * Section heading for the course detail page — the Framer Motion counterpart of
@@ -49,26 +60,38 @@ export default function SectionTitle({
         </motion.div>
       )}
 
-      <h2
+      {/* The trigger lives on the <h2>, not on the words.
+          Each word starts a full line-height *below* its own mask, and
+          IntersectionObserver clips a target by its ancestors' overflow — so a
+          word observed on its own reports a zero intersection ratio, never
+          crosses `amount`, and stays hidden for good. The heading itself is
+          unclipped, so it enters view normally and hands the words their state
+          down through variants. */}
+      <motion.h2
         className={`font-display text-3xl font-extrabold leading-[1.12] sm:text-4xl lg:text-[2.7rem] ${
           dark ? "text-white" : "text-up-ink"
         }`}
+        variants={wordsContainer}
+        initial={reduce ? undefined : "hidden"}
+        whileInView={reduce ? undefined : "show"}
+        viewport={{ once: true, amount: 0.35 }}
       >
         {words.map((word, i) => (
-          <span key={`${word}-${i}`} className="inline-block overflow-hidden align-top">
-            <motion.span
-              className="inline-block"
-              initial={reduce ? false : { y: "112%", opacity: 0 }}
-              whileInView={{ y: "0%", opacity: 1 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.8, delay: i * 0.045, ease: EASE }}
-            >
+          // The gap between words is margin on the mask, not a space inside it:
+          // `overflow-hidden` clips trailing whitespace, which ran every word
+          // into the next one.
+          <span
+            key={`${word}-${i}`}
+            className={`inline-block overflow-hidden align-top ${
+              i < words.length - 1 ? "mr-[0.26em]" : ""
+            }`}
+          >
+            <motion.span className="inline-block" variants={reduce ? undefined : wordVariants}>
               {word}
-              {i < words.length - 1 ? " " : ""}
             </motion.span>
           </span>
         ))}
-      </h2>
+      </motion.h2>
 
       <DrawLine
         className={`mt-5 h-[3px] w-24 rounded-full bg-gradient-to-r ${

@@ -51,6 +51,7 @@ export default function WhyChoose({ course }: { course: Course }) {
 
       <ScrollZoom
         items={reasons}
+        lead={`Every ${course.title} batch is taught by working professionals, builds on live projects from the third week, and hands over to a placement team that keeps working until you are hired.`}
         note={`Six reasons the ${course.title} track produces people who get hired, rather than people who finished a syllabus.`}
       />
 

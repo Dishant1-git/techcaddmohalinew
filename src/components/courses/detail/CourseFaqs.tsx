@@ -7,7 +7,18 @@ import { courseFaqs } from "@/lib/coursePage";
 import { site } from "@/lib/site";
 import Icon from "@/components/ui/Icon";
 import SectionTitle from "@/components/courses/detail/SectionTitle";
+import SectionLink from "@/components/courses/detail/SectionLink";
 import { EASE, itemVariants, Stagger } from "@/components/courses/detail/Motion";
+
+/**
+ * What the counsellor call actually settles — the three things people write in
+ * asking about, so the offer is concrete rather than "get in touch".
+ */
+const CALL_COVERS = [
+  "Which batch timing — morning, evening, weekend or live-online — fits around your college or job.",
+  "Fees, instalment options and any scholarship you qualify for.",
+  "Whether this track or a neighbouring one suits the background you are coming from.",
+];
 
 /**
  * FAQs for this specific course. The first five questions are generated from
@@ -19,18 +30,24 @@ export default function CourseFaqs({ course }: { course: Course }) {
   const faqs = courseFaqs(course);
 
   return (
-    <section id="faqs" className="relative scroll-mt-36 overflow-hidden py-20 lg:py-28">
-      <div className="pointer-events-none absolute inset-0 grid-lines-light opacity-60" />
+    <section id="faqs" className="relative scroll-mt-36 py-20 lg:py-28">
+      {/* The grid is clipped here, not on the section: `overflow-hidden` on the
+          section would make it a scroll container and the sticky left column
+          below would stop pinning to the viewport. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 grid-lines-light opacity-60" />
+      </div>
 
       <div className="container-x relative">
-        {/* `items-start`, and no sticky on the left column: the heading block
-            sits at the top of the section and scrolls away with it, rather
-            than pinning and floating alongside the list. */}
+        {/* The answer list is far taller than the heading block, so from `lg`
+            the left column pins beside it — `items-start` keeps the grid item
+            its own height, which is what sticky needs. `top-44` clears the
+            navbar and the section rail stacked above it. */}
         <div className="grid items-start gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
-          <div>
+          <div className="lg:sticky lg:top-44">
             <SectionTitle
               eyebrow="FAQs"
-              title="Questions about this course"
+              title="Common questions"
               subtitle="Still unsure? A ten-minute call with a counsellor usually settles it faster than any brochure."
             />
 
@@ -64,6 +81,40 @@ export default function CourseFaqs({ course }: { course: Course }) {
                 >
                   <Icon name="mail" size={15} className="text-up-accent" /> {site.email}
                 </a>
+              </div>
+
+              <div className="mt-6 border-t border-line pt-5">
+                <p className="text-sm font-semibold text-up-ink">What the call covers</p>
+                <ul className="mt-3 space-y-2.5">
+                  {CALL_COVERS.map((t) => (
+                    <li key={t} className="flex gap-2.5 text-sm leading-relaxed text-up-muted">
+                      <Icon
+                        name="check"
+                        size={15}
+                        className="mt-0.5 shrink-0 text-up-accent"
+                        strokeWidth={2.4}
+                      />
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+
+                <SectionLink
+                  to="enquire"
+                  className="group mt-5 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-hero-600 to-hero-glow px-5 py-3 text-sm font-bold text-white shadow-lg shadow-hero-600/25 transition-all hover:-translate-y-0.5 hover:shadow-xl"
+                >
+                  Book a free demo class
+                  <Icon
+                    name="arrowRight"
+                    size={16}
+                    className="transition-transform group-hover:translate-x-1"
+                  />
+                </SectionLink>
+
+                <p className="mt-3.5 text-xs leading-relaxed text-up-muted/80">
+                  Counsellors reply within a working day. No fee is collected until you have sat
+                  through a demo session.
+                </p>
               </div>
             </motion.div>
           </div>
