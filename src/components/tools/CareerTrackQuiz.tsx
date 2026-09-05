@@ -374,13 +374,22 @@ export default function CareerTrackQuiz() {
                 Retake the quiz
               </button>
 
-              <p className="no-print mt-8 border-t border-line pt-6 text-sm text-up-muted">
-                Need this for university-mandated training?{" "}
-                <Link href="/tools/training-matcher" className="font-semibold text-up-accent hover:underline">
-                  Match your semester to a live project track
-                </Link>
-                .
-              </p>
+              <div className="no-print mt-8 space-y-2 border-t border-line pt-6 text-sm text-up-muted">
+                <p>
+                  Need this for university-mandated training?{" "}
+                  <Link href="/tools/training-matcher" className="font-semibold text-up-accent hover:underline">
+                    Match your semester to a live project track
+                  </Link>
+                  .
+                </p>
+                <p>
+                  Curious what {result.category.title} roles actually pay?{" "}
+                  <Link href="/tools/salary-estimator" className="font-semibold text-up-accent hover:underline">
+                    Check the Salary Estimator
+                  </Link>
+                  .
+                </p>
+              </div>
             </div>
           )
         )}
