@@ -350,7 +350,7 @@ export const navItems: NavItem[] = [
       { label: "Blogs", href: "/blog" },
       { label: "Events", href: "/events" },
       { label: "Gallery", href: "/gallery" },
-      { label: "FAQ", href: "/#faqs" },
+      { label: "FAQ", href: "/faq" },
       { label: "Reviews", href: "/#reviews" },
       { label: "College Partnerships", href: "/college-partnerships" },
     ],
