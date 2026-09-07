@@ -52,6 +52,12 @@ const paths: Record<string, React.ReactNode> = {
       <path d="M12 7v5l3 2" />
     </>
   ),
+  calendar: (
+    <>
+      <rect x="3" y="4.5" width="18" height="16" rx="2" />
+      <path d="M3 9.5h18M8 3v3M16 3v3" />
+    </>
+  ),
   star: <path d="m12 3 2.6 5.6 6.1.8-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L3.3 9.4l6.1-.8L12 3Z" />,
   plus: <path d="M12 5v14M5 12h14" />,
   menu: <path d="M4 7h16M4 12h16M4 17h16" />,
@@ -136,6 +142,18 @@ const paths: Record<string, React.ReactNode> = {
     <>
       <rect x="2.5" y="4" width="19" height="13" rx="2" />
       <path d="M9 21h6M12 17v4" />
+    </>
+  ),
+  download: (
+    <>
+      <path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5" />
+      <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+    </>
+  ),
+  building: (
+    <>
+      <path d="M4 21V9l8-6 8 6v12" />
+      <path d="M9 21v-6h6v6M9 12h.01M15 12h.01M9 8.5h.01M15 8.5h.01" />
     </>
   ),
 };

@@ -17,6 +17,9 @@ import LearnPoints from "@/components/courses/detail/LearnPoints";
 import WhyChoose from "@/components/courses/detail/WhyChoose";
 import WhoCanJoin from "@/components/courses/detail/WhoCanJoin";
 import Tools from "@/components/courses/detail/Tools";
+import Certification from "@/components/courses/detail/Certification";
+import FutureScope from "@/components/courses/detail/FutureScope";
+import Compare from "@/components/courses/detail/Compare";
 import Reviews from "@/components/courses/detail/Reviews";
 import CourseFaqs from "@/components/courses/detail/CourseFaqs";
 import EnquiryForm from "@/components/courses/detail/EnquiryForm";
@@ -27,8 +30,8 @@ import EnquiryForm from "@/components/courses/detail/EnquiryForm";
  * Every section below is a pure function of the course record, so adding a
  * course to `src/lib/courses.ts` is all it takes to get a full page at
  * `/courses/<slug>` — hero, overview, modules, skills, why-choose, audience,
- * tools, reviews, FAQs and an enquiry form that already knows which course it
- * is for.
+ * tools, certification, future scope, the comparison, reviews, FAQs and an
+ * enquiry form that already knows which course it is for.
  *
  * The sections animate with Framer Motion rather than the site-wide GSAP
  * `data-anim` system, which is why nothing here carries those attributes.
@@ -147,6 +150,9 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
         <WhyChoose course={course} />
         <WhoCanJoin course={course} />
         <Tools course={course} />
+        <Certification course={course} />
+        <FutureScope course={course} />
+        <Compare course={course} />
         <Reviews course={course} />
         <CourseFaqs course={course} />
         <EnquiryForm course={course} />
