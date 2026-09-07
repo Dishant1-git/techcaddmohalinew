@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import MiniCtaBar from "@/components/layout/MiniCtaBar";
 import Animator from "@/components/anim/Animator";
 import FloatingActions from "@/components/layout/FloatingActions";
+import EnquiryModal from "@/components/layout/EnquiryModal";
 import { site } from "@/lib/site";
 
 const inter = Inter({
@@ -111,6 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MiniCtaBar />
         <Footer />
         <FloatingActions />
+        <EnquiryModal />
       </body>
     </html>
   );

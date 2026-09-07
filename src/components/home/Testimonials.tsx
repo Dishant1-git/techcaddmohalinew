@@ -65,7 +65,7 @@ export default function Testimonials() {
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-white to-transparent sm:w-40" />
 
         <div className="group flex overflow-hidden">
-          <div className="flex w-max [animation:marquee_50s_linear_infinite] group-hover:[animation-play-state:paused]">
+          <div className="flex w-max [animation:marquee_50s_linear_infinite]">
             {[...rowA, ...rowA, ...rowA, ...rowA].map((t, i) => (
               <Card key={`a-${i}`} t={t} />
             ))}
@@ -73,7 +73,7 @@ export default function Testimonials() {
         </div>
 
         <div className="group flex overflow-hidden">
-          <div className="flex w-max [animation:marquee_58s_linear_infinite_reverse] group-hover:[animation-play-state:paused]">
+          <div className="flex w-max [animation:marquee_58s_linear_infinite_reverse]">
             {[...rowB, ...rowB, ...rowB, ...rowB].map((t, i) => (
               <Card key={`b-${i}`} t={t} />
             ))}

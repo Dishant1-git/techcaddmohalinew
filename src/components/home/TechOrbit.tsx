@@ -213,13 +213,6 @@ export default function TechOrbit() {
       };
       window.addEventListener("resize", onResize);
 
-      // Hovering parks the board so a logo can be read or clicked.
-      let paused = false;
-      const enter = () => (paused = true);
-      const leave = () => (paused = false);
-      boardEl.addEventListener("pointerenter", enter);
-      boardEl.addEventListener("pointerleave", leave);
-
       // Off-screen the board costs nothing: the clock stops with it, so it
       // resumes where it left off rather than jumping when scrolled back to.
       let onScreen = true;
@@ -237,7 +230,7 @@ export default function TechOrbit() {
       let clock = 0;
       const update = (_t: number, delta: number) => {
         if (!onScreen) return;
-        if (!paused) clock += delta / 1000;
+        clock += delta / 1000;
 
         for (const el of nodes) {
           const slot = slots.current.get(el.dataset.node ?? "");
@@ -268,8 +261,6 @@ export default function TechOrbit() {
       return () => {
         gsap.ticker.remove(update);
         window.removeEventListener("resize", onResize);
-        boardEl.removeEventListener("pointerenter", enter);
-        boardEl.removeEventListener("pointerleave", leave);
       };
     }, root);
 

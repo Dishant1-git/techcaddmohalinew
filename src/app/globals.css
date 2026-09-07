@@ -272,10 +272,49 @@
     animation: circuit-pulse 3.4s linear infinite;
   }
 
+  /* Scrolls, but shows no bar. The page styles ::-webkit-scrollbar as a thick
+     blue gradient, which reads as a stray slider when it turns up inside a
+     panel like the enquiry modal. */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .animate-wave {
+    display: inline-block;
+    transform-origin: 72% 78%;
+    animation: wave-hand 2.6s ease-in-out infinite;
+  }
+
   /* Marching ants along the connectors in the capabilities flow. */
   .flow-dash {
     stroke-dasharray: 3 6;
     animation: flow-dash 2.4s linear infinite;
+  }
+}
+
+/* The waving hand on the enquiry modal. Pivots at the wrist rather than the
+   glyph's centre, so it reads as a wave and not a spin. */
+@keyframes wave-hand {
+  0%,
+  62%,
+  100% {
+    transform: rotate(0deg);
+  }
+  10%,
+  30% {
+    transform: rotate(15deg);
+  }
+  20%,
+  40% {
+    transform: rotate(-9deg);
+  }
+  50% {
+    transform: rotate(11deg);
   }
 }
 

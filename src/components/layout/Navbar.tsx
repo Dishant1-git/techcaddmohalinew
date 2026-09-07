@@ -13,6 +13,7 @@ import {
 } from "@/lib/site";
 import Logo from "@/components/ui/Logo";
 import Icon from "@/components/ui/Icon";
+import { openEnquiry } from "@/lib/enquiry";
 import ResourcesMegaMenu from "@/components/layout/ResourcesMegaMenu";
 
 const socialIcon: Record<string, string> = {
@@ -596,22 +597,9 @@ export default function Navbar() {
 
             {/* -------------------------------- Actions ------------------------------- */}
             <div className="flex shrink-0 items-center gap-2.5">
-              <a
-                href={site.whatsappHref}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Chat on WhatsApp"
-                className={`hidden h-10 w-10 place-items-center rounded-full border transition-all hover:-translate-y-0.5 2xl:grid ${
-                  scrolled
-                    ? "border-up-line text-up-accent hover:border-up-accent hover:bg-white"
-                    : "border-white/25 text-white hover:border-white/60 hover:bg-white/10"
-                }`}
-              >
-                <Icon name="whatsapp" size={18} />
-              </a>
-
-              <Link
-                href="/contact"
+              <button
+                type="button"
+                onClick={openEnquiry}
                 className={`hidden items-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-r from-hero-glow to-hero-600 font-bold text-white shadow-lg shadow-hero-600/35 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-hero-glow/45 sm:inline-flex ${
                   scrolled
                     ? "px-5 py-2.5 text-[0.82rem] 2xl:px-6 2xl:text-[0.85rem]"
@@ -619,7 +607,7 @@ export default function Navbar() {
                 }`}
               >
                 Book Demo
-              </Link>
+              </button>
 
               <button
                 onClick={() => setMobileOpen((v) => !v)}
@@ -756,12 +744,16 @@ export default function Navbar() {
           </nav>
 
           <div className="shrink-0 space-y-3 border-t border-line px-5 py-5">
-            <Link
-              href="/contact"
+            <button
+              type="button"
+              onClick={() => {
+                setMobileOpen(false);
+                openEnquiry();
+              }}
               className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-hero-glow to-hero-600 py-3.5 text-sm font-bold text-white"
             >
               Book Demo <Icon name="arrowRight" size={16} />
-            </Link>
+            </button>
             <a
               href={site.phoneHref}
               className="flex w-full items-center justify-center gap-2 rounded-full border border-up-line py-3.5 text-sm font-semibold text-up-ink"
