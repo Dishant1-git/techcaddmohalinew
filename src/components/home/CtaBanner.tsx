@@ -1,66 +1,78 @@
-import Link from "next/link";
 import { site } from "@/lib/site";
 import Icon from "@/components/ui/Icon";
+import QuickEnquiry from "@/components/home/QuickEnquiry";
+
+const ASSURANCES = ["Free career counselling", "No registration fee", "Placement support included"];
 
 export default function CtaBanner() {
   return (
-    <section className="relative py-20 lg:py-28">
-      <div className="container-x">
-        <div
-          data-anim="scale"
-          className="relative overflow-hidden rounded-[2rem] bg-hero-950 px-8 py-16 text-center lg:px-16 lg:py-20"
+    <section className="relative overflow-hidden bg-subtle py-24 lg:py-32">
+      {/* Faint outlined rings, echoing the reference's decorative circles */}
+      <div className="pointer-events-none absolute right-[6%] top-1/2 h-16 w-16 -translate-y-1/2 rounded-full border border-up-line" />
+      <div className="pointer-events-none absolute left-[7%] top-[22%] h-10 w-10 rounded-full border border-up-line" />
+
+      <div className="container-x relative text-center">
+        <p
+          data-anim="fade"
+          className="text-[0.72rem] font-bold uppercase tracking-[0.2em] text-up-bright"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_80%_at_50%_0%,#1c53d1_0%,transparent_60%)]" />
-          <div className="absolute inset-0 grid-lines opacity-70" />
-          <div
-            data-parallax="-40"
-            className="glow-blob left-[10%] top-[-20%] h-[320px] w-[320px] bg-accent-glow/25"
-          />
-          <div
-            data-parallax="50"
-            className="glow-blob bottom-[-30%] right-[8%] h-[300px] w-[300px] bg-hero-glow/30"
-          />
+          Ready to get started?
+        </p>
 
-          <div className="relative mx-auto max-w-3xl">
-            <p className="text-[0.7rem] font-bold uppercase tracking-[0.2em] text-accent-yellow">
-              Admissions open · Limited seats per batch
-            </p>
-            <h2 className="mt-5 font-display text-3xl font-extrabold leading-tight text-white sm:text-5xl">
-              Your next batch starts within two weeks
-            </h2>
-            <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-up-soft/80">
-              Book a free demo class at our Sector 75 campus, or ask a counsellor which track
-              suits your background. No fee, no obligation.
-            </p>
+        <h2
+          data-anim="up"
+          data-anim-delay="0.08"
+          className="mx-auto mt-5 max-w-2xl font-display text-[2.4rem] font-extrabold leading-[1.06] tracking-tight text-up-ink sm:text-5xl lg:text-[3.6rem]"
+        >
+          Start building your career today.
+        </h2>
 
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-              <Link
-                href="/contact"
-                className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-bold text-hero-900 shadow-xl transition-all hover:-translate-y-0.5 hover:shadow-2xl"
-              >
-                Book a free demo
-                <Icon name="arrowRight" size={17} className="transition-transform group-hover:translate-x-1" />
-              </Link>
-              <a
-                href={site.phoneHref}
-                className="inline-flex items-center gap-2 rounded-full border border-white/25 px-8 py-4 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/5"
-              >
-                <Icon name="phone" size={16} /> {site.phone}
-              </a>
-            </div>
+        <p
+          data-anim="up"
+          data-anim-delay="0.16"
+          className="mx-auto mt-6 max-w-xl text-[1.02rem] leading-relaxed text-up-muted"
+        >
+          Talk to a counsellor today. One call is usually enough to know which track fits your
+          degree, your schedule and the job you want.
+        </p>
 
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-up-soft/60">
-              {["Free counselling", "EMI options available", "Morning · Evening · Weekend batches", "Online or on-campus"].map(
-                (item) => (
-                  <span key={item} className="inline-flex items-center gap-1.5">
-                    <Icon name="check" size={13} strokeWidth={3} className="text-accent-glow" />
-                    {item}
-                  </span>
-                ),
-              )}
-            </div>
-          </div>
+        <div data-anim="up" data-anim-delay="0.24" className="mt-10 flex justify-center">
+          <QuickEnquiry />
         </div>
+
+        <a
+          data-anim="up"
+          data-anim-delay="0.3"
+          href={site.phoneHref}
+          className="group mt-8 inline-flex items-center gap-3.5 rounded-full bg-hero-600 py-3 pl-3 pr-7 text-left text-white shadow-[0_18px_45px_-16px_rgba(28,83,209,0.85)] transition-all hover:-translate-y-0.5 hover:bg-hero-glow"
+        >
+          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/20">
+            <Icon name="phone" size={19} />
+          </span>
+          <span className="leading-tight">
+            <span className="block text-[0.62rem] font-bold uppercase tracking-[0.16em] text-white/70">
+              Call now
+            </span>
+            <span className="block text-[1.05rem] font-extrabold">{site.phone}</span>
+          </span>
+        </a>
+
+        <ul
+          data-anim="fade"
+          data-anim-delay="0.36"
+          className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[0.88rem] text-up-muted"
+        >
+          {ASSURANCES.map((item, i) => (
+            <li key={item} className="flex items-center">
+              {/* Divider between items rather than after the last one */}
+              {i > 0 && <span aria-hidden className="mr-6 hidden h-4 w-px bg-up-line sm:block" />}
+              <span className="inline-flex items-center gap-2">
+                <Icon name="checkCircle" size={16} className="shrink-0 text-up-bright" />
+                {item}
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

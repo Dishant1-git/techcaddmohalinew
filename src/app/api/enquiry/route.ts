@@ -20,20 +20,25 @@ export async function POST(request: Request) {
   const name = String(body.name ?? "").trim();
   const phone = String(body.phone ?? "").trim();
 
-  if (!name || !/^[0-9+\s-]{10,15}$/.test(phone)) {
+  // The phone number is the only thing an enquiry genuinely needs to be
+  // actionable — the quick callback form on the home page asks for nothing else.
+  // The full contact form still sends a name, and `source` records which one it
+  // came from so the desk knows how much context to expect.
+  if (!/^[0-9+\s-]{10,15}$/.test(phone)) {
     return NextResponse.json(
-      { ok: false, error: "A name and a valid phone number are required." },
+      { ok: false, error: "A valid phone number is required." },
       { status: 422 },
     );
   }
 
   const enquiry = {
-    name,
+    name: name || "Not given",
     phone,
     email: String(body.email ?? "").trim(),
     course: String(body.course ?? "").trim() || "Undecided",
     mode: String(body.mode ?? "").trim(),
     message: String(body.message ?? "").trim(),
+    source: String(body.source ?? "").trim() || "Contact form",
     receivedAt: new Date().toISOString(),
   };
 

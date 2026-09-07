@@ -1,113 +1,135 @@
+import Image from "next/image";
 import Link from "next/link";
-import SectionHeading from "@/components/ui/SectionHeading";
+import { collage, pillars } from "@/lib/about";
 import Icon from "@/components/ui/Icon";
 
-const highlights = [
-  { icon: "users", label: "Small batches", value: "12–18 students" },
-  { icon: "briefcase", label: "Trainers", value: "Working engineers" },
-  { icon: "certificate", label: "Certification", value: "ISO certified" },
-  { icon: "bolt", label: "Labs open", value: "6 days a week" },
-];
-
+/**
+ * The home page's about section: vision and mission, with a collage alongside.
+ *
+ * The collage is absolutely positioned inside a fixed-aspect box, so the tiles
+ * hold their arrangement and their overlaps at every width instead of reflowing
+ * into a grid. Below lg it becomes a plain two-column grid, where a scattered
+ * layout has no room to read.
+ */
 export default function AboutStrip() {
   return (
-    <section className="relative overflow-hidden py-24 lg:py-32">
-      <div className="container-x">
-        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
-          {/* Visual */}
-          <div className="relative">
-            <div
-              data-anim="left"
-              className="relative overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-hero-900 via-hero-800 to-hero-600 p-10 pb-20 text-white sm:pb-24"
-            >
-              <div className="absolute inset-0 grid-lines opacity-60" />
-              <div className="glow-blob right-[-20%] top-[-10%] h-64 w-64 bg-accent-glow/25" />
+    <section
+      id="vision"
+      className="relative scroll-mt-32 overflow-hidden bg-hero-950 py-24 text-white lg:py-32"
+    >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_78%_45%,rgba(28,83,209,0.35),transparent_68%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_45%_40%_at_10%_15%,rgba(0,212,255,0.14),transparent_70%)]" />
+      <div className="pointer-events-none absolute inset-0 grid-lines opacity-40" />
 
-              <p className="relative font-display text-[5rem] font-extrabold leading-none text-white/95">
-                15<span className="text-accent-yellow">+</span>
-              </p>
-              <p className="relative mt-2 text-sm font-semibold uppercase tracking-[0.16em] text-up-soft">
-                Years of training in Punjab
-              </p>
-              <p className="relative mt-6 max-w-sm text-sm leading-relaxed text-up-soft/80">
-                techcadd has been training students since 2007. The Mohali centre brings that
-                method to the Chandigarh tricity — the same trainers, the same live-project
-                approach, the same placement network.
-              </p>
+      <div className="container-x relative grid items-center gap-14 lg:grid-cols-[1fr_minmax(0,30rem)] lg:gap-20">
+        {/* ------------------------------- Copy ------------------------------- */}
+        <div>
+          <div className="space-y-14 lg:space-y-16">
+            {pillars.map((pillar, i) => (
+              <div key={pillar.title} data-anim="up" data-anim-delay={`${i * 0.12}`}>
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-4 py-1.5 text-[0.65rem] font-bold uppercase tracking-[0.18em] text-up-soft/80 backdrop-blur-sm">
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent-glow shadow-[0_0_10px_2px_rgba(0,212,255,0.7)]" />
+                  {pillar.eyebrow}
+                </span>
 
-              <div className="relative mt-8 grid grid-cols-2 gap-4">
-                {highlights.map((h) => (
-                  <div
-                    key={h.label}
-                    className="rounded-xl border border-white/12 bg-white/5 p-4 backdrop-blur-sm"
-                  >
-                    <Icon name={h.icon} size={18} className="text-accent-glow" />
-                    <p className="mt-2.5 text-sm font-bold text-white">{h.value}</p>
-                    <p className="text-[0.68rem] text-up-soft/70">{h.label}</p>
-                  </div>
-                ))}
+                <h2 className="mt-5 font-display text-[2.1rem] font-extrabold leading-[1.08] tracking-tight sm:text-[2.6rem]">
+                  {pillar.title}
+                </h2>
+
+                <p className="mt-4 max-w-xl text-[0.98rem] leading-relaxed text-up-soft/65">
+                  {pillar.body}
+                </p>
               </div>
-            </div>
-
-            <div
-              data-anim="scale"
-              data-anim-delay="0.2"
-              className="absolute -bottom-7 right-6 hidden w-56 rounded-2xl border border-line bg-white p-5 shadow-[0_24px_60px_-24px_rgba(11,26,77,0.45)] sm:block lg:-right-6"
-            >
-              <div className="flex items-center gap-1 text-accent-yellow">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Icon key={i} name="star" size={14} className="fill-accent-yellow" strokeWidth={0} />
-                ))}
-              </div>
-              <p className="mt-2 font-display text-2xl font-extrabold text-up-ink">4.9 / 5</p>
-              <p className="text-xs text-up-muted">556+ verified Google reviews</p>
-            </div>
+            ))}
           </div>
 
-          {/* Copy */}
-          <div>
-            <SectionHeading
-              eyebrow="About techcadd Mohali"
-              title="Two decades of turning students into engineers"
-              subtitle="We are a training centre, not a content library. Every batch is taught in person or live, capped small enough that a trainer knows where each student is stuck, and structured so the work you produce is the work you show in interviews."
+          <Link
+            data-anim="fade"
+            href="/about"
+            className="group mt-12 inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:border-white/45 hover:bg-white/5"
+          >
+            More about the institute
+            <Icon
+              name="arrowRight"
+              size={16}
+              className="transition-transform group-hover:translate-x-1"
             />
+          </Link>
+        </div>
 
-            <div className="mt-8 space-y-5">
-              {[
-                {
-                  t: "Built around the tricity job market",
-                  b: "Our curriculum tracks what companies in Mohali, Chandigarh and Panchkula are hiring for — then adds the fundamentals those interviews test.",
-                },
-                {
-                  t: "A trainer who stays with your batch",
-                  b: "No rotating faculty. The engineer who teaches your first module reviews your capstone project and prepares you for interviews.",
-                },
-                {
-                  t: "Support that continues after the course",
-                  b: "Placement help does not stop at the certificate. Alumni come back for interview prep, referrals and refresher sessions.",
-                },
-              ].map((item) => (
-                <div key={item.t} data-anim="up" className="flex gap-4">
-                  <span className="mt-1 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-50 text-up-accent">
-                    <Icon name="check" size={14} strokeWidth={3} />
-                  </span>
-                  <div>
-                    <p className="font-semibold text-up-ink">{item.t}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-up-muted">{item.b}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <Link
-              data-anim="fade"
-              href="/about"
-              className="group mt-9 inline-flex items-center gap-2 rounded-full border border-up-line px-6 py-3 text-sm font-semibold text-up-ink transition-all hover:-translate-y-0.5 hover:border-up-accent hover:text-up-accent"
+        {/* ------------------------------ Collage ----------------------------- */}
+        <div data-anim="right" className="relative mx-auto hidden aspect-[5/6] w-full max-w-md lg:block">
+          {collage.map((tile, i) => (
+            <figure
+              key={tile.key}
+              style={{
+                left: `${tile.x}%`,
+                top: `${tile.y}%`,
+                width: `${tile.w}%`,
+                height: `${tile.h}%`,
+                // Smaller tiles sit over the tall one, as in the reference.
+                zIndex: i === 0 ? 10 : 20,
+              }}
+              className="absolute overflow-hidden rounded-[1.5rem] border border-white/12 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85)]"
             >
-              More about the institute
-              <Icon name="arrowRight" size={16} className="transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
+              {tile.photo ? (
+                <Image
+                  src={tile.photo.src}
+                  alt={tile.photo.alt}
+                  fill
+                  sizes="(min-width: 1024px) 30vw, 100vw"
+                  className="object-cover"
+                />
+              ) : (
+                <>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${tile.art}`} />
+                  <div className="absolute inset-0 grid-lines opacity-60" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-hero-950/85 via-hero-950/20 to-transparent" />
+                </>
+              )}
+
+              <figcaption className="absolute inset-x-0 bottom-0 flex items-center gap-2 p-3.5">
+                <Icon name={tile.icon} size={14} className="shrink-0 text-accent-glow" />
+                <span className="truncate text-[0.68rem] font-semibold text-white">
+                  {tile.label}
+                </span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+
+        {/* Scattered tiles need width to read; below lg they become a grid. */}
+        <div data-anim="up" className="grid grid-cols-2 gap-4 lg:hidden">
+          {collage.map((tile) => (
+            <figure
+              key={tile.key}
+              className={`relative overflow-hidden rounded-2xl border border-white/12 ${
+                tile.key === "campus" ? "col-span-2 aspect-[16/10]" : "aspect-square"
+              }`}
+            >
+              {tile.photo ? (
+                <Image
+                  src={tile.photo.src}
+                  alt={tile.photo.alt}
+                  fill
+                  sizes="50vw"
+                  className="object-cover"
+                />
+              ) : (
+                <>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${tile.art}`} />
+                  <div className="absolute inset-0 grid-lines opacity-60" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-hero-950/85 via-hero-950/20 to-transparent" />
+                </>
+              )}
+              <figcaption className="absolute inset-x-0 bottom-0 flex items-center gap-2 p-3">
+                <Icon name={tile.icon} size={13} className="shrink-0 text-accent-glow" />
+                <span className="truncate text-[0.66rem] font-semibold text-white">
+                  {tile.label}
+                </span>
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </div>
     </section>

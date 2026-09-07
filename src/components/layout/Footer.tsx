@@ -1,107 +1,102 @@
+import Image from "next/image";
 import Link from "next/link";
 import { site } from "@/lib/site";
-import Logo from "@/components/ui/Logo";
-import Icon from "@/components/ui/Icon";
+import Logo, { LOGO_H, LOGO_SRC, LOGO_W } from "@/components/ui/Logo";
 
 const columns = [
   {
     heading: "Courses",
     links: [
-      { label: "Artificial Intelligence", href: "/courses/artificial-intelligence" },
-      { label: "Generative AI", href: "/courses/generative-ai" },
-      { label: "MERN Full Stack", href: "/courses/mern-full-stack" },
-      { label: "Data Science", href: "/courses/data-science" },
-      { label: "Cyber Security", href: "/courses/cyber-security" },
-      { label: "Digital Marketing", href: "/courses/digital-marketing" },
+      { label: "Programming", href: "/courses?category=programming" },
+      { label: "AI & Data", href: "/courses?category=ai-data" },
+      { label: "Digital Marketing", href: "/courses?category=digital-marketing" },
+      { label: "Cyber & Cloud", href: "/courses?category=cyber-cloud" },
     ],
   },
   {
-    heading: "Programs",
+    heading: "Company",
     links: [
-      { label: "45 Days Training", href: "/training" },
-      { label: "6 Weeks Training", href: "/training" },
-      { label: "6 Months Industrial Training", href: "/training" },
-      { label: "9 Months Expert Track", href: "/training" },
-      { label: "Internship Programme", href: "/training" },
-      { label: "After 12th Courses", href: "/courses" },
-    ],
-  },
-  {
-    heading: "Institute",
-    links: [
-      { label: "About techcadd Mohali", href: "/about" },
-      { label: "Placements", href: "/placements" },
-      { label: "All Courses", href: "/courses" },
+      { label: "About Us", href: "/about" },
+      { label: "How We Work", href: "/about#values" },
+      { label: "Our Founder", href: "/about#founder" },
       { label: "Contact Us", href: "/contact" },
+    ],
+  },
+  {
+    heading: "Support",
+    links: [
+      { label: "Placement Support", href: "/placements" },
+      { label: "Student Reviews", href: "/about#reviews" },
+      { label: "FAQs", href: "/courses#faqs" },
+      { label: "Enquire Now", href: "/contact" },
     ],
   },
 ];
 
+const legal = [
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms & Conditions", href: "/terms" },
+];
+
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-hero-950 text-white">
-      <div className="glow-blob left-[-10%] top-0 h-[420px] w-[420px] bg-hero-600/25" />
-      <div className="glow-blob bottom-[-20%] right-[-5%] h-[380px] w-[380px] bg-accent-glow/15" />
-      <div className="absolute inset-0 grid-lines opacity-60" />
+    <footer className="relative overflow-hidden border-t border-line bg-subtle">
+      {/* Oversized wordmark watermark, cropped by the footer's bottom edge. It
+          is the logo artwork rather than set text, so the lettering matches the
+          mark exactly instead of approximating its typeface. */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-[24%] select-none px-4"
+      >
+        <Image
+          src={LOGO_SRC}
+          alt=""
+          width={LOGO_W}
+          height={LOGO_H}
+          aria-hidden
+          className="h-auto w-full opacity-[0.055]"
+        />
+      </span>
 
       <div className="container-x relative py-16 lg:py-20">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-8">
+          {/* ------------------------------ Identity ----------------------------- */}
           <div>
-            <Logo variant="light" />
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-up-soft/75">
-              {site.legalName}, Mohali — training students and professionals in AI, software,
-              cyber security, marketing and CAD with live projects, working trainers and
-              genuine placement support.
+            <Logo size="xl" />
+
+            <p className="mt-6 max-w-sm text-[0.95rem] leading-relaxed text-up-muted">
+              An IT training institute in Mohali — AI, cloud, cyber security and full-stack
+              engineering, taught with live projects by people who still build.
             </p>
 
-            <div className="mt-6 space-y-3 text-sm">
-              <a
-                href={site.mapsUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-start gap-3 text-up-soft/80 transition-colors hover:text-white"
-              >
-                <Icon name="pin" size={17} className="mt-0.5 shrink-0 text-accent-glow" />
-                <span>
-                  {site.address.line1}
-                  <br />
-                  {site.address.line2}, {site.address.line3}
-                </span>
-              </a>
-              <a
-                href={site.phoneHref}
-                className="flex items-center gap-3 text-up-soft/80 transition-colors hover:text-white"
-              >
-                <Icon name="phone" size={17} className="shrink-0 text-accent-glow" />
-                {site.phone}
-              </a>
-              <a
-                href={site.emailHref}
-                className="flex items-center gap-3 text-up-soft/80 transition-colors hover:text-white"
-              >
-                <Icon name="mail" size={17} className="shrink-0 text-accent-glow" />
-                {site.email}
-              </a>
-              <p className="flex items-center gap-3 text-up-soft/80">
-                <Icon name="clock" size={17} className="shrink-0 text-accent-glow" />
-                {site.hours}
-              </p>
-            </div>
+            <a
+              href={site.emailHref}
+              className="mt-7 inline-block rounded-full bg-up-ink px-7 py-3.5 text-[0.95rem] font-bold text-white shadow-[0_16px_36px_-18px_rgba(11,26,77,0.9)] transition-all hover:-translate-y-0.5 hover:bg-hero-900"
+            >
+              {site.email}
+            </a>
+
+            <a
+              href={site.phoneHref}
+              className="mt-5 block text-[0.95rem] text-up-muted transition-colors hover:text-up-accent"
+            >
+              {site.phone}
+            </a>
           </div>
 
+          {/* -------------------------------- Links ------------------------------ */}
           {columns.map((col) => (
             <div key={col.heading}>
-              <h3 className="mb-5 text-sm font-bold uppercase tracking-[0.14em] text-accent-yellow">
+              <h3 className="font-display text-[1.15rem] font-extrabold text-up-ink">
                 {col.heading}
               </h3>
-              <ul className="space-y-2.5">
+              <ul className="mt-6 space-y-4">
                 {col.links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="group inline-flex items-center gap-1.5 text-sm text-up-soft/75 transition-colors hover:text-white"
+                      className="text-[0.95rem] text-up-muted transition-colors hover:text-up-accent"
                     >
-                      <span className="h-px w-0 bg-accent-glow transition-all duration-300 group-hover:w-3" />
                       {link.label}
                     </Link>
                   </li>
@@ -111,32 +106,37 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="mt-14 flex flex-col gap-6 border-t border-white/10 pt-8 md:flex-row md:items-center md:justify-between">
-          <p className="text-xs text-up-soft/60">
-            © {new Date().getFullYear()} {site.legalName}. All rights reserved. Built in Mohali, Punjab.
+        {/* ------------------------------- Bottom bar ----------------------------- */}
+        <div className="mt-16 border-t border-line pt-7">
+          <p className="text-[0.88rem] text-up-muted">
+            © {new Date().getFullYear()} {site.legalName}. Built in{" "}
+            <Link href="/contact" className="font-medium text-up-bright hover:underline">
+              {site.city}
+            </Link>
+            .
           </p>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
+            {legal.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-[0.85rem] text-up-muted/80 transition-colors hover:text-up-accent"
+              >
+                {item.label}
+              </Link>
+            ))}
             {site.socials.map((s) => (
               <a
                 key={s.label}
                 href={s.href}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-up-soft/80 transition-all hover:-translate-y-0.5 hover:border-accent-glow/50 hover:text-white"
+                className="text-[0.85rem] text-up-muted/80 transition-colors hover:text-up-accent"
               >
                 {s.label}
               </a>
             ))}
-          </div>
-
-          <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-up-soft/60">
-            <Link href="/privacy-policy" className="hover:text-white">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-white">
-              Terms &amp; Conditions
-            </Link>
           </div>
         </div>
       </div>

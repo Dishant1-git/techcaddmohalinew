@@ -25,6 +25,12 @@ const paths: Record<string, React.ReactNode> = {
   arrowRight: <path d="M4 12h16M14 6l6 6-6 6" />,
   arrowUpRight: <path d="M7 17 17 7M9 7h8v8" />,
   check: <path d="m4 12 5 5L20 6" />,
+  checkCircle: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="m8.4 12.2 2.5 2.5 4.7-5.2" />
+    </>
+  ),
   phone: (
     <path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4 5.2 2 2 0 0 1 6 3Z" />
   ),

@@ -511,7 +511,11 @@ export default function Navbar() {
                 : "h-[4.5rem] px-5 lg:h-[5.5rem] lg:px-6 2xl:px-10"
             }`}
           >
-            <Logo variant={scrolled ? "dark" : "light"} size={scrolled ? "sm" : "lg"} />
+            <Logo
+              variant={scrolled ? "dark" : "light"}
+              size={scrolled ? "sm" : "lg"}
+              priority
+            />
 
             {/* ------------------------------ Desktop nav ----------------------------- */}
             <nav
