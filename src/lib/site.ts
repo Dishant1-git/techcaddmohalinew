@@ -71,8 +71,10 @@ export type NavFeature = {
   kicker?: string;
   /** Muted text beside the kicker. */
   caption?: string;
-  /** Gradient used for the card's image area. */
+  /** Gradient used for the card's image area (fallback when no `photo`). */
   art?: string;
+  /** Real photo for the card's image area, takes priority over `art`. */
+  photo?: string;
 };
 
 /**
@@ -123,32 +125,34 @@ export const navItems: NavItem[] = [
     href: "/about",
     panel: "feature",
     links: [
-      { label: "About techcadd Mohali", href: "/about" },
-      { label: "Why choose us", href: "/about#why" },
-      { label: "How we work", href: "/about#values" },
-      { label: "The Mohali campus", href: "/about#campus" },
-      { label: "Founder", href: "/about#founder" },
+      { label: "About techcadd", href: "/about" },
+      { label: "Mission and Vision", href: "/mission-vision" },
+      { label: "Accreditations & Awards", href: "/accreditations-awards" },
+      { label: "Founder", href: "/founder" },
     ],
     features: [
       {
-        title: "About techcadd Mohali",
+        title: "About techcadd",
         href: "/about",
         kicker: "Story",
         caption: "Since 2016",
+        photo: "/gallery/certification-ceremony.png",
         art: "from-hero-800 via-hero-600 to-hero-glow",
       },
       {
-        title: "How we work",
-        href: "/about#values",
+        title: "Mission and Vision",
+        href: "/mission-vision",
         kicker: "Purpose",
-        caption: "Four rules",
+        caption: "Our direction",
+        photo: "/gallery/workshop-seminars-01.png",
         art: "from-hero-900 via-brand-700 to-accent-500",
       },
       {
         title: "Our Founder",
-        href: "/about#founder",
+        href: "/founder",
         kicker: "Profile",
         caption: "Gourav Gupta",
+        photo: "/founder/gouravsir.jpg",
         art: "from-brand-900 via-hero-600 to-accent-400",
       },
     ],
@@ -159,7 +163,7 @@ export const navItems: NavItem[] = [
     },
   },
 
-  { label: "Founder", href: "/about#founder" },
+  { label: "Founder", href: "/founder" },
 
   {
     label: "AI",
@@ -351,7 +355,7 @@ export const navItems: NavItem[] = [
       { label: "Events", href: "/events" },
       { label: "Gallery", href: "/gallery" },
       { label: "FAQ", href: "/faq" },
-      { label: "Reviews", href: "/#reviews" },
+      { label: "Reviews", href: "/reviews" },
       { label: "College Partnerships", href: "/college-partnerships" },
     ],
   },

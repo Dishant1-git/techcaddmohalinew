@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -286,9 +287,19 @@ function PanelBody({ item }: { item: NavItem }) {
               {item.features!.map((f) => (
                 <Link key={f.title} href={f.href} className="group/f block">
                   <span
-                    className={`relative block h-[8.5rem] overflow-hidden rounded-2xl bg-gradient-to-br ${f.art}`}
+                    className={`relative block h-[8.5rem] overflow-hidden rounded-2xl ${f.photo ? "bg-hero-950" : `bg-gradient-to-br ${f.art}`}`}
                   >
-                    <span className="absolute inset-0 grid-lines opacity-70" />
+                    {f.photo ? (
+                      <Image
+                        src={f.photo}
+                        alt=""
+                        fill
+                        sizes="220px"
+                        className="object-cover transition-transform duration-500 group-hover/f:scale-105"
+                      />
+                    ) : (
+                      <span className="absolute inset-0 grid-lines opacity-70" />
+                    )}
                     <span className="absolute inset-0 bg-gradient-to-t from-hero-950/45 to-transparent" />
                   </span>
                   <span className="mt-3 block font-display text-[1.05rem] font-bold text-up-ink transition-colors group-hover/f:text-up-accent">
