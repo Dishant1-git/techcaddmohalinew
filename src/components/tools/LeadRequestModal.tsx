@@ -35,13 +35,23 @@ export default function LeadRequestModal({
       const res = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, course, message: `Training Matcher: ${title}` }),
+        body: JSON.stringify({
+          ...data,
+          course,
+          message: `Training Matcher: ${title}`,
+          source: "Training Matcher tool",
+        }),
       });
-      if (!res.ok) throw new Error("Request failed");
+      const payload = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || !payload.ok) throw new Error(payload.error || "Request failed");
       setStatus("sent");
-    } catch {
+    } catch (err) {
       setStatus("error");
-      setError("Something went wrong. Please call or WhatsApp us instead.");
+      setError(
+        err instanceof Error && err.message !== "Request failed"
+          ? err.message
+          : "Something went wrong. Please call or WhatsApp us instead.",
+      );
     }
   }
 

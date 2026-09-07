@@ -27,14 +27,23 @@ export default function QuickCallbackBar() {
       const res = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: "Career Track tool visitor", phone }),
+        body: JSON.stringify({
+          name: "Career Track tool visitor",
+          phone,
+          source: "Career Track tool — callback bar",
+        }),
       });
-      if (!res.ok) throw new Error("Request failed");
+      const payload = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || !payload.ok) throw new Error(payload.error || "Request failed");
       setStatus("sent");
       setPhone("");
-    } catch {
+    } catch (err) {
       setStatus("error");
-      setError("Something went wrong. Please call or WhatsApp us instead.");
+      setError(
+        err instanceof Error && err.message !== "Request failed"
+          ? err.message
+          : "Something went wrong. Please call or WhatsApp us instead.",
+      );
     }
   }
 

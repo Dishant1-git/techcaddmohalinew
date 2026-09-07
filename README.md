@@ -17,6 +17,75 @@ npm start        # serve the production build
 npx eslint src   # lint
 ```
 
+## Database (MySQL)
+
+Every form on the site writes one row into a single `enquiries` table.
+
+### One-time setup
+
+1. **Create `.env.local`** at the repo root (copy `.env.example`) and fill in the
+   same credentials you use in MySQL Workbench:
+
+   ```
+   MYSQL_HOST=localhost
+   MYSQL_PORT=3306
+   MYSQL_USER=root
+   MYSQL_PASSWORD=your-password
+   MYSQL_DATABASE=techcadd_mohali
+   CAPTCHA_SECRET=any-long-random-string
+   ```
+
+2. **Create the database and table** — either run
+
+   ```bash
+   npm run db:setup
+   ```
+
+   or open `db/schema.sql` in MySQL Workbench and execute it. Both do the same
+   thing and both are safe to re-run.
+
+3. **Start the site** with `npm run dev` and submit any form.
+
+### Checking it works
+
+```bash
+npm run dev          # terminal 1
+npm run forms:test   # terminal 2 — posts one enquiry per form, reads the rows back
+```
+
+`forms:test` deletes its own test rows afterwards; pass `--keep` to leave them.
+
+In MySQL Workbench:
+
+```sql
+SELECT * FROM techcadd_mohali.enquiries ORDER BY id DESC;
+```
+
+### Where the data goes
+
+| Form | Endpoint | `form_type` | `source` |
+| --- | --- | --- | --- |
+| Contact page form | `/api/enquiry` | `enquiry` | Contact page form |
+| Enquiry modal (site-wide) | `/api/enquiry` | `enquiry` | Enquiry modal |
+| Home CTA callback bar | `/api/enquiry` | `enquiry` | Home CTA — callback request |
+| Career Track tool bar | `/api/enquiry` | `enquiry` | Career Track tool — callback bar |
+| Training Matcher modal | `/api/enquiry` | `enquiry` | Training Matcher tool |
+| Course page enquiry forms | `/api/course-enquiry` | `course-enquiry` | course-page |
+
+Both endpoints validate first (phone format, email format, honeypot, and a signed
+captcha on the course forms), then insert through `src/lib/leads.ts`. If MySQL is
+unreachable the route answers 503, the form shows "please call or WhatsApp us
+instead", and the full payload is written to the server log so the lead can still
+be recovered.
+
+Columns worth knowing: `status` (`new` / `contacted` / `enrolled` / `closed`) and
+`notes` are there for the front desk to update as they work through the list;
+`page_url`, `referrer`, `ip_address` and `user_agent` are captured automatically.
+
+The table definition lives in three places that must stay in step:
+`db/schema.sql` (Workbench), `src/lib/db.ts` (created on demand by the app) and
+`scripts/db-setup.mjs`.
+
 ## Structure
 
 ```
@@ -79,9 +148,12 @@ course detail routes and the navigation mega-menu.
 
 ## Before going live
 
-- **Enquiry form** — `src/app/api/enquiry/route.ts` validates the payload and logs it
-  to the server console. Wire up an email/CRM provider at the `TODO` to actually
-  deliver enquiries.
+- **Enquiry storage** — forms write to MySQL (see **Database** above). Set the
+  `MYSQL_*` variables on the production host as well, and add an email/CRM
+  notification in `src/lib/leads.ts` if the desk should be alerted rather than
+  polling the table.
+- **`CAPTCHA_SECRET`** must be set in production, or the course-page captcha falls
+  back to a known development key.
 - **Testimonials** are written as representative examples, not verified quotes.
   Replace them with real, attributable reviews before publishing.
 - **Stats** (12,450+ students, 450+ partners, 98% placement, 4.9★/556 reviews) come
