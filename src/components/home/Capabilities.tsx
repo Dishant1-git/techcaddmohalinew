@@ -273,33 +273,40 @@ export default function Capabilities() {
       <section
         ref={root}
         id="capabilities"
-        className="relative isolate flex min-h-screen items-center overflow-hidden bg-hero-950 py-20 text-white lg:py-0"
+        className="relative isolate flex min-h-screen items-center overflow-hidden bg-gradient-to-b from-white via-subtle to-white py-20 lg:py-0"
       >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_-10%,rgba(28,83,209,0.35),transparent_65%)]" />
-      <div className="pointer-events-none absolute inset-0 grid-lines opacity-50" />
+      <div className="pointer-events-none absolute inset-0">
+        <div className="glow-blob left-[4%] top-[14%] h-[24rem] w-[24rem] bg-brand-300/45" />
+        <div className="glow-blob right-[6%] bottom-[10%] h-[22rem] w-[22rem] bg-accent-400/35" />
+      </div>
+      <div className="pointer-events-none absolute inset-0 grid-lines-light opacity-60" />
 
       <div className="container-x relative w-full">
         {/* ------------------------------- Header ------------------------------ */}
         <div className="text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-4 py-1.5 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-up-soft/80 backdrop-blur-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent-glow shadow-[0_0_10px_2px_rgba(0,212,255,0.7)]" />
+          <span className="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-up-accent">
+            <span className="h-1.5 w-1.5 rounded-full bg-up-accent" />
             Capabilities
           </span>
 
-          <h2 className="mx-auto mt-5 max-w-3xl font-display text-[1.8rem] font-extrabold leading-[1.12] tracking-tight sm:text-4xl lg:text-[2.6rem]">
+          <h2 className="mx-auto mt-5 max-w-3xl font-display text-[1.8rem] font-extrabold leading-[1.12] tracking-tight text-up-ink sm:text-4xl lg:text-[2.6rem]">
             Best-in-class technology,
             <br />
-            <span className="text-gradient">taught the way it is built</span>
+            <span className="text-up-accent">taught the way it is built</span>
           </h2>
 
-          <p className="mx-auto mt-4 max-w-2xl text-[0.88rem] text-up-soft/60">
+          <p className="mx-auto mt-4 max-w-2xl text-[0.88rem] text-up-muted">
             Six tracks, one campus — the tools we train you on are the ones the industry
             actually ships with.
           </p>
         </div>
 
-        {/* ------------------------------ Two panels ---------------------------- */}
-        <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,20rem)_1fr]">
+        {/* ------------------------------ Two panels ----------------------------
+            The rail and the flow board keep their dark treatment — the pill
+            tiers and connectors are built for it — so they sit together on a
+            dark stage inside the now-light section rather than being recoloured
+            piece by piece. */}
+        <div className="mt-10 grid gap-5 rounded-[2rem] bg-hero-950 p-5 shadow-[0_40px_90px_-40px_rgba(11,26,77,0.75)] lg:grid-cols-[minmax(0,20rem)_1fr]">
           {/* Track rail */}
           <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-3 backdrop-blur-sm">
             {capabilities.map((cap, i) => {

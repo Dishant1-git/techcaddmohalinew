@@ -12,12 +12,17 @@ const included = [
 
 export default function WhyUs() {
   return (
-    <section id="why" className="relative scroll-mt-32 overflow-hidden py-24 lg:py-32">
-      <div className="absolute right-[-10%] top-1/4 h-[420px] w-[420px] rounded-full bg-brand-100/50 blur-[100px]" />
+    <section
+      id="why"
+      className="relative scroll-mt-32 overflow-hidden bg-hero-950 py-24 text-white lg:py-32"
+    >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_75%_25%,rgba(28,83,209,0.35),transparent_68%)]" />
+      <div className="pointer-events-none absolute inset-0 grid-lines opacity-40" />
 
       <div className="container-x relative">
         <SectionHeading
           align="center"
+          tone="dark"
           eyebrow="Why techcadd Mohali"
           title="Four things that change the outcome"
           subtitle="Any institute can list a syllabus. These are the parts that decide whether you finish with a job."
@@ -27,9 +32,9 @@ export default function WhyUs() {
           {whyUs.map((w) => (
             <div
               key={w.title}
-              className="card-hover group relative overflow-hidden rounded-3xl border border-line bg-white p-8 lg:p-10"
+              className="card-hover glass-dark glass-sheen group relative overflow-hidden rounded-3xl p-8 lg:p-10"
             >
-              <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-brand-50 transition-transform duration-700 group-hover:scale-[2.2]" />
+              <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-hero-glow/20 blur-xl transition-transform duration-700 group-hover:scale-[2.2]" />
 
               <div className="relative flex items-start gap-6">
                 <div className="w-28 shrink-0 rounded-2xl bg-gradient-to-br from-hero-600 to-hero-glow px-3 py-3.5 text-center text-white shadow-lg shadow-hero-600/25">
@@ -39,8 +44,8 @@ export default function WhyUs() {
                   </p>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-up-ink">{w.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-up-muted">{w.body}</p>
+                  <h3 className="text-xl font-bold text-white">{w.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-up-soft/70">{w.body}</p>
                 </div>
               </div>
             </div>
@@ -50,7 +55,7 @@ export default function WhyUs() {
         {/* Included with every course */}
         <div
           data-anim="up"
-          className="mt-8 overflow-hidden rounded-3xl border border-line bg-hero-950 p-8 lg:p-10"
+          className="glass-dark relative mt-8 overflow-hidden rounded-3xl p-8 lg:p-10"
         >
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div>

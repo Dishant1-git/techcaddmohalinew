@@ -196,6 +196,62 @@
     display: none;
   }
 
+  /* ---- Liquid glass -------------------------------------------------------
+     Two grounds, same idea: a translucent fill, a bright specular rim along the
+     top edge and a faint one along the bottom, over a blurred, saturated
+     backdrop. The fill alone carries the effect, so a panel still reads as
+     frosted where backdrop-filter is unsupported — or where a transformed
+     ancestor neuters it, which happens inside the Categories rail.
+
+     Glass only shows if there is something behind it to refract, which is what
+     `.glass-field` is for: a light section needs colour washed under it or the
+     panels read as flat grey. */
+  .glass {
+    border: 1px solid rgb(255 255 255 / 0.7);
+    background: rgb(255 255 255 / 0.5);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.95),
+      inset 0 -1px 0 rgb(255 255 255 / 0.4),
+      0 28px 60px -28px rgb(11 26 77 / 0.4);
+  }
+
+  .glass-dark {
+    border: 1px solid rgb(255 255 255 / 0.14);
+    background: rgb(255 255 255 / 0.07);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.18),
+      inset 0 -1px 0 rgb(255 255 255 / 0.05),
+      0 28px 60px -28px rgb(0 0 0 / 0.8);
+  }
+
+  /* Sheen down the top face of a glass panel. */
+  .glass-sheen::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 66%;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      rgb(255 255 255 / 0.75),
+      rgb(255 255 255 / 0.22),
+      transparent
+    );
+  }
+
+  .glass-dark.glass-sheen::before {
+    background: linear-gradient(
+      to bottom,
+      rgb(255 255 255 / 0.12),
+      rgb(255 255 255 / 0.03),
+      transparent
+    );
+  }
+
   .card-hover {
     transition:
       transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),

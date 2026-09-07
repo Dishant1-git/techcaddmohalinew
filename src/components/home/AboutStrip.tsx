@@ -15,11 +15,13 @@ export default function AboutStrip() {
   return (
     <section
       id="vision"
-      className="relative scroll-mt-32 overflow-hidden bg-hero-950 py-24 text-white lg:py-32"
+      className="relative scroll-mt-32 overflow-hidden bg-gradient-to-b from-white via-subtle to-white py-24 lg:py-32"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_78%_45%,rgba(28,83,209,0.35),transparent_68%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_45%_40%_at_10%_15%,rgba(0,212,255,0.14),transparent_70%)]" />
-      <div className="pointer-events-none absolute inset-0 grid-lines opacity-40" />
+      <div className="pointer-events-none absolute inset-0">
+        <div className="glow-blob left-[2%] top-[12%] h-[24rem] w-[24rem] bg-brand-300/45" />
+        <div className="glow-blob right-[10%] bottom-[8%] h-[22rem] w-[22rem] bg-accent-400/35" />
+      </div>
+      <div className="pointer-events-none absolute inset-0 grid-lines-light opacity-60" />
 
       <div className="container-x relative grid items-center gap-14 lg:grid-cols-[1fr_minmax(0,30rem)] lg:gap-20">
         {/* ------------------------------- Copy ------------------------------- */}
@@ -27,16 +29,16 @@ export default function AboutStrip() {
           <div className="space-y-14 lg:space-y-16">
             {pillars.map((pillar, i) => (
               <div key={pillar.title} data-anim="up" data-anim-delay={`${i * 0.12}`}>
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-4 py-1.5 text-[0.65rem] font-bold uppercase tracking-[0.18em] text-up-soft/80 backdrop-blur-sm">
-                  <span className="h-1.5 w-1.5 rounded-full bg-accent-glow shadow-[0_0_10px_2px_rgba(0,212,255,0.7)]" />
+                <span className="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[0.65rem] font-bold uppercase tracking-[0.18em] text-up-accent">
+                  <span className="h-1.5 w-1.5 rounded-full bg-up-accent" />
                   {pillar.eyebrow}
                 </span>
 
-                <h2 className="mt-5 font-display text-[2.1rem] font-extrabold leading-[1.08] tracking-tight sm:text-[2.6rem]">
+                <h2 className="mt-5 font-display text-[2.1rem] font-extrabold leading-[1.08] tracking-tight text-up-ink sm:text-[2.6rem]">
                   {pillar.title}
                 </h2>
 
-                <p className="mt-4 max-w-xl text-[0.98rem] leading-relaxed text-up-soft/65">
+                <p className="mt-4 max-w-xl text-[0.98rem] leading-relaxed text-up-muted">
                   {pillar.body}
                 </p>
               </div>
@@ -46,7 +48,7 @@ export default function AboutStrip() {
           <Link
             data-anim="fade"
             href="/about"
-            className="group mt-12 inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:border-white/45 hover:bg-white/5"
+            className="group mt-12 inline-flex items-center gap-2 rounded-full bg-up-ink px-7 py-3.5 text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_18px_40px_-20px_rgba(11,26,77,0.9)] transition-all hover:-translate-y-0.5 hover:bg-hero-900"
           >
             More about the institute
             <Icon
@@ -70,7 +72,7 @@ export default function AboutStrip() {
                 // Smaller tiles sit over the tall one, as in the reference.
                 zIndex: i === 0 ? 10 : 20,
               }}
-              className="absolute overflow-hidden rounded-[1.5rem] border border-white/12 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85)]"
+              className="absolute overflow-hidden rounded-[1.5rem] border-2 border-white/80 shadow-[0_30px_70px_-30px_rgba(11,26,77,0.6)]"
             >
               {tile.photo ? (
                 <Image
@@ -103,7 +105,7 @@ export default function AboutStrip() {
           {collage.map((tile) => (
             <figure
               key={tile.key}
-              className={`relative overflow-hidden rounded-2xl border border-white/12 ${
+              className={`relative overflow-hidden rounded-2xl border-2 border-white/80 shadow-[0_20px_50px_-24px_rgba(11,26,77,0.55)] ${
                 tile.key === "campus" ? "col-span-2 aspect-[16/10]" : "aspect-square"
               }`}
             >

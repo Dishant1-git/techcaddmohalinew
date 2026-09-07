@@ -15,19 +15,22 @@ import CtaBanner from "@/components/home/CtaBanner";
 
 export default function Home() {
   return (
+    // Section order mirrors techcaddjalandhar.com's home page: AI first, then
+    // the institute, how long it takes, how it works, what you can study, the
+    // headline courses, proof, the stack, capabilities, questions, and the ask.
     <>
       <Hero />
       <StatsBar />
-      <Categories />
       <AiSpotlight />
-      <Capabilities />
       <AboutStrip />
       <Durations />
       <Process />
+      <Categories />
       <FeaturedCourses />
       <WhyUs />
       <Testimonials />
       <TechOrbit />
+      <Capabilities />
       <Faq />
       <CtaBanner />
     </>

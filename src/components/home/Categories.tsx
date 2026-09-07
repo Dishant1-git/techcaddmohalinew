@@ -128,18 +128,20 @@ export default function Categories() {
     // one screen and the heading + rail are laid out inside that budget.
     <section
       ref={root}
-      className="relative flex flex-col overflow-hidden py-24 lg:h-screen lg:min-h-[44rem] lg:justify-center lg:py-0"
+      className="relative flex flex-col overflow-hidden bg-hero-950 py-24 text-white lg:h-screen lg:min-h-[44rem] lg:justify-center lg:py-0"
     >
-      <div className="absolute inset-0 grid-lines-light opacity-70" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_15%,rgba(28,83,209,0.35),transparent_68%)]" />
+      <div className="absolute inset-0 grid-lines opacity-40" />
 
       <div className="container-x relative shrink-0">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
+            tone="dark"
             eyebrow="What you can learn"
             title={
               <>
                 Six fields, one campus in{" "}
-                <span className="text-up-accent">Mohali</span>
+                <span className="text-accent-glow">Mohali</span>
               </>
             }
             subtitle="Every track is taught by working professionals, built around live projects, and backed by the same placement cell."
@@ -147,7 +149,7 @@ export default function Categories() {
           <Link
             data-anim="fade"
             href="/courses"
-            className="group inline-flex shrink-0 items-center gap-2 rounded-full border border-up-line px-6 py-3 text-sm font-semibold text-up-ink transition-all hover:-translate-y-0.5 hover:border-up-accent hover:text-up-accent"
+            className="group inline-flex shrink-0 items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:border-white/45 hover:bg-white/5"
           >
             Browse all courses
             <Icon
@@ -180,9 +182,13 @@ export default function Categories() {
                   an inline GSAP transform on any of them would otherwise win
                   over the others. */}
               <div className="rail-tilt flex w-full">
-                <div className="card-hover relative flex w-full flex-col overflow-hidden rounded-3xl border border-line bg-white p-8">
+                {/* glass-dark, not glass: the rail sits on the dark ground, and
+                    its translucent fill carries the frost on its own — the
+                    ancestor transforms above would otherwise leave a
+                    backdrop-filter with nothing to sample. */}
+                <div className="card-hover glass-dark glass-sheen relative flex w-full flex-col overflow-hidden rounded-3xl p-8">
                   <div
-                    className={`absolute -right-16 -top-16 h-40 w-40 rounded-full bg-gradient-to-br ${cat.accent} opacity-10 blur-2xl transition-all duration-500 group-hover:scale-150 group-hover:opacity-25`}
+                    className={`absolute -right-16 -top-16 h-40 w-40 rounded-full bg-gradient-to-br ${cat.accent} opacity-30 blur-2xl transition-all duration-500 group-hover:scale-150 group-hover:opacity-55`}
                   />
 
                   <span
@@ -191,14 +197,14 @@ export default function Categories() {
                     <Icon name={cat.icon} size={26} strokeWidth={1.9} />
                   </span>
 
-                  <h3 className="relative mt-6 text-xl font-bold text-up-ink transition-colors group-hover:text-up-accent">
+                  <h3 className="relative mt-6 text-xl font-bold text-white transition-colors group-hover:text-accent-glow">
                     {cat.title}
                   </h3>
-                  <p className="relative mt-3 text-sm leading-relaxed text-up-muted">
+                  <p className="relative mt-3 text-sm leading-relaxed text-up-soft/70">
                     {cat.blurb}
                   </p>
 
-                  <span className="relative mt-auto pt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-up-accent">
+                  <span className="relative mt-auto pt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-glow">
                     Explore track
                     <Icon
                       name="arrowRight"

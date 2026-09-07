@@ -10,12 +10,14 @@ export default function StatsBar() {
         <div
           data-anim="up"
           data-anim-stagger
-          className="grid overflow-hidden rounded-3xl border border-line bg-white shadow-[0_30px_80px_-40px_rgba(11,26,77,0.4)] sm:grid-cols-2 lg:grid-cols-4"
+          // Glass here has the dark hero behind its top half, which is exactly
+          // what makes the frost read.
+          className="glass glass-sheen relative grid overflow-hidden rounded-3xl sm:grid-cols-2 lg:grid-cols-4"
         >
           {stats.map((s, i) => (
             <div
               key={s.label}
-              className="group relative border-line px-7 py-8 transition-colors hover:bg-subtle sm:[&:nth-child(odd)]:border-r lg:border-r lg:last:border-r-0"
+              className="group relative border-white/50 px-7 py-8 transition-colors hover:bg-white/40 sm:[&:nth-child(odd)]:border-r lg:border-r lg:last:border-r-0"
             >
               <span className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-hero-600 to-accent-glow transition-transform duration-500 group-hover:scale-x-100" />
               <span className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-up-accent transition-colors group-hover:bg-up-accent group-hover:text-white">
