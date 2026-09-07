@@ -18,153 +18,35 @@ const VH_PER_TRACK = 0.5;
  */
 const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
-/* -------------------------------------------------------------------------- *
- * Flow canvas
- *
- * Eight fixed slots on a 16:10 board. Slots never move — only their contents
- * swap as the scroll advances the track, so the logos and names change in place
- * rather than the whole arrangement reshuffling. Pills are placed by their
- * centre, which makes the connector anchors exact.
- * -------------------------------------------------------------------------- */
-
-const VB_W = 320;
-const VB_H = 200;
-const vx = (x: number) => (x / 100) * VB_W;
-const vy = (y: number) => (y / 100) * VB_H;
-
-/** Pill footprint. Half-extents are what connectors anchor to. */
-const PILL_W = 28;
-const HALF_W = vx(PILL_W / 2);
-const HALF_H = 13;
-
-type Tier = "bright" | "mid" | "faint";
-
-/**
- * Three loose columns at 15/48/83% with the rows jittered. At 28% pill width
- * that leaves a real gap between neighbours, which the connectors need — pack
- * them any tighter and the stub between two pills collapses to a few pixels.
- */
-const SLOTS: { x: number; y: number; tier: Tier; mirror?: boolean }[] = [
-  { x: 50, y: 50, tier: "bright" }, // 0 — the focused pill, dead centre
-  { x: 17, y: 50, tier: "mid", mirror: true }, // 1 — logo on the right
-  { x: 83, y: 30, tier: "mid" }, // 2
-  { x: 46, y: 14, tier: "mid" }, // 3
-  { x: 15, y: 14, tier: "faint" }, // 4
-  { x: 48, y: 86, tier: "faint" }, // 5
-  { x: 80, y: 72, tier: "faint" }, // 6
-  { x: 88, y: -6, tier: "faint" }, // 7 — clipped by the board's top edge
-];
-
-/** [from, to, shape] — "line" is the one solid segment, the rest are dashed. */
-const LINKS: [number, number, "line" | "h" | "v"][] = [
-  [1, 0, "line"],
-  [4, 0, "h"],
-  [0, 3, "v"],
-  [0, 5, "v"],
-  [0, 2, "h"],
-  [2, 7, "v"],
-  [2, 6, "v"],
-];
-
-function linkPath([a, b, shape]: [number, number, "line" | "h" | "v"]) {
-  const A = SLOTS[a];
-  const B = SLOTS[b];
-  const ax = vx(A.x);
-  const ay = vy(A.y);
-  const bx = vx(B.x);
-  const by = vy(B.y);
-
-  if (shape === "h" || shape === "line") {
-    const dir = bx > ax ? 1 : -1;
-    const x1 = ax + dir * HALF_W;
-    const x2 = bx - dir * HALF_W;
-    if (shape === "line") return `M${x1} ${ay} H${x2}`;
-    // A floor on the control offset: neighbouring columns sit close, and a
-    // midpoint-based control would squash the S into a near-vertical kink.
-    const bow = Math.max(30, Math.abs(x2 - x1) * 0.6);
-    return `M${x1} ${ay} C ${x1 + dir * bow} ${ay}, ${x2 - dir * bow} ${by}, ${x2} ${by}`;
-  }
-
-  const dir = by > ay ? 1 : -1;
-  const y1 = ay + dir * HALF_H;
-  const y2 = by - dir * HALF_H;
-  const bow = Math.max(24, Math.abs(y2 - y1) * 0.6);
-  return `M${ax} ${y1} C ${ax} ${y1 + dir * bow}, ${bx} ${y2 - dir * bow}, ${bx} ${y2}`;
-}
-
-const TIER: Record<Tier, string> = {
-  bright:
-    "bg-white shadow-[0_0_0_1px_rgba(255,255,255,0.7),0_22px_55px_-18px_rgba(0,212,255,0.75)]",
-  mid: "bg-white/[0.13] border border-white/20 backdrop-blur-md",
-  faint: "bg-white/[0.06] border border-white/10 backdrop-blur-sm",
-};
-
-const TIER_TITLE: Record<Tier, string> = {
-  bright: "text-up-ink",
-  mid: "text-white/90",
-  faint: "text-white/45",
-};
-
-const TIER_ROLE: Record<Tier, string> = {
-  bright: "text-up-muted",
-  mid: "text-up-soft/60",
-  faint: "text-up-soft/30",
-};
+const two = (n: number) => String(n + 1).padStart(2, "0");
 
 function ToolLogo({ tool }: { tool: Tool }) {
-  if (tool.mark) return <TechMark name={tool.mark} size={22} />;
-  if (tool.emoji) return <span className="text-[1.15rem] leading-none">{tool.emoji}</span>;
+  if (tool.mark) return <TechMark name={tool.mark} size={24} />;
+  if (tool.emoji) return <span className="text-[1.25rem] leading-none">{tool.emoji}</span>;
   return (
     <span
       style={{ color: tool.color }}
-      className="font-display text-[0.72rem] font-extrabold leading-none tracking-tight"
+      className="font-display text-[0.78rem] font-extrabold leading-none tracking-tight"
     >
       {tool.short}
     </span>
   );
 }
 
-function Pill({
-  tool,
-  tier = "bright",
-  mirror,
-}: {
-  tool: Tool;
-  tier?: Tier;
-  mirror?: boolean;
-}) {
-  const chip = (
-    <span
-      className={`grid h-9 w-9 shrink-0 place-items-center rounded-full ${
-        tier === "bright" ? "bg-subtle" : "bg-white/90"
-      } ${tier === "faint" ? "opacity-45" : ""}`}
-    >
-      <ToolLogo tool={tool} />
-    </span>
-  );
-
-  const text = (
-    <span className={`flex min-w-0 flex-col leading-tight ${mirror ? "text-right" : ""}`}>
-      <span className={`truncate text-[0.82rem] font-bold ${TIER_TITLE[tier]}`}>{tool.name}</span>
-      <span className={`truncate text-[0.68rem] ${TIER_ROLE[tier]}`}>{tool.role}</span>
-    </span>
-  );
-
+/**
+ * One tool. Every card is identical in weight — a capability grid exists to be
+ * read, so nothing here is faded back for decoration.
+ */
+function ToolCard({ tool }: { tool: Tool }) {
   return (
-    <div
-      className={`cap-tool flex items-center gap-3 rounded-full px-3 py-2.5 transition-transform duration-300 hover:-translate-y-0.5 ${TIER[tier]}`}
-    >
-      {mirror ? (
-        <>
-          {text}
-          {chip}
-        </>
-      ) : (
-        <>
-          {chip}
-          {text}
-        </>
-      )}
+    <div className="cap-tool glass group/tool relative flex items-center gap-3.5 rounded-2xl p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:!border-up-accent/40">
+      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white shadow-[0_6px_16px_-8px_rgba(11,26,77,0.45)]">
+        <ToolLogo tool={tool} />
+      </span>
+      <span className="flex min-w-0 flex-col leading-tight">
+        <span className="truncate text-[0.85rem] font-bold text-up-ink">{tool.name}</span>
+        <span className="truncate text-[0.7rem] text-up-muted">{tool.role}</span>
+      </span>
     </div>
   );
 }
@@ -180,15 +62,14 @@ export default function Capabilities() {
 
   /* ---- Scroll drives the track: pin the section, step through the six ----
    * useIsoLayoutEffect, not useEffect: ScrollTrigger's `pin` re-parents `root`
-   * under a synthetic pin-spacer div. React must unwrap that (via st.kill()
-   * in cleanup) before its mutation phase removes `root` from the tree, or
-   * it calls removeChild on a node that is no longer where React thinks it
-   * is. Passive-effect cleanup runs too late for that; layout-effect cleanup
-   * runs in the same synchronous pass as the removal. */
+   * under a synthetic pin-spacer div. React must unwrap that before its
+   * mutation phase removes `root` from the tree, or it calls removeChild on a
+   * node that is no longer where React thinks it is. Passive-effect cleanup
+   * runs too late; layout-effect cleanup runs in the same synchronous pass. */
   useIsoLayoutEffect(() => {
     if (prefersReducedMotion()) return;
 
-    // Pinning only makes sense where the rail and board sit side by side. Below
+    // Pinning only makes sense where the rail and grid sit side by side. Below
     // lg the section scrolls normally and the rail works as plain tabs.
     const mm = gsap.matchMedia();
     mm.add("(min-width: 1024px)", () => {
@@ -221,25 +102,24 @@ export default function Capabilities() {
     return () => mm.revert();
   }, []);
 
-  /* ---- Swap the board's contents whenever the track changes ---- */
+  /* ---- Swap the grid's contents whenever the track changes ---- */
   useEffect(() => {
     if (prefersReducedMotion() || !board.current) return;
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ".cap-desc",
-        { y: 10, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" },
+        ".cap-head",
+        { y: 12, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" },
       );
       gsap.fromTo(
         ".cap-tool",
-        { y: 12, opacity: 0, scale: 0.94 },
+        { y: 14, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          scale: 1,
           duration: 0.5,
           ease: "power3.out",
-          stagger: { each: 0.045, from: "center" },
+          stagger: { each: 0.04, from: "start" },
         },
       );
     }, board);
@@ -275,156 +155,127 @@ export default function Capabilities() {
         id="capabilities"
         className="relative isolate flex min-h-screen items-center overflow-hidden bg-gradient-to-b from-white via-subtle to-white py-20 lg:py-0"
       >
-      <div className="pointer-events-none absolute inset-0">
-        <div className="glow-blob left-[4%] top-[14%] h-[24rem] w-[24rem] bg-brand-300/45" />
-        <div className="glow-blob right-[6%] bottom-[10%] h-[22rem] w-[22rem] bg-accent-400/35" />
-      </div>
-      <div className="pointer-events-none absolute inset-0 grid-lines-light opacity-60" />
-
-      <div className="container-x relative w-full">
-        {/* ------------------------------- Header ------------------------------ */}
-        <div className="text-center">
-          <span className="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-up-accent">
-            <span className="h-1.5 w-1.5 rounded-full bg-up-accent" />
-            Capabilities
-          </span>
-
-          <h2 className="mx-auto mt-5 max-w-3xl font-display text-[1.8rem] font-extrabold leading-[1.12] tracking-tight text-up-ink sm:text-4xl lg:text-[2.6rem]">
-            Best-in-class technology,
-            <br />
-            <span className="text-up-accent">taught the way it is built</span>
-          </h2>
-
-          <p className="mx-auto mt-4 max-w-2xl text-[0.88rem] text-up-muted">
-            Six tracks, one campus — the tools we train you on are the ones the industry
-            actually ships with.
-          </p>
+        <div className="pointer-events-none absolute inset-0">
+          <div className="glow-blob left-[4%] top-[12%] h-[24rem] w-[24rem] bg-brand-300/45" />
+          <div className="glow-blob right-[6%] bottom-[8%] h-[22rem] w-[22rem] bg-accent-400/35" />
         </div>
+        <div className="pointer-events-none absolute inset-0 grid-lines-light opacity-60" />
 
-        {/* ------------------------------ Two panels ----------------------------
-            The rail and the flow board keep their dark treatment — the pill
-            tiers and connectors are built for it — so they sit together on a
-            dark stage inside the now-light section rather than being recoloured
-            piece by piece. */}
-        <div className="mt-10 grid gap-5 rounded-[2rem] bg-hero-950 p-5 shadow-[0_40px_90px_-40px_rgba(11,26,77,0.75)] lg:grid-cols-[minmax(0,20rem)_1fr]">
-          {/* Track rail */}
-          <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-3 backdrop-blur-sm">
-            {capabilities.map((cap, i) => {
-              const on = i === active;
-              return (
-                <button
-                  key={cap.key}
-                  onClick={() => goTo(i)}
-                  aria-current={on || undefined}
-                  className={`relative block w-full overflow-hidden rounded-2xl px-5 py-[0.9rem] text-left transition-all duration-400 ${
-                    on
-                      ? "bg-gradient-to-r from-hero-600 to-hero-glow shadow-[0_18px_40px_-20px_rgba(47,125,255,0.9)]"
-                      : "hover:bg-white/[0.05]"
-                  }`}
-                >
-                  <span className="flex items-center justify-between gap-3">
-                    <span
-                      className={`text-[0.95rem] font-bold transition-colors ${
-                        on ? "text-white" : "text-up-soft/55"
-                      }`}
-                    >
-                      {cap.label}
-                    </span>
-                    <Icon
-                      name="arrowRight"
-                      size={16}
-                      className={`shrink-0 transition-all duration-300 ${
-                        on ? "text-white opacity-100" : "-translate-x-2 opacity-0"
-                      }`}
-                    />
-                  </span>
-
-                  {/* Fills as you scroll through this track's slice */}
-                  {on && (
-                    <span className="absolute inset-x-0 bottom-0 h-[3px] bg-white/20">
-                      <span
-                        ref={progress}
-                        className="block h-full origin-left scale-x-0 bg-white/85"
-                      />
-                    </span>
-                  )}
-                </button>
-              );
-            })}
+        <div className="container-x relative w-full">
+          {/* ------------------------------- Header ------------------------------ */}
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="text-[0.68rem] font-bold uppercase tracking-[0.22em] text-up-bright">
+                Capabilities
+              </p>
+              <h2 className="mt-4 max-w-xl font-display text-[1.9rem] font-extrabold leading-[1.1] tracking-tight text-up-ink sm:text-4xl lg:text-[2.5rem]">
+                Best-in-class technology,{" "}
+                <span className="text-up-accent">taught the way it is built</span>
+              </h2>
+            </div>
+            <p className="max-w-sm text-[0.92rem] leading-relaxed text-up-muted lg:pb-1.5">
+              Six tracks, one campus — the tools we train you on are the ones the industry
+              actually ships with.
+            </p>
           </div>
 
-          {/* Flow board */}
-          <div
-            ref={board}
-            className="rounded-3xl border border-white/10 bg-white/[0.045] p-5 backdrop-blur-sm lg:p-6"
-          >
-            <p className="cap-desc text-[0.9rem] text-up-soft/65">{current.blurb}</p>
-
-            {/* Full canvas — needs the width to breathe, so lg and up only */}
-            <div className="relative mt-4 hidden aspect-[16/10] w-full overflow-hidden lg:block">
-              <svg
-                viewBox={`0 0 ${VB_W} ${VB_H}`}
-                className="absolute inset-0 h-full w-full"
-                aria-hidden="true"
-              >
-                {LINKS.map(([a, b, shape]) => (
-                  <path
-                    key={`${a}-${b}`}
-                    d={linkPath([a, b, shape])}
-                    fill="none"
-                    stroke={shape === "line" ? "rgba(0,212,255,0.75)" : "rgba(169,196,255,0.32)"}
-                    strokeWidth={shape === "line" ? 1.4 : 1}
-                    strokeLinecap="round"
-                    className={shape === "line" ? undefined : "flow-dash"}
-                  />
-                ))}
-              </svg>
-
-              {SLOTS.map((slot, i) => {
-                const tool = current.tools[i];
-                if (!tool) return null;
+          {/* ------------------------------ Two panels ---------------------------- */}
+          <div className="mt-10 grid gap-6 lg:mt-12 lg:grid-cols-[minmax(0,19rem)_1fr]">
+            {/* Track rail — numbered, so the six read as a sequence */}
+            <div className="flex flex-col gap-1.5">
+              {capabilities.map((cap, i) => {
+                const on = i === active;
                 return (
-                  <div
-                    key={`${current.key}-${i}`}
-                    style={{ left: `${slot.x}%`, top: `${slot.y}%`, width: `${PILL_W}%` }}
-                    className="absolute -translate-x-1/2 -translate-y-1/2"
+                  <button
+                    key={cap.key}
+                    onClick={() => goTo(i)}
+                    aria-current={on || undefined}
+                    className={`group/rail relative block w-full overflow-hidden rounded-2xl px-5 py-4 text-left transition-all duration-300 ${
+                      on
+                        ? "bg-gradient-to-r from-hero-600 to-hero-glow shadow-[0_18px_40px_-20px_rgba(47,125,255,0.85)]"
+                        : "hover:bg-white/70"
+                    }`}
                   >
-                    <Pill tool={tool} tier={slot.tier} mirror={slot.mirror} />
-                  </div>
+                    <span className="flex items-center gap-4">
+                      <span
+                        className={`font-mono text-[0.72rem] font-bold tabular-nums transition-colors ${
+                          on ? "text-white/60" : "text-up-muted/45"
+                        }`}
+                      >
+                        {two(i)}
+                      </span>
+                      <span
+                        className={`flex-1 text-[0.95rem] font-bold transition-colors ${
+                          on ? "text-white" : "text-up-ink/60 group-hover/rail:text-up-ink"
+                        }`}
+                      >
+                        {cap.label}
+                      </span>
+                      <Icon
+                        name="arrowRight"
+                        size={16}
+                        className={`shrink-0 transition-all duration-300 ${
+                          on
+                            ? "text-white opacity-100"
+                            : "-translate-x-2 text-up-accent opacity-0 group-hover/rail:translate-x-0 group-hover/rail:opacity-60"
+                        }`}
+                      />
+                    </span>
+
+                    {/* Fills as you scroll through this track's slice */}
+                    {on && (
+                      <span className="absolute inset-x-0 bottom-0 h-[3px] bg-white/25">
+                        <span
+                          ref={progress}
+                          className="block h-full origin-left scale-x-0 bg-white/90"
+                        />
+                      </span>
+                    )}
+                  </button>
                 );
               })}
+            </div>
 
-              {/* Floating action, bottom-left — that corner of the board is free */}
+            {/* Tool grid */}
+            <div ref={board} className="glass relative rounded-[1.75rem] p-6 lg:p-8">
+              <div className="cap-head flex flex-wrap items-end justify-between gap-4">
+                <div>
+                  <p className="font-mono text-[0.72rem] font-bold tabular-nums text-up-muted/60">
+                    {two(active)} / {two(capabilities.length - 1)}
+                  </p>
+                  <h3 className="mt-2 font-display text-[1.45rem] font-extrabold tracking-tight text-up-ink lg:text-[1.7rem]">
+                    {current.label}
+                  </h3>
+                  <p className="mt-2 max-w-lg text-[0.9rem] leading-relaxed text-up-muted">
+                    {current.blurb}
+                  </p>
+                </div>
+                <span className="rounded-full border border-up-line bg-white/70 px-3.5 py-1.5 text-[0.68rem] font-bold uppercase tracking-[0.14em] text-up-accent">
+                  {current.tools.length} tools
+                </span>
+              </div>
+
+              <div className="my-6 h-px bg-up-line/70" />
+
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                {current.tools.map((tool) => (
+                  <ToolCard key={`${current.key}-${tool.name}`} tool={tool} />
+                ))}
+              </div>
+
               <Link
                 href={current.href}
-                className="group absolute bottom-0 left-0 inline-flex items-center gap-2 rounded-full bg-white/95 py-2 pl-4 pr-2 text-[0.82rem] font-bold text-up-ink transition-all hover:-translate-y-0.5 hover:bg-white"
+                className="group mt-7 inline-flex items-center gap-2 rounded-full bg-up-ink py-2 pl-6 pr-2 text-[0.85rem] font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-hero-900"
               >
-                Explore track
-                <span className="grid h-7 w-7 place-items-center rounded-full bg-gradient-to-r from-hero-600 to-hero-glow text-white">
+                Explore {current.label}
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/15">
                   <Icon
                     name="arrowUpRight"
-                    size={14}
+                    size={15}
                     className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                   />
                 </span>
               </Link>
-            </div>
-
-            {/* Compact stack below lg — the scatter needs width the phone lacks */}
-            <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:hidden">
-              {current.tools.map((tool) => (
-                <Pill key={`${current.key}-${tool.name}`} tool={tool} />
-              ))}
-            </div>
-            <Link
-              href={current.href}
-              className="group mt-5 inline-flex items-center gap-2 rounded-full bg-white/95 py-2 pl-5 pr-2 text-[0.85rem] font-bold text-up-ink lg:hidden"
-            >
-              Explore {current.label}
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-r from-hero-600 to-hero-glow text-white">
-                <Icon name="arrowRight" size={15} />
-              </span>
-            </Link>
             </div>
           </div>
         </div>

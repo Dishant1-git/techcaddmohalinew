@@ -3,7 +3,6 @@ import { Inter, Host_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import MiniCtaBar from "@/components/layout/MiniCtaBar";
 import Animator from "@/components/anim/Animator";
 import FloatingActions from "@/components/layout/FloatingActions";
 import EnquiryModal from "@/components/layout/EnquiryModal";
@@ -109,7 +108,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Animator />
         <Navbar />
         <main>{children}</main>
-        <MiniCtaBar />
         <Footer />
         <FloatingActions />
         <EnquiryModal />

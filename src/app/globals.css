@@ -290,11 +290,6 @@
     animation: wave-hand 2.6s ease-in-out infinite;
   }
 
-  /* Marching ants along the connectors in the capabilities flow. */
-  .flow-dash {
-    stroke-dasharray: 3 6;
-    animation: flow-dash 2.4s linear infinite;
-  }
 }
 
 /* The waving hand on the enquiry modal. Pivots at the wrist rather than the
@@ -315,12 +310,6 @@
   }
   50% {
     transform: rotate(11deg);
-  }
-}
-
-@keyframes flow-dash {
-  to {
-    stroke-dashoffset: -9;
   }
 }
 
