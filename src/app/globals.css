@@ -308,6 +308,94 @@
     animation: wave-hand 2.6s ease-in-out infinite;
   }
 
+  /* ---- AI pill sparkle -----------------------------------------------------
+     The white halo is doing the visibility work: navy-on-yellow is already high
+     contrast, but at 16px the glyph's thin waist disappears into the fill, and a
+     glow separates the two without changing the mark's colour. */
+  .sparkle-star {
+    transform-origin: center;
+    filter: drop-shadow(0 0 3px rgb(255 255 255 / 0.9));
+    animation: sparkle-star 2.8s ease-in-out infinite;
+  }
+
+  .sparkle-star-sm {
+    transform-origin: center;
+    filter: drop-shadow(0 0 2px rgb(255 255 255 / 0.85));
+    animation: sparkle-star-sm 2.8s ease-in-out infinite;
+  }
+
+  /* ---- Footer wordmark sheen -----------------------------------------------
+     A slow pass of the mark's own navy across the oversized techcadd watermark,
+     deepening the letterforms as it crosses rather than laying a coloured shine
+     over them — an accent-tinted highlight on a loop is the thing that makes a
+     footer look templated. The mask URL is set inline by <Footer/> from
+     LOGO_SRC so the artwork path stays declared in one place. Under reduced
+     motion the global reset further down lands this on its last keyframe, where
+     the band has already left the frame — so it settles invisible rather than
+     frozen mid-pass. */
+  .wordmark-sheen {
+    background-image: linear-gradient(
+      104deg,
+      transparent 28%,
+      rgb(6 14 43 / 0.1) 50%,
+      transparent 72%
+    );
+    background-repeat: no-repeat;
+    background-size: 300% 100%;
+    -webkit-mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    animation: wordmark-sheen 14s cubic-bezier(0.33, 0, 0.15, 1) infinite;
+  }
+
+}
+
+/* Rotation is kept small and reversing — a sparkle that spins through a full
+   turn stops reading as a glint and starts reading as a loading spinner. The
+   two glyphs share a period but peak at opposite ends of it. */
+@keyframes sparkle-star {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.88;
+  }
+  35% {
+    transform: rotate(18deg) scale(1.22);
+    opacity: 1;
+  }
+  70% {
+    transform: rotate(-8deg) scale(0.96);
+    opacity: 0.82;
+  }
+}
+
+@keyframes sparkle-star-sm {
+  0%,
+  25%,
+  100% {
+    transform: rotate(0deg) scale(0.5);
+    opacity: 0;
+  }
+  55% {
+    transform: rotate(-22deg) scale(1);
+    opacity: 1;
+  }
+}
+
+/* The band travels left to right: the background is wider than the element, so
+   aligning its right edge (100%) parks the band off to the left. Most of the
+   timeline is the hold that follows — the pass lands once every ten seconds or
+   so, slow enough to read as the mark catching the light rather than as
+   something asking to be looked at. */
+@keyframes wordmark-sheen {
+  0% {
+    background-position: 100% 0;
+  }
+  32%,
+  100% {
+    background-position: 0% 0;
+  }
 }
 
 /* The waving hand on the enquiry modal. Pivots at the wrist rather than the

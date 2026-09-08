@@ -49,14 +49,37 @@ export default function Footer() {
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-[24%] select-none px-4"
       >
-        <Image
-          src={LOGO_SRC}
-          alt=""
-          width={LOGO_W}
-          height={LOGO_H}
-          aria-hidden
-          className="h-auto w-full opacity-[0.055]"
-        />
+        {/* Three wrappers, one transform each. The outer span already owns a CSS
+            transform for the crop and GSAP rewrites `transform` wholesale, and
+            the parallax and the fade are two separate tweens that would
+            otherwise fight over the same element. Splitting them also keeps the
+            watermark's 0.055 on the <Image>, since the declarative reveal ends
+            at opacity 1 and would wash the mark out if it ran there. */}
+        <span className="block" data-parallax="-34">
+          <span className="relative block" data-anim="fade" data-anim-delay="0.1">
+            <Image
+              src={LOGO_SRC}
+              alt=""
+              width={LOGO_W}
+              height={LOGO_H}
+              aria-hidden
+              className="h-auto w-full opacity-[0.055]"
+            />
+
+            {/* A pass of ink that deepens the letterforms as it crosses, masked
+                to the logo art. Adding the mark's own navy rather than painting
+                a coloured highlight over it is what keeps this reading as the
+                wordmark catching the light instead of a shine effect. */}
+            <span
+              aria-hidden
+              className="wordmark-sheen absolute inset-0"
+              style={{
+                maskImage: `url(${LOGO_SRC})`,
+                WebkitMaskImage: `url(${LOGO_SRC})`,
+              }}
+            />
+          </span>
+        </span>
       </span>
 
       <div className="container-x relative py-16 lg:py-20">

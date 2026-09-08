@@ -96,12 +96,33 @@ function Chevron({ open }: { open: boolean }) {
   );
 }
 
-/** The four-pointed sparkle riding inside the AI pill. */
+const SPARKLE_PATH =
+  "M12 2.5c.5 4.4 2.6 6.6 7 7-4.4.5-6.5 2.6-7 7-.5-4.4-2.6-6.5-7-7 4.4-.4 6.5-2.6 7-7Z";
+
+/**
+ * The four-pointed sparkle riding inside the AI pill.
+ *
+ * Two glyphs on offset timings, because a single shape pulsing on its own reads
+ * as a throb rather than a twinkle — the large star rocks and swells while a
+ * small companion blinks between its beats. Both are drawn in `currentColor`,
+ * so the mark stays navy on the yellow pill and picks up the link colour in the
+ * mobile drawer; the halo is what lifts it off the fill.
+ */
 function Sparkle() {
   return (
-    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0" fill="currentColor" aria-hidden="true">
-      <path d="M12 2.5c.5 4.4 2.6 6.6 7 7-4.4.5-6.5 2.6-7 7-.5-4.4-2.6-6.5-7-7 4.4-.4 6.5-2.6 7-7Z" />
-    </svg>
+    <span className="relative inline-flex h-4 w-4 shrink-0 items-center justify-center">
+      <svg viewBox="0 0 24 24" className="sparkle-star h-4 w-4" fill="currentColor" aria-hidden="true">
+        <path d={SPARKLE_PATH} />
+      </svg>
+      <svg
+        viewBox="0 0 24 24"
+        className="sparkle-star-sm absolute -right-1 -top-0.5 h-2 w-2"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d={SPARKLE_PATH} />
+      </svg>
+    </span>
   );
 }
 
