@@ -17,7 +17,7 @@ const branchCourses = [
   { title: "Python Programming", href: "/courses/python-programming" },
   { title: "Digital Marketing & SEO", href: "/courses/digital-marketing" },
   { title: "Cybersecurity & Ethical Hacking", href: "/courses/cyber-security" },
-  { title: "Cloud Computing & DevOps", href: "/courses/cloud-computing" },
+  { title: "Cloud Computing", href: "/courses/cloud-computing" },
   { title: "Web Designing & UI", href: "/courses/web-designing" },
 ];
 

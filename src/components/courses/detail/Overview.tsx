@@ -36,10 +36,20 @@ export default function Overview({ course }: { course: Course }) {
               subtitle={`A ${course.duration} ${course.level.toLowerCase()} track taught at our Sector 75 campus in Mohali and live online, built around what employers in this field are hiring for right now.`}
             />
 
+            {/* A course written to a keyword brief carries several paragraphs
+                in `overview`, separated by a blank line; a one-paragraph
+                overview falls out of the same split as a single item. */}
             <Reveal delay={0.1}>
-              <p className="mt-8 text-base leading-[1.85] text-up-ink/75 sm:text-[1.05rem]">
-                {course.overview}
-              </p>
+              <div className="mt-8 space-y-5">
+                {course.overview.split("\n\n").map((paragraph) => (
+                  <p
+                    key={paragraph.slice(0, 48)}
+                    className="text-base leading-[1.85] text-up-ink/75 sm:text-[1.05rem]"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
             </Reveal>
 
             <Stagger className="mt-10 grid gap-x-8 gap-y-6 sm:grid-cols-2" amount={0.2}>

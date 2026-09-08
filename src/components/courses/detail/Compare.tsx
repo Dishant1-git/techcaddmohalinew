@@ -1,7 +1,7 @@
 "use client";
 
 import type { Course } from "@/lib/courses";
-import { comparison } from "@/lib/coursePage";
+import { comparisonFor } from "@/lib/coursePage";
 import Icon from "@/components/ui/Icon";
 import SectionTitle from "@/components/courses/detail/SectionTitle";
 import { Stagger, StaggerItem } from "@/components/courses/detail/Motion";
@@ -47,7 +47,7 @@ export default function Compare({ course }: { course: Course }) {
           </div>
 
           <Stagger className="divide-y divide-line" amount={0.05}>
-            {comparison.map((row) => (
+            {comparisonFor(course).map((row) => (
               <StaggerItem key={row.aspect}>
                 <div className="grid gap-4 px-6 py-6 sm:px-8 lg:grid-cols-[0.7fr_1.15fr_1.15fr] lg:items-center lg:gap-6">
                   <div className="flex items-center gap-3">

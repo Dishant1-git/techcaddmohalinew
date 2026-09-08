@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { Course } from "@/lib/courses";
+import { sectionCopy } from "@/lib/coursePage";
 import { site } from "@/lib/site";
 import Icon from "@/components/ui/Icon";
 import SectionTitle from "@/components/courses/detail/SectionTitle";
@@ -30,6 +31,7 @@ const labelBase =
  * browser, so passing it is not a matter of reading a JS variable.
  */
 export default function EnquiryForm({ course }: { course: Course }) {
+  const copy = sectionCopy(course, "enquire");
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
@@ -138,9 +140,40 @@ export default function EnquiryForm({ course }: { course: Course }) {
             <SectionTitle
               tone="dark"
               eyebrow="Enquire"
-              title="Ask about this course"
-              subtitle={`Send a quick enquiry about ${course.title} and a counsellor from the Mohali centre will get back to you — usually the same working day.`}
+              title={copy?.title ?? "Ask about this course"}
+              subtitle={
+                copy?.intro ??
+                `Send a quick enquiry about ${course.title} and a counsellor from the Mohali centre will get back to you — usually the same working day.`
+              }
             />
+
+            {/* ---- Course at a glance ----------------------------------- *
+                The facts a reader wants confirmed before they fill anything
+                in — duration, mode, certification — on the pages that carry
+                them. A definition list rather than a table: these are label /
+                value pairs, and a table would need a header row saying so. */}
+            {copy?.facts && (
+              <Reveal delay={0.12} className="mt-10">
+                <div className="overflow-hidden rounded-2xl border border-white/12 bg-white/[0.04] backdrop-blur-sm">
+                  <p className="border-b border-white/10 px-5 py-3.5 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-accent-yellow">
+                    Course at a glance
+                  </p>
+                  <dl className="divide-y divide-white/8">
+                    {copy.facts.map((fact) => (
+                      <div
+                        key={fact.label}
+                        className="flex flex-col gap-1 px-5 py-3.5 sm:flex-row sm:items-baseline sm:gap-5"
+                      >
+                        <dt className="shrink-0 text-xs font-semibold uppercase tracking-wider text-up-soft/50 sm:w-32">
+                          {fact.label}
+                        </dt>
+                        <dd className="text-sm leading-relaxed text-white/90">{fact.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              </Reveal>
+            )}
 
             <Reveal delay={0.15} className="mt-10 space-y-3">
               {[
@@ -170,6 +203,12 @@ export default function EnquiryForm({ course }: { course: Course }) {
                 </a>
               ))}
             </Reveal>
+
+            {copy?.note && (
+              <Reveal delay={0.2} className="mt-6 rounded-2xl border border-white/12 bg-white/[0.04] p-5">
+                <p className="text-sm leading-relaxed text-up-soft/70">{copy.note}</p>
+              </Reveal>
+            )}
 
             <Reveal delay={0.25} className="mt-6 rounded-2xl border border-white/12 bg-white/[0.04] p-5">
               <p className="flex items-start gap-3 text-xs leading-relaxed text-up-soft/60">
