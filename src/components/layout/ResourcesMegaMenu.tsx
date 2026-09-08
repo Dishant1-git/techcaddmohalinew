@@ -3,7 +3,7 @@ import type { NavChild } from "@/lib/site";
 import { PANEL } from "@/components/layout/Navbar";
 import Icon from "@/components/ui/Icon";
 
-type ToolCard = {
+type ResourceCard = {
   title: string;
   href: string;
   kicker: string;
@@ -12,46 +12,50 @@ type ToolCard = {
   icon: string;
   headline: string;
   tone: "dark" | "light";
+  /** Small icon pills along the card's foot. Leave empty to show `badge`. */
   features: string[];
+  /** Shown in place of `features` when that list is empty. */
+  badge?: string;
 };
 
-const TOOLS: ToolCard[] = [
+const CARDS: ResourceCard[] = [
   {
-    title: "Find My Career Track",
-    href: "/tools/career-track",
-    kicker: "Free tool",
-    caption: "4 questions",
+    title: "Blogs",
+    href: "/blog",
+    kicker: "Read",
+    caption: "New every week",
     art: "from-hero-900 via-hero-800 to-hero-600",
-    icon: "target",
-    headline: "Find my IT / CAD career track",
+    icon: "megaphone",
+    headline: "Guides, notes & industry reads",
     tone: "dark",
-    features: ["target", "rocket", "briefcase"],
+    features: ["code", "cube", "chart"],
   },
   {
-    title: "Training Matcher",
-    href: "/tools/training-matcher",
-    kicker: "Free tool",
-    caption: "Instant match",
+    title: "Gallery",
+    href: "/gallery",
+    kicker: "Photos",
+    caption: "Life at techcadd",
     art: "from-hero-950 via-brand-800 to-brand-600",
-    icon: "search",
-    headline: "6 Weeks & 6 Months",
+    icon: "layers",
+    headline: "Campus, classrooms & ceremonies",
     tone: "dark",
-    features: ["clock", "calendar", "check"],
+    features: ["users", "certificate", "star"],
   },
   {
-    title: "Salary Estimator",
-    href: "/tools/salary-estimator",
-    kicker: "Free tool",
-    caption: "Punjab & NCR",
+    title: "Events",
+    href: "/events",
+    kicker: "Campus",
+    caption: "Mohali & Jalandhar",
     art: "from-brand-50 via-white to-brand-50",
-    icon: "chart",
-    headline: "Salary & career growth estimator",
+    icon: "calendar",
+    headline: "Workshops, seminars & demo days",
     tone: "light",
     features: [],
+    badge: "Free to attend",
   },
 ];
 
-/** The wide "Resources" dropdown: a link rail beside three free-tool cards. */
+/** The wide "Resources" dropdown: a link rail beside three highlight cards. */
 export default function ResourcesMegaMenu({ links }: { links: NavChild[] }) {
   return (
     <div className={`${PANEL} overflow-hidden`}>
@@ -88,9 +92,9 @@ export default function ResourcesMegaMenu({ links }: { links: NavChild[] }) {
           </Link>
         </div>
 
-        {/* Free-tool cards */}
+        {/* Highlight cards */}
         <div className="grid grid-cols-3 gap-5">
-          {TOOLS.map((t) => (
+          {CARDS.map((t) => (
             <Link key={t.title} href={t.href} className="group/f block">
               <span
                 className={`relative flex h-[11rem] flex-col justify-between overflow-hidden rounded-2xl bg-gradient-to-br p-4 ${t.art}`}
@@ -129,9 +133,11 @@ export default function ResourcesMegaMenu({ links }: { links: NavChild[] }) {
                       ))}
                     </span>
                   ) : (
-                    <span className="rounded-full bg-up-accent/10 px-2.5 py-1 text-[0.65rem] font-bold text-up-accent">
-                      ₹12.8 LPA
-                    </span>
+                    t.badge && (
+                      <span className="rounded-full bg-up-accent/10 px-2.5 py-1 text-[0.65rem] font-bold text-up-accent">
+                        {t.badge}
+                      </span>
+                    )
                   )}
                 </span>
               </span>

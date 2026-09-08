@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -43,6 +42,18 @@ const childrenOf = (item: NavItem): NavChild[] => [
 export const PANEL =
   "rounded-[1.75rem] border border-line bg-white/95 shadow-[0_45px_110px_-45px_rgba(6,14,43,0.85)] backdrop-blur-xl";
 const FOOT = "flex items-center justify-between gap-8 border-t border-line bg-subtle px-8 py-4";
+
+/**
+ * Column count for a `feature` panel's picture cards, keyed by how many cards
+ * there are. Spelled out rather than interpolated because Tailwind only ships
+ * class names it can find as literal text in the source.
+ */
+const FEATURE_COLS: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-2",
+  3: "grid-cols-3",
+  4: "grid-cols-4",
+};
 
 /** All four tones come from the theme ramp in globals.css. */
 const badgeTone: Record<NavBadge, string> = {
@@ -284,7 +295,13 @@ function PanelBody({ item }: { item: NavItem }) {
               </Link>
             </div>
 
-            <div className="grid grid-cols-4 gap-4">
+            {/* Sized to the number of cards so a shorter list still fills the
+                panel instead of leaving an empty track on the right. */}
+            <div
+              className={`grid gap-4 ${
+                FEATURE_COLS[Math.min(item.features!.length, 4)] ?? "grid-cols-4"
+              }`}
+            >
               {item.features!.map((f) => (
                 <Link key={f.title} href={f.href} className="group/f block">
                   {/* A photograph when one is registered, otherwise artwork built
@@ -307,7 +324,6 @@ function PanelBody({ item }: { item: NavItem }) {
                         <span className="absolute inset-0 bg-gradient-to-t from-hero-950/45 to-transparent" />
                       </>
                     )}
-                  </span>
                   </span>
                   <span className="mt-3 block font-display text-[1.05rem] font-bold text-up-ink transition-colors group-hover/f:text-up-accent">
                     {f.title}

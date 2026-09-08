@@ -129,7 +129,8 @@ export const navItems: NavItem[] = [
     label: "About",
     href: "/about",
     panel: "feature",
-    // Four items, each its own page — the rail and the cards stay in step.
+    // The rail lists every About page; the cards highlight a subset of them,
+    // so the two lists are deliberately allowed to differ in length.
     links: [
       { label: "About techcadd", href: "/about" },
       { label: "Mission and Vision", href: "/about/mission-vision" },
@@ -142,7 +143,10 @@ export const navItems: NavItem[] = [
         href: "/about",
         kicker: "Story",
         caption: "Since 2016",
-        photo: "/gallery/certification-ceremony.png",
+        photo: {
+          src: "/gallery/certification-ceremony.png",
+          alt: "Students receiving their certificates at a techcadd ceremony",
+        },
         art: "from-hero-800 via-hero-600 to-hero-glow",
       },
       {
@@ -150,26 +154,21 @@ export const navItems: NavItem[] = [
         href: "/about/mission-vision",
         kicker: "Purpose",
         caption: "Our direction",
-        photo: "/gallery/workshop-seminars-01.png",
+        photo: {
+          src: "/gallery/workshop-seminars-01.png",
+          alt: "A techcadd workshop session in progress",
+        },
         art: "from-hero-900 via-brand-700 to-accent-500",
-        art: "from-hero-900 via-brand-700 to-accent-500",
-      },
-      {
-        title: "Accreditations",
-        href: "/about/accreditations",
-        kicker: "Proof",
-        caption: "ISO certified",
-        art: "from-hero-800 via-brand-600 to-accent-glow",
       },
       {
         title: "Our Founder",
         href: "/about/founder",
         kicker: "Profile",
         caption: "Gourav Gupta",
-        photo: "/founder/gouravsir.jpg",
-        kicker: "Profile",
-        caption: "Gourav Gupta",
-        photo: "/founder/gouravsir.jpg",
+        photo: {
+          src: "/founder/gouravsir.jpg",
+          alt: "Gourav Gupta, founder of techcadd",
+        },
         art: "from-brand-900 via-hero-600 to-accent-400",
       },
     ],

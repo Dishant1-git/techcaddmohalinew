@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Animator from "@/components/anim/Animator";
+import Cursor from "@/components/anim/Cursor";
 import FloatingActions from "@/components/layout/FloatingActions";
 import EnquiryModal from "@/components/layout/EnquiryModal";
 import { site } from "@/lib/site";
@@ -106,6 +107,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
         />
         <Animator />
+        <Cursor />
         <Navbar />
         <main>{children}</main>
         <Footer />
