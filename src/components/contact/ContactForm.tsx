@@ -31,14 +31,19 @@ export default function ContactForm() {
       const res = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, source: "Contact page form" }),
       });
-      if (!res.ok) throw new Error("Request failed");
+      const payload = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || !payload.ok) throw new Error(payload.error || "Request failed");
       setStatus("sent");
       form.reset();
-    } catch {
+    } catch (err) {
       setStatus("error");
-      setError("Something went wrong. Please call or WhatsApp us instead.");
+      setError(
+        err instanceof Error && err.message !== "Request failed"
+          ? err.message
+          : "Something went wrong. Please call or WhatsApp us instead.",
+      );
     }
   }
 
@@ -72,6 +77,16 @@ export default function ContactForm() {
       <p className="mt-2 text-sm text-up-muted">
         Tell us a little about yourself. No fee, no obligation — a counsellor will call you back.
       </p>
+
+      {/* Honeypot — hidden from people, irresistible to form-filling bots. */}
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden
+        className="absolute left-[-9999px] h-0 w-0 opacity-0"
+      />
 
       <div className="mt-8 grid gap-5 sm:grid-cols-2">
         <div className="sm:col-span-1">

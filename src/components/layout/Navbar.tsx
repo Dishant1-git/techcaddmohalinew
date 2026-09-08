@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -306,6 +307,7 @@ function PanelBody({ item }: { item: NavItem }) {
                         <span className="absolute inset-0 bg-gradient-to-t from-hero-950/45 to-transparent" />
                       </>
                     )}
+                  </span>
                   </span>
                   <span className="mt-3 block font-display text-[1.05rem] font-bold text-up-ink transition-colors group-hover/f:text-up-accent">
                     {f.title}
