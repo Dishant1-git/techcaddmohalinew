@@ -6,6 +6,7 @@ import Icon from "@/components/ui/Icon";
 import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import CtaBanner from "@/components/home/CtaBanner";
 import { googleRating, studentsTrained } from "@/lib/reviews";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "Reviews — What Our Students Say",
@@ -49,6 +50,7 @@ export default function ReviewsPage() {
         </div>
       </section>
 
+      <RelatedLinks route="/reviews" />
       <QuickCallbackBar />
       <CtaBanner />
     </>

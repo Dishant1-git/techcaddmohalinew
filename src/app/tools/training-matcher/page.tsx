@@ -4,6 +4,7 @@ import TrainingMatcher from "@/components/tools/TrainingMatcher";
 import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import CtaBanner from "@/components/home/CtaBanner";
 import Icon from "@/components/ui/Icon";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "Training Matcher — Find Your 6 Weeks / 6 Months Track",
@@ -68,6 +69,7 @@ export default function TrainingMatcherPage() {
         </div>
       </section>
 
+      <RelatedLinks route="/tools/training-matcher" />
       <QuickCallbackBar />
       <CtaBanner />
     </>

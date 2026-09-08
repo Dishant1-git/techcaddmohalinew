@@ -4,6 +4,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import GalleryWall from "@/components/gallery/GalleryWall";
 import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import CtaBanner from "@/components/home/CtaBanner";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "Gallery — Life at techcadd",
@@ -36,6 +37,7 @@ export default function GalleryPage() {
         </div>
       </section>
 
+      <RelatedLinks route="/gallery" />
       <QuickCallbackBar />
       <CtaBanner />
     </>

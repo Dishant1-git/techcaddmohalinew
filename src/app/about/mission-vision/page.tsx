@@ -5,6 +5,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import CtaBanner from "@/components/home/CtaBanner";
 import Icon from "@/components/ui/Icon";
 import { pillars } from "@/lib/about";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "Mission & Vision",
@@ -115,6 +116,7 @@ export default function MissionVisionPage() {
         </div>
       </section>
 
+      <RelatedLinks route="/about/mission-vision" />
       <CtaBanner />
     </>
   );

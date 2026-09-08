@@ -6,6 +6,7 @@ import CtaBanner from "@/components/home/CtaBanner";
 import Icon from "@/components/ui/Icon";
 import { credentials } from "@/lib/about";
 import { site } from "@/lib/site";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "Accreditations & Awards",
@@ -135,6 +136,7 @@ export default function AccreditationsPage() {
         </div>
       </section>
 
+      <RelatedLinks route="/about/accreditations" />
       <CtaBanner />
     </>
   );

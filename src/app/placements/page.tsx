@@ -4,6 +4,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Testimonials from "@/components/home/Testimonials";
 import CtaBanner from "@/components/home/CtaBanner";
 import Icon from "@/components/ui/Icon";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "Placements & Career Support",
@@ -155,6 +156,7 @@ export default function PlacementsPage() {
       </section>
 
       <Testimonials />
+      <RelatedLinks route="/placements" />
       <CtaBanner />
     </>
   );

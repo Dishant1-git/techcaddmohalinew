@@ -3,6 +3,7 @@ import PageHero from "@/components/ui/PageHero";
 import FaqAccordion from "@/components/faq/FaqAccordion";
 import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import CtaBanner from "@/components/home/CtaBanner";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "FAQs — Admissions, Fees, Batches & Placement",
@@ -32,6 +33,7 @@ export default function FaqPage() {
         </div>
       </section>
 
+      <RelatedLinks route="/faq" />
       <QuickCallbackBar />
       <CtaBanner />
     </>

@@ -3,6 +3,7 @@ import PageHero from "@/components/ui/PageHero";
 import BlogGrid from "@/components/blog/BlogGrid";
 import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import CtaBanner from "@/components/home/CtaBanner";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "Blog — Course Guides, Hiring Trends & Career Advice",
@@ -32,6 +33,7 @@ export default function BlogPage() {
         </div>
       </section>
 
+      <RelatedLinks route="/blog" />
       <QuickCallbackBar />
       <CtaBanner />
     </>

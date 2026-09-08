@@ -4,6 +4,7 @@ import CareerTrackQuiz from "@/components/tools/CareerTrackQuiz";
 import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import CtaBanner from "@/components/home/CtaBanner";
 import Icon from "@/components/ui/Icon";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "Find My Career Track — Free IT & CAD Career Quiz",
@@ -47,6 +48,7 @@ export default function CareerTrackPage() {
         </div>
       </section>
 
+      <RelatedLinks route="/tools/career-track" />
       <QuickCallbackBar />
       <CtaBanner />
     </>

@@ -4,6 +4,7 @@ import CourseExplorer from "@/components/courses/CourseExplorer";
 import CtaBanner from "@/components/home/CtaBanner";
 import Faq from "@/components/home/Faq";
 import type { CategoryKey } from "@/lib/courses";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "Courses — AI, Full Stack, Data, Cyber Security & CAD",
@@ -44,6 +45,7 @@ export default async function CoursesPage({
 
       <CourseExplorer initialCategory={(category as CategoryKey) ?? "all"} />
       <Faq />
+      <RelatedLinks route="/courses" />
       <CtaBanner />
     </>
   );

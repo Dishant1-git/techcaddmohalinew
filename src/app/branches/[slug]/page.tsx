@@ -7,6 +7,8 @@ import CtaBanner from "@/components/home/CtaBanner";
 import Icon from "@/components/ui/Icon";
 import { site } from "@/lib/site";
 import { branches, getBranch, headOffice } from "@/lib/branches";
+import RelatedLinks from "@/components/ui/RelatedLinks";
+import { relatedForBranch } from "@/lib/related";
 
 const branchCourses = [
   { title: "Artificial Intelligence & Machine Learning", href: "/courses/artificial-intelligence" },
@@ -256,6 +258,12 @@ export default async function BranchPage({ params }: { params: Promise<{ slug: s
           </div>
         </div>
       </section>
+
+      <RelatedLinks
+        links={relatedForBranch()}
+        eyebrow="At every centre"
+        title="What runs here"
+      />
 
       <CtaBanner />
     </>

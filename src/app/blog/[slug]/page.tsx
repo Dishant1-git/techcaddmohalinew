@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { blogPosts, categoryArt, getPost } from "@/lib/blog";
 import Icon from "@/components/ui/Icon";
 import CtaBanner from "@/components/home/CtaBanner";
+import RelatedLinks from "@/components/ui/RelatedLinks";
+import { relatedForPost } from "@/lib/related";
 
 export function generateStaticParams() {
   return blogPosts.map((p) => ({ slug: p.slug }));
@@ -120,6 +122,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           )}
         </div>
       </article>
+
+      {/* The "More on {category}" list above stays inside the blog; this points
+          out of it, at whatever the post is actually about. */}
+      <RelatedLinks
+        links={relatedForPost(post)}
+        eyebrow="From the article"
+        title="Take this further"
+      />
 
       <CtaBanner />
     </>

@@ -7,6 +7,7 @@ import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import CtaBanner from "@/components/home/CtaBanner";
 import Icon from "@/components/ui/Icon";
 import { site } from "@/lib/site";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "College Partnerships",
@@ -283,6 +284,7 @@ export default function CollegePartnershipsPage() {
         </div>
       </section>
 
+      <RelatedLinks route="/college-partnerships" />
       <QuickCallbackBar />
       <CtaBanner />
     </>

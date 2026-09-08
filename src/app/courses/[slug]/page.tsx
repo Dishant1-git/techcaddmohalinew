@@ -7,6 +7,8 @@ import { site } from "@/lib/site";
 import CourseCard from "@/components/ui/CourseCard";
 import CtaBanner from "@/components/home/CtaBanner";
 import Icon from "@/components/ui/Icon";
+import RelatedLinks from "@/components/ui/RelatedLinks";
+import { relatedForCourse } from "@/lib/related";
 
 import CourseHero from "@/components/courses/detail/CourseHero";
 import SectionRail from "@/components/courses/detail/SectionRail";
@@ -188,6 +190,14 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
           </div>
         </div>
       </section>
+
+      {/* "Students also consider" above covers other courses; this reaches the
+          pages a reader needs once they have stopped comparing subjects. */}
+      <RelatedLinks
+        links={relatedForCourse(course)}
+        eyebrow="Beyond the syllabus"
+        title="Before you decide"
+      />
 
       <CtaBanner />
     </>

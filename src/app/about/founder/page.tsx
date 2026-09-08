@@ -5,6 +5,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import CtaBanner from "@/components/home/CtaBanner";
 import Icon from "@/components/ui/Icon";
 import { founder } from "@/lib/about";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "Our Founder",
@@ -110,6 +111,7 @@ export default function FounderPage() {
         </div>
       </section>
 
+      <RelatedLinks route="/about/founder" />
       <CtaBanner />
     </>
   );

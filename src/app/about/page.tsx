@@ -11,6 +11,7 @@ import Icon from "@/components/ui/Icon";
 import HowWeWork from "@/components/about/HowWeWork";
 import TeamMarquee from "@/components/about/TeamMarquee";
 import { site } from "@/lib/site";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "About the Institute",
@@ -121,7 +122,7 @@ export default function AboutPage() {
             <div data-anim="up" data-anim-delay="0.1" className="mt-7 space-y-5 text-sm leading-relaxed text-up-muted lg:text-[15px]">
               <p>
                 Founded in 2016 by{" "}
-                <Link href="/founder" className="font-bold text-up-ink underline decoration-2 underline-offset-2">
+                <Link href="/about/founder" className="font-bold text-up-ink underline decoration-2 underline-offset-2">
                   Mr. Gourav Gupta
                 </Link>
                 , techcadd is an IT training and skill-development organization focused on bridging
@@ -554,6 +555,7 @@ export default function AboutPage() {
       <TeamMarquee />
       <WhyUs />
       <Testimonials />
+      <RelatedLinks route="/about" />
       <CtaBanner />
     </>
   );

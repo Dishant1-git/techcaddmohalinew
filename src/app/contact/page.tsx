@@ -8,6 +8,7 @@ import Faq from "@/components/home/Faq";
 import CtaBanner from "@/components/home/CtaBanner";
 import Icon from "@/components/ui/Icon";
 import { site } from "@/lib/site";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "Contact & Book a Free Demo",
@@ -321,6 +322,7 @@ export default function ContactPage() {
 
       <Faq />
 
+      <RelatedLinks route="/contact" />
       <CtaBanner />
     </>
   );

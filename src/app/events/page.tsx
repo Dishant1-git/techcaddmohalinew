@@ -3,6 +3,7 @@ import PageHero from "@/components/ui/PageHero";
 import EventsGrid from "@/components/events/EventsGrid";
 import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import CtaBanner from "@/components/home/CtaBanner";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "Events — Seminars, Workshops & Campus Sessions",
@@ -34,6 +35,7 @@ export default function EventsPage() {
         </div>
       </section>
 
+      <RelatedLinks route="/events" />
       <QuickCallbackBar />
       <CtaBanner />
     </>

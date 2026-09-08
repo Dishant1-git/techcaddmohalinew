@@ -4,6 +4,7 @@ import SalaryEstimator from "@/components/tools/SalaryEstimator";
 import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import CtaBanner from "@/components/home/CtaBanner";
 import Icon from "@/components/ui/Icon";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "Salary & Career Growth Estimator — Punjab, NCR & Remote",
@@ -48,6 +49,7 @@ export default function SalaryEstimatorPage() {
         </div>
       </section>
 
+      <RelatedLinks route="/tools/salary-estimator" />
       <QuickCallbackBar />
       <CtaBanner />
     </>

@@ -6,6 +6,7 @@ import Process from "@/components/home/Process";
 import Faq from "@/components/home/Faq";
 import CtaBanner from "@/components/home/CtaBanner";
 import Icon from "@/components/ui/Icon";
+import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
   title: "Industrial Training & Internship in Mohali",
@@ -123,6 +124,7 @@ export default function TrainingPage() {
       </section>
 
       <Faq />
+      <RelatedLinks route="/training" />
       <CtaBanner />
     </>
   );
