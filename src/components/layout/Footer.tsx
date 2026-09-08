@@ -17,8 +17,9 @@ const columns = [
     heading: "Company",
     links: [
       { label: "About Us", href: "/about" },
-      { label: "How We Work", href: "/about#values" },
-      { label: "Our Founder", href: "/about#founder" },
+      { label: "Mission & Vision", href: "/about/mission-vision" },
+      { label: "Accreditations", href: "/about/accreditations" },
+      { label: "Our Founder", href: "/about/founder" },
       { label: "Contact Us", href: "/contact" },
     ],
   },

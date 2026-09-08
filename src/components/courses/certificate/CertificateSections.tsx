@@ -32,7 +32,7 @@ import { Guilloche, Seal } from "@/components/courses/certificate/Motifs";
  * -------------------------------------------------------------------------- */
 
 /** An ink wipe, left to right — the motion signature of this design. */
-function Wipe({
+export function Wipe({
   children,
   delay = 0,
   className,
@@ -58,7 +58,7 @@ function Wipe({
 }
 
 /** A ruled section heading, set like a clause title in a formal document. */
-function RuledHeading({
+export function RuledHeading({
   index,
   eyebrow,
   title,

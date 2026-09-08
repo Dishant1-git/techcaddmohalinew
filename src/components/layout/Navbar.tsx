@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -255,14 +256,14 @@ function PanelBody({ item }: { item: NavItem }) {
     case "feature":
       return (
         <div className={`${PANEL} overflow-hidden`}>
-          <div className="grid grid-cols-[minmax(0,15rem)_1fr] gap-10 px-8 py-9">
+          <div className="grid grid-cols-[minmax(0,17rem)_1fr] gap-10 px-8 py-9">
             <div className="border-r border-up-line/60 pr-8">
-              <ul className="space-y-1">
+              <ul className="space-y-0.5">
                 {item.links!.map((child) => (
                   <li key={child.href + child.label}>
                     <Link
                       href={child.href}
-                      className="block py-1.5 text-[1.02rem] font-semibold text-up-ink transition-colors hover:text-up-accent"
+                      className="block py-2.5 text-[1.02rem] font-semibold text-up-ink transition-colors hover:text-up-accent"
                     >
                       {child.label}
                     </Link>
@@ -282,14 +283,29 @@ function PanelBody({ item }: { item: NavItem }) {
               </Link>
             </div>
 
-            <div className="grid grid-cols-3 gap-5">
+            <div className="grid grid-cols-4 gap-4">
               {item.features!.map((f) => (
                 <Link key={f.title} href={f.href} className="group/f block">
-                  <span
-                    className={`relative block h-[8.5rem] overflow-hidden rounded-2xl bg-gradient-to-br ${f.art}`}
-                  >
-                    <span className="absolute inset-0 grid-lines opacity-70" />
-                    <span className="absolute inset-0 bg-gradient-to-t from-hero-950/45 to-transparent" />
+                  {/* A photograph when one is registered, otherwise artwork built
+                      from the card's own gradient. Paths are listed explicitly in
+                      site.ts rather than guessed, so a photo that has not been
+                      added yet can never render as a broken image. */}
+                  <span className="relative block aspect-[4/3] overflow-hidden rounded-xl">
+                    {f.photo ? (
+                      <Image
+                        src={f.photo.src}
+                        alt={f.photo.alt}
+                        fill
+                        sizes="(min-width: 1024px) 18vw, 100vw"
+                        className="object-cover transition-transform duration-500 group-hover/f:scale-105"
+                      />
+                    ) : (
+                      <>
+                        <span className={`absolute inset-0 bg-gradient-to-br ${f.art}`} />
+                        <span className="absolute inset-0 grid-lines opacity-70" />
+                        <span className="absolute inset-0 bg-gradient-to-t from-hero-950/45 to-transparent" />
+                      </>
+                    )}
                   </span>
                   <span className="mt-3 block font-display text-[1.05rem] font-bold text-up-ink transition-colors group-hover/f:text-up-accent">
                     {f.title}
@@ -546,7 +562,7 @@ export default function Navbar() {
                       aria-expanded={hasMenu(item) ? isOpen : undefined}
                       className={
                         item.pill
-                          ? "relative mx-1 flex items-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-hero-glow to-hero-600 px-3.5 py-2 text-[0.82rem] font-semibold text-white shadow-lg shadow-hero-glow/35 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-hero-glow/45 2xl:mx-1.5 2xl:px-5 2xl:text-[0.9rem]"
+                          ? "accent-fill relative mx-1 flex items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-2 text-[0.82rem] font-semibold transition-all hover:-translate-y-0.5 2xl:mx-1.5 2xl:px-5 2xl:text-[0.9rem]"
                           : `relative flex items-center gap-1 whitespace-nowrap py-2 font-medium transition-colors ${linkSize} ${
                               isCurrent || isOpen ? activeTone : linkTone
                             }`
@@ -600,7 +616,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={openEnquiry}
-                className={`hidden items-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-r from-hero-glow to-hero-600 font-bold text-white shadow-lg shadow-hero-600/35 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-hero-glow/45 sm:inline-flex ${
+                className={`accent-fill hidden items-center gap-2 whitespace-nowrap rounded-full font-bold transition-all hover:-translate-y-0.5 sm:inline-flex ${
                   scrolled
                     ? "px-5 py-2.5 text-[0.82rem] 2xl:px-6 2xl:text-[0.85rem]"
                     : "px-5 py-3 text-[0.85rem] 2xl:px-7 2xl:text-[0.9rem]"
@@ -750,7 +766,7 @@ export default function Navbar() {
                 setMobileOpen(false);
                 openEnquiry();
               }}
-              className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-hero-glow to-hero-600 py-3.5 text-sm font-bold text-white"
+              className="accent-fill flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-sm font-bold"
             >
               Book Demo <Icon name="arrowRight" size={16} />
             </button>

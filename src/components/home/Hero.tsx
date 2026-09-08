@@ -102,7 +102,7 @@ export default function Hero() {
           <div className="hero-cta mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/contact"
-              className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-hero-glow to-accent-glow px-6 py-3 text-[0.88rem] font-bold text-hero-950 shadow-[0_18px_45px_-16px_rgba(0,212,255,0.7)] transition-all hover:-translate-y-0.5 hover:shadow-[0_22px_55px_-14px_rgba(0,212,255,0.9)]"
+              className="accent-fill group inline-flex items-center gap-2 rounded-full px-6 py-3 text-[0.88rem] font-bold transition-all hover:-translate-y-0.5"
             >
               Book a free demo
               <Icon

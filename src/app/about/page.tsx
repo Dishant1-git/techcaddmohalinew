@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import PageHero from "@/components/ui/PageHero";
 import SectionHeading from "@/components/ui/SectionHeading";
 import StatsBar from "@/components/home/StatsBar";
@@ -162,55 +163,70 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Founder — target of the "Founder" item in the main navigation */}
-      <section id="founder" className="scroll-mt-32 bg-subtle py-24 lg:py-32">
+      {/* Founder and the other About pages now stand on their own, so this is a
+          way through to them rather than a second copy of their content. */}
+      <section className="bg-subtle py-24 lg:py-32">
         <div className="container-x">
           <SectionHeading
             align="center"
-            eyebrow="Leadership"
-            title="The person behind techcadd"
-            subtitle="One classroom in Jalandhar in 2016, now a multi-branch network across Punjab — including this campus in Mohali."
+            eyebrow="More on the institute"
+            title="Three things worth reading next"
+            subtitle="Where we are headed, what the certificate is issued against, and the person who started it."
           />
 
-          <div data-anim="up" className="mx-auto mt-14 max-w-4xl">
-            <div className="rounded-[1.75rem] border border-line bg-white p-8 lg:p-12">
-              <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
-                <span className="grid h-20 w-20 shrink-0 place-items-center rounded-3xl bg-gradient-to-br from-hero-600 to-hero-glow font-display text-2xl font-extrabold text-white shadow-lg shadow-hero-600/25">
-                  GG
+          <div
+            data-anim="up"
+            data-anim-stagger
+            className="mt-14 grid gap-6 sm:grid-cols-3"
+          >
+            {[
+              {
+                href: "/about/mission-vision",
+                icon: "target",
+                kicker: "Purpose",
+                title: "Mission & Vision",
+                body: "What we are aiming at, and the four things it commits us to daily.",
+              },
+              {
+                href: "/about/accreditations",
+                icon: "certificate",
+                kicker: "Proof",
+                title: "Accreditations & Awards",
+                body: "ISO-certified training, documented letters, and a 450+ partner network.",
+              },
+              {
+                href: "/about/founder",
+                icon: "users",
+                kicker: "Profile",
+                title: "Our Founder",
+                body: "Mr. Gourav Gupta on why techcadd started, and what has not changed since.",
+              },
+            ].map((c) => (
+              <Link
+                key={c.href}
+                href={c.href}
+                className="card-hover group rounded-3xl border border-line bg-white p-8"
+              >
+                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-50 text-up-accent transition-colors group-hover:bg-up-accent group-hover:text-white">
+                  <Icon name={c.icon} size={22} />
                 </span>
-                <div className="text-center sm:text-left">
-                  <h3 className="font-display text-2xl font-extrabold text-up-ink">
-                    Mr. Gourav Gupta
-                  </h3>
-                  <p className="mt-1 text-sm font-semibold uppercase tracking-[0.14em] text-up-accent">
-                    Founder &amp; CEO, techcadd
-                  </p>
-                  <p className="mt-5 text-sm leading-relaxed text-up-muted">
-                    He started techcadd in 2016 to give young people in Punjab technology skills and
-                    the confidence to use them. The method has not changed since that first
-                    classroom: practising engineers as trainers, project work instead of slide
-                    decks, and a curriculum rewritten whenever the industry moves — which is how AI,
-                    cloud and cyber security joined the syllabus.
-                  </p>
-                  <blockquote className="mt-6 border-l-2 border-up-accent pl-5 text-left font-display text-lg font-bold leading-snug text-up-ink">
-                    “The future belongs to learners who continuously adapt, innovate and build.”
-                  </blockquote>
-                </div>
-              </div>
-
-              <div className="mt-9 grid gap-4 border-t border-line pt-8 sm:grid-cols-3">
-                {[
-                  { title: "Practitioner-led", body: "Every trainer still builds for a living." },
-                  { title: "Industry-aligned", body: "Curriculum reviewed against live hiring briefs." },
-                  { title: "Career-integrated", body: "Placement support is part of the course, not an add-on." },
-                ].map((p) => (
-                  <div key={p.title}>
-                    <p className="text-sm font-bold text-up-ink">{p.title}</p>
-                    <p className="mt-1.5 text-sm leading-relaxed text-up-muted">{p.body}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+                <p className="mt-6 text-[0.66rem] font-bold uppercase tracking-[0.16em] text-up-muted/80">
+                  {c.kicker}
+                </p>
+                <h3 className="mt-1.5 text-lg font-bold text-up-ink transition-colors group-hover:text-up-accent">
+                  {c.title}
+                </h3>
+                <p className="mt-2.5 text-sm leading-relaxed text-up-muted">{c.body}</p>
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-up-accent">
+                  Read more
+                  <Icon
+                    name="arrowRight"
+                    size={15}
+                    className="transition-transform duration-300 group-hover:translate-x-1.5"
+                  />
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

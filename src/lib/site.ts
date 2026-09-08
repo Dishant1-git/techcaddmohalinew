@@ -71,8 +71,15 @@ export type NavFeature = {
   kicker?: string;
   /** Muted text beside the kicker. */
   caption?: string;
-  /** Gradient used for the card's image area. */
+  /** Gradient used for the card's image area when there is no photograph. */
   art?: string;
+  /**
+   * Drop a file in `public/about/` and register it here to use a real photo.
+   * Listed explicitly rather than guessed from the title, so a photo that has
+   * not been added yet can never render as a broken image — the same convention
+   * `public/courses/README.md` sets out for course photography.
+   */
+  photo?: { src: string; alt: string };
 };
 
 /**
@@ -122,31 +129,38 @@ export const navItems: NavItem[] = [
     label: "About",
     href: "/about",
     panel: "feature",
+    // Four items, each its own page — the rail and the cards stay in step.
     links: [
-      { label: "About techcadd Mohali", href: "/about" },
-      { label: "Why choose us", href: "/about#why" },
-      { label: "How we work", href: "/about#values" },
-      { label: "The Mohali campus", href: "/about#campus" },
-      { label: "Founder", href: "/about#founder" },
+      { label: "About techcadd", href: "/about" },
+      { label: "Mission and Vision", href: "/about/mission-vision" },
+      { label: "Accreditations & Awards", href: "/about/accreditations" },
+      { label: "Founder", href: "/about/founder" },
     ],
     features: [
       {
-        title: "About techcadd Mohali",
+        title: "About techcadd",
         href: "/about",
         kicker: "Story",
         caption: "Since 2016",
         art: "from-hero-800 via-hero-600 to-hero-glow",
       },
       {
-        title: "How we work",
-        href: "/about#values",
+        title: "Mission and Vision",
+        href: "/about/mission-vision",
         kicker: "Purpose",
-        caption: "Four rules",
+        caption: "Our direction",
         art: "from-hero-900 via-brand-700 to-accent-500",
       },
       {
+        title: "Accreditations",
+        href: "/about/accreditations",
+        kicker: "Proof",
+        caption: "ISO certified",
+        art: "from-hero-800 via-brand-600 to-accent-glow",
+      },
+      {
         title: "Our Founder",
-        href: "/about#founder",
+        href: "/about/founder",
         kicker: "Profile",
         caption: "Gourav Gupta",
         art: "from-brand-900 via-hero-600 to-accent-400",
@@ -159,7 +173,7 @@ export const navItems: NavItem[] = [
     },
   },
 
-  { label: "Founder", href: "/about#founder" },
+  { label: "Founder", href: "/about/founder" },
 
   {
     label: "AI",

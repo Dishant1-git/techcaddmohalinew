@@ -72,7 +72,7 @@ export default function QuickEnquiry() {
         <button
           type="submit"
           disabled={state === "sending"}
-          className="shrink-0 rounded-full bg-up-ink px-8 py-4 text-[0.9rem] font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-hero-900 disabled:pointer-events-none disabled:opacity-60"
+          className="accent-fill shrink-0 rounded-full px-8 py-4 text-[0.9rem] font-bold transition-all hover:-translate-y-0.5 disabled:pointer-events-none disabled:opacity-60"
         >
           {state === "sending" ? "Sending…" : "Book Demo"}
         </button>

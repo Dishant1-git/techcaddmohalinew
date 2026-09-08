@@ -20,13 +20,28 @@ const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : use
 
 const two = (n: number) => String(n + 1).padStart(2, "0");
 
+/** White or near-black on a brand colour, whichever actually reads. */
+function inkOn(hex: string) {
+  const channels = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+  const [r, g, b] = channels.map((v) =>
+    v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4,
+  );
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.45 ? "#0b1a4d" : "#ffffff";
+}
+
 function ToolLogo({ tool }: { tool: Tool }) {
   if (tool.mark) return <TechMark name={tool.mark} size={24} />;
   if (tool.emoji) return <span className="text-[1.25rem] leading-none">{tool.emoji}</span>;
+
+  // A handful of vendors are a wordmark or a mascot — Jenkins' butler, Kali's
+  // dragon, the Postgres elephant — and redrawing those at 24px produces a
+  // smudge that reads worse than no logo. They get a solid tile in the brand
+  // colour instead, which carries the same visual weight as a real mark rather
+  // than looking like one failed to load.
   return (
     <span
-      style={{ color: tool.color }}
-      className="font-display text-[0.78rem] font-extrabold leading-none tracking-tight"
+      style={{ backgroundColor: tool.color, color: inkOn(tool.color ?? "#1c53d1") }}
+      className="grid h-7 w-7 place-items-center rounded-[0.5rem] font-display text-[0.62rem] font-extrabold leading-none tracking-tight"
     >
       {tool.short}
     </span>
@@ -265,10 +280,10 @@ export default function Capabilities() {
 
               <Link
                 href={current.href}
-                className="group mt-7 inline-flex items-center gap-2 rounded-full bg-up-ink py-2 pl-6 pr-2 text-[0.85rem] font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-hero-900"
+                className="accent-fill group mt-7 inline-flex items-center gap-2 rounded-full py-2 pl-6 pr-2 text-[0.85rem] font-bold transition-all hover:-translate-y-0.5"
               >
                 Explore {current.label}
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/15">
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-hero-950/12">
                   <Icon
                     name="arrowUpRight"
                     size={15}

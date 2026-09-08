@@ -346,7 +346,7 @@ export default function EnquiryModal() {
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="group mt-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-8 py-3 text-[0.92rem] font-bold text-hero-800 transition-all hover:-translate-y-0.5 hover:bg-white disabled:pointer-events-none disabled:opacity-60"
+                className="accent-fill group mt-4 inline-flex items-center gap-2 rounded-full px-8 py-3 text-[0.92rem] font-bold transition-all hover:-translate-y-0.5 disabled:pointer-events-none disabled:opacity-60"
               >
                 {status === "sending" ? "Sending…" : "Submit"}
                 <Icon

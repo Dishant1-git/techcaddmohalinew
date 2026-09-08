@@ -284,6 +284,24 @@
     display: none;
   }
 
+  /* ---- Primary action ------------------------------------------------------
+     Yellow against the navy, not a blue-on-blue gradient. Blue reads as the
+     site's structure, so a blue CTA sits *in* the page; this steps out of it.
+
+     Defined once and applied by class so the accent can be retuned in one
+     place. Call sites must not set their own `color` — a text utility would
+     win over this rule, since utilities are layered after components. */
+  .accent-fill {
+    background-color: var(--color-accent-yellow);
+    color: var(--color-hero-950);
+    box-shadow: 0 18px 40px -18px rgb(255 210 63 / 0.55);
+  }
+
+  .accent-fill:hover {
+    background-color: #ffdf72;
+    box-shadow: 0 22px 50px -16px rgb(255 210 63 / 0.75);
+  }
+
   .animate-wave {
     display: inline-block;
     transform-origin: 72% 78%;

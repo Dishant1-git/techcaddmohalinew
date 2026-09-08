@@ -76,6 +76,64 @@ export const collage: CollageTile[] = [
   },
 ];
 
+export const founder = {
+  name: "Mr. Gourav Gupta",
+  initials: "GG",
+  role: "Founder & CEO, techcadd",
+  quote: "The future belongs to learners who continuously adapt, innovate and build.",
+  bio: "He started techcadd in 2016 to give young people in Punjab technology skills and the confidence to use them. The method has not changed since that first classroom: practising engineers as trainers, project work instead of slide decks, and a curriculum rewritten whenever the industry moves — which is how AI, cloud and cyber security joined the syllabus.",
+  principles: [
+    { title: "Practitioner-led", body: "Every trainer still builds for a living." },
+    { title: "Industry-aligned", body: "Curriculum reviewed against live hiring briefs." },
+    {
+      title: "Career-integrated",
+      body: "Placement support is part of the course, not an add-on.",
+    },
+  ],
+};
+
+/**
+ * Accreditations and recognitions.
+ *
+ * Only claims the site already makes elsewhere (ISO-certified training, the
+ * certificate and internship letter every course ends with). Anything with a
+ * registration number, an awarding body or a year belongs here too — but those
+ * have to come from the institute's own records rather than be written for it,
+ * so this list stays at what can be stated honestly today.
+ */
+export const credentials = [
+  {
+    icon: "certificate",
+    title: "ISO-certified training",
+    body: "Programmes are delivered under an ISO-certified quality process, and every completion certificate is issued against it.",
+  },
+  {
+    icon: "briefcase",
+    title: "Internship letters",
+    body: "The six- and nine-month tracks issue a documented internship letter covering the live project work you did, not just attendance.",
+  },
+  {
+    icon: "building",
+    title: "University-compliant training",
+    body: "Six-week and summer programmes come with the syllabus mapping, attendance record and project report colleges ask for.",
+  },
+  {
+    icon: "users",
+    title: "450+ hiring partners",
+    body: "A placement network across Mohali, Chandigarh and Panchkula that runs drives through the year, not once a season.",
+  },
+  {
+    icon: "star",
+    title: "4.9 on Google",
+    body: "Rated 4.9 out of 5 across 556+ verified reviews on our Google Business Profile.",
+  },
+  {
+    icon: "shield",
+    title: "Practising-engineer faculty",
+    body: "Every trainer works in the field they teach, and the curriculum is reviewed each quarter against live job descriptions.",
+  },
+];
+
 export const pillars = [
   {
     eyebrow: "Where we are going",

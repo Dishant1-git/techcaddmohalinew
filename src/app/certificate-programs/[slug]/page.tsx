@@ -10,6 +10,7 @@ import SectionRail from "@/components/courses/detail/SectionRail";
 import CertificateHero from "@/components/courses/certificate/CertificateHero";
 import { GuillocheDefs } from "@/components/courses/certificate/Motifs";
 import CertificateEnquiry from "@/components/courses/certificate/CertificateEnquiry";
+import CertificateTracks from "@/components/courses/certificate/CertificateTracks";
 import {
   CertFaqs,
   CertLearn,
@@ -145,6 +146,12 @@ export default async function CertificateProgramPage({
       <GuillocheDefs />
 
       <CertificateHero course={course} serial={reference} />
+
+      {/* Length first: which of 3 / 6 / 9 months you take is the question that
+          comes up before the syllabus does. Outside the rail wrapper below, so
+          it stays clear of the nine numbered sections the three course designs
+          share. */}
+      <CertificateTracks course={course} />
 
       {/* The rail is sticky within this wrapper, so it pins across the
           programme sections and releases before the footer blocks. */}

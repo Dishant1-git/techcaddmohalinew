@@ -48,7 +48,7 @@ export default function AboutStrip() {
           <Link
             data-anim="fade"
             href="/about"
-            className="group mt-12 inline-flex items-center gap-2 rounded-full bg-up-ink px-7 py-3.5 text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_18px_40px_-20px_rgba(11,26,77,0.9)] transition-all hover:-translate-y-0.5 hover:bg-hero-900"
+            className="accent-fill group mt-12 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold transition-all hover:-translate-y-0.5"
           >
             More about the institute
             <Icon
