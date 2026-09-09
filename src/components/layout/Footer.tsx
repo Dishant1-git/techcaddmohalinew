@@ -39,7 +39,12 @@ const legal = [
   { label: "Terms & Conditions", href: "/terms" },
 ];
 
-export default function Footer() {
+/** Pages written in the CMS and marked for the footer. */
+export default function Footer({
+  cmsPages = [],
+}: {
+  cmsPages?: { slug: string; label: string }[];
+}) {
   return (
     <footer className="relative overflow-hidden border-t border-line bg-subtle">
       {/* Oversized wordmark watermark, cropped by the footer's bottom edge. It
@@ -109,7 +114,22 @@ export default function Footer() {
           </div>
 
           {/* -------------------------------- Links ------------------------------ */}
-          {columns.map((col) => (
+          {/* The built-in columns, then whatever the CMS adds. A page that
+              nobody marked for the footer adds no column at all. */}
+          {[
+            ...columns,
+            ...(cmsPages.length
+              ? [
+                  {
+                    heading: "More",
+                    links: cmsPages.map((page) => ({
+                      label: page.label,
+                      href: `/${page.slug}`,
+                    })),
+                  },
+                ]
+              : []),
+          ].map((col) => (
             <div key={col.heading}>
               <h3 className="font-display text-[1.15rem] font-extrabold text-up-ink">
                 {col.heading}

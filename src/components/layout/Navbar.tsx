@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   navItems,
   site,
@@ -470,8 +470,24 @@ function PanelBody({ item }: { item: NavItem }) {
  * Ten items, one of them 19 characters, only fit beside the logo and CTA from
  * 1280px up, so below xl the bar collapses to the drawer.
  */
-export default function Navbar() {
+/**
+ * `cmsPages` are pages an editor marked for the header.
+ *
+ * Appended as plain links after the built-in menu. They carry no panel, so
+ * they render the way "Home" does — a CMS page is a page, not a mega-menu, and
+ * inventing a dropdown for it would promise structure it does not have.
+ */
+export default function Navbar({
+  cmsPages = [],
+}: {
+  cmsPages?: { slug: string; label: string }[];
+}) {
   const pathname = usePathname();
+
+  const items = useMemo<NavItem[]>(
+    () => [...navItems, ...cmsPages.map((page) => ({ label: page.label, href: `/${page.slug}` }))],
+    [cmsPages],
+  );
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -530,7 +546,7 @@ export default function Navbar() {
    */
   const activeLabel = (() => {
     let best: { label: string; depth: number } | null = null;
-    for (const item of navItems) {
+    for (const item of items) {
       if (item.neverActive) continue;
       const path = item.href.split("#")[0];
       const hit =
@@ -584,7 +600,7 @@ export default function Navbar() {
               onMouseLeave={hoverClose}
               aria-label="Primary"
             >
-              {navItems.map((item, i) => {
+              {items.map((item, i) => {
                 const isOpen = openMenu === item.label;
                 const isCurrent = activeLabel === item.label;
 

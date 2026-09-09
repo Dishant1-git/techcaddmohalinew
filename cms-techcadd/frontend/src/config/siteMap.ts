@@ -42,17 +42,32 @@ const slugUrl = (prefix: string) => (record: Record<string, unknown>) => {
 
 export const SITE_MAP: Record<string, Placement> = {
   blogs: {
-    where: 'The blog index at /blogs, and a page of its own.',
-    url: slugUrl('/blogs/'),
+    where: 'The blog index at /blog, and a page of its own.',
+    // /blog, not /blogs. The plural is the Jalandhar site's address and it
+    // 404s here, which sent editors to a missing page from their own post.
+    url: slugUrl('/blog/'),
   },
   courses: {
     where:
       'Its own course page, the listing for its section, the course dropdown in the menus and the sitemap. The category you choose is the heading it is filed under.',
+    /*
+      The segment is not the address.
+
+      It used to be dropped straight into the path, so an after-12th course
+      linked to /after-12th-courses/<slug> — which this site does not have.
+      A segment with no page here returns no link at all, which is honester
+      than one that 404s.
+    */
     url: (record) => {
       const { slug, segment } = record
       if (typeof slug !== 'string' || !slug) return undefined
-      const section = typeof segment === 'string' && segment ? segment : 'courses'
-      return `${SITE_URL}/${section}/${slug}`
+
+      const paths: Record<string, string> = {
+        courses: '/courses/',
+        'after-12th-courses': '/after-12th/',
+      }
+      const prefix = paths[typeof segment === 'string' ? segment : 'courses']
+      return prefix ? `${SITE_URL}${prefix}${slug}` : undefined
     },
   },
   categories: {
@@ -64,14 +79,15 @@ export const SITE_MAP: Record<string, Placement> = {
   },
   faqs: {
     where:
-      'The /faq page, grouped under the category you enter. Featured questions also appear in the homepage FAQ section.',
+      'The /faq page, under the tab matching the category you choose. A category with no tab of its own is shown under General.',
   },
   reviews: {
     where:
       'The /reviews page. Only reviews with source "Google" are shown there, because the card carries the Google mark.',
   },
   testimonials: {
-    where: 'The testimonials carousel on the homepage. Featured ones are shown first.',
+    where:
+      'The quotes marquee on the homepage, and the student stories on /reviews — where a Google link or a video link on the testimonial becomes a button.',
   },
   events: {
     where:
@@ -79,7 +95,9 @@ export const SITE_MAP: Record<string, Placement> = {
     url: slugUrl('/events/'),
   },
   gallery: {
-    where: 'The /gallery page, as a photo wall grouped by album.',
+    where:
+      'The /gallery index as an album card, and a page of its own where the photographs are shown as a wall. Clicking one opens it full size.',
+    url: slugUrl('/gallery/'),
   },
   settings: {
     where:

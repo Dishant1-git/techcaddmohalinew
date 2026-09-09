@@ -251,7 +251,9 @@ export function relatedForCourse(course: Course): RelatedLink[] {
  * quiz that works one out instead.
  */
 export function relatedForPost(post: BlogPost): RelatedLink[] {
-  const courseCategory = BLOG_TO_COURSE[post.category];
+  // Keyed by the built-in headings; a category created in the CMS is not one
+  // of them and simply has no subject hub to point at.
+  const courseCategory = BLOG_TO_COURSE[post.category as BlogCategory];
 
   return [
     courseCategory ? categoryHub(courseCategory) : DEST.careerTrack,

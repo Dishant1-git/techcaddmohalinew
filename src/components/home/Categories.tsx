@@ -3,7 +3,8 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import Link from "next/link";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
-import { categories } from "@/lib/courses";
+import { categories as builtInCategories } from "@/lib/courses";
+import type { CourseCategory } from "@/lib/cms/content";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Icon from "@/components/ui/Icon";
 
@@ -14,7 +15,8 @@ import Icon from "@/components/ui/Icon";
 const useIsoLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
-export default function Categories() {
+/** `items` is the list to render — the page passes the CMS-merged one. */
+export default function Categories({ items = builtInCategories }: { items?: CourseCategory[] }) {
   const root = useRef<HTMLElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
@@ -188,7 +190,7 @@ export default function Categories() {
           ref={track}
           className="flex w-max items-stretch gap-5 px-[max(1.25rem,calc((100vw-80rem)/2))] py-6 sm:gap-6 lg:gap-10 lg:py-14"
         >
-          {categories.map((cat) => (
+          {items.map((cat) => (
             <Link
               key={cat.key}
               href={`/courses?category=${cat.key}`}

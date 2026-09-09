@@ -12,12 +12,15 @@ import Testimonials from "@/components/home/Testimonials";
 import TechOrbit from "@/components/home/TechOrbit";
 import Faq from "@/components/home/Faq";
 import CtaBanner from "@/components/home/CtaBanner";
-import { getTestimonials } from "@/lib/cms/content";
+import { getCourseCategories, getTestimonials } from "@/lib/cms/content";
 
 export default async function Home() {
   // CategoryGrid derives its own cards from `src/lib/courses.ts`, so the only
   // CMS read this page still needs is the one behind the quotes marquee.
-  const testimonials = await getTestimonials();
+  const [testimonials, courseCategories] = await Promise.all([
+    getTestimonials(),
+    getCourseCategories(),
+  ]);
 
   return (
     // Section order mirrors techcaddjalandhar.com's home page: AI first, then
@@ -30,7 +33,7 @@ export default async function Home() {
       <AboutStrip />
       <Durations />
       <Process />
-      <Categories />
+      <Categories items={courseCategories} />
       <CategoryGrid />
       <WhyUs />
       <Testimonials items={testimonials} />

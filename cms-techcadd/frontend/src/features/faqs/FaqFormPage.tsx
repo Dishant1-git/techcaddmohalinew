@@ -25,6 +25,25 @@ import { STATUS_OPTIONS } from '../courses/courseSchema'
 import { emptyFaq, faqSchema, type FaqFormValues } from './faqSchema'
 import { faqHooks } from './useFaqs'
 
+/**
+ * The slugs the website's FAQ page has tabs for.
+ *
+ * Mirrors the `order` list in the site's `src/lib/faq.ts`. The two codebases
+ * do not share a module graph, so this is the one place the coupling lives —
+ * add a tab there and add its slug here.
+ */
+const FAQ_TAB_SLUGS = new Set([
+  'digital-marketing',
+  'ai-data',
+  'development',
+  'cyber-cloud',
+  'cad-design',
+  'programming',
+])
+
+/** The catch-all tab, which is not a Categories row. */
+const GENERAL_CATEGORY = 'General'
+
 export default function FaqFormPage() {
   const { id } = useParams<{ id: string }>()
   const isEdit = Boolean(id)
@@ -71,20 +90,35 @@ export default function FaqFormPage() {
   const currentCategory = useWatch({ control, name: 'categoryName' })
 
   const categoryOptions = useMemo(() => {
+    /*
+      Only headings the FAQ page actually has a tab for.
+
+      The Categories section holds course categories and blog categories in one
+      table, but the FAQ page's tabs are the six course ones plus General. A
+      question filed under "Career Advice" or "Cyber Security" — both blog
+      headings — matched no tab and silently ended up in General, which reads
+      as the category having been ignored. Offering a choice that cannot be
+      honoured is worse than offering fewer.
+    */
     const options = (categories.data?.items ?? [])
-      .filter((category) => category.status === 'published')
+      .filter(
+        (category) => category.status === 'published' && FAQ_TAB_SLUGS.has(category.slug),
+      )
       .map((category) => ({ value: category.name, label: category.name }))
 
-    /*
-      A question filed under a heading that is no longer in the list keeps it.
+    // The catch-all tab. It is not a row in the Categories section — it lives
+    // in the FAQ page itself — so it has to be added by hand.
+    options.push({ value: GENERAL_CATEGORY, label: GENERAL_CATEGORY })
 
-      Older questions were filed under headings this form invented before the
-      lists were joined up ("General"). Without this the select would render
-      blank for them and the first save would quietly re-file the question
-      under whatever happened to be first.
+    /*
+      A question filed under a heading that is not offered keeps it.
+
+      Older questions were filed before the lists were joined up. Without this
+      the select would render blank for them and the first save would quietly
+      re-file the question under whatever happened to be first.
     */
     if (currentCategory && !options.some((option) => option.value === currentCategory)) {
-      options.push({ value: currentCategory, label: `${currentCategory} (not in Categories)` })
+      options.unshift({ value: currentCategory, label: `${currentCategory} (no tab — shows under General)` })
     }
 
     return options

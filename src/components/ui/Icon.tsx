@@ -179,6 +179,15 @@ const paths: Record<string, React.ReactNode> = {
 
 export type IconName = keyof typeof paths;
 
+/**
+ * Every icon this component can draw.
+ *
+ * Exported so a name arriving from outside the codebase — the CMS stores one
+ * per category — can be checked before it is rendered. An unknown name draws
+ * nothing, which reads as a missing icon rather than a bad value.
+ */
+export const ICON_NAMES = new Set(Object.keys(paths));
+
 export default function Icon({
   name,
   size = 20,

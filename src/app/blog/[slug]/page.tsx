@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
-import { categoryArt } from "@/lib/blog";
+import { artFor } from "@/lib/blog";
 import { getBlogPost, getBlogPosts } from "@/lib/cms/content";
 import Icon from "@/components/ui/Icon";
 import CtaBanner from "@/components/home/CtaBanner";
@@ -51,17 +52,23 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <Link href="/blog" className="transition-colors hover:text-white">
               Blog
             </Link>
-            <Icon name="arrowRight" size={11} className="opacity-50" />
-            <span className="text-up-soft">{post.category}</span>
+            {post.category && (
+              <>
+                <Icon name="arrowRight" size={11} className="opacity-50" />
+                <span className="text-up-soft">{post.category}</span>
+              </>
+            )}
           </nav>
 
-          <p
-            data-anim="fade"
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-up-soft"
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-accent-yellow" />
-            {post.category}
-          </p>
+          {post.category && (
+            <p
+              data-anim="fade"
+              className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-up-soft"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-accent-yellow" />
+              {post.category}
+            </p>
+          )}
 
           <h1 data-anim="words" className="break-words font-display text-3xl font-extrabold leading-[1.15] sm:text-4xl lg:text-[2.9rem]">
             {post.title}
@@ -79,17 +86,58 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       <article className="py-16 lg:py-20">
         <div className="container-x max-w-3xl">
-          <span className={`relative block h-56 overflow-hidden rounded-3xl bg-gradient-to-br ${categoryArt[post.category]} sm:h-72`}>
-            <span className="absolute inset-0 grid-lines opacity-70" />
+          <span
+            className={`relative block h-56 overflow-hidden rounded-3xl bg-gradient-to-br ${artFor(post.category)} sm:h-72`}
+          >
+            {/* A cover uploaded in the CMS replaces the gradient; without one
+                the gradient is the design, not a placeholder. */}
+            {post.cover ? (
+              <Image
+                src={post.cover.src}
+                alt={post.cover.alt}
+                fill
+                sizes="(min-width: 768px) 48rem, 100vw"
+                priority
+                className="object-cover"
+              />
+            ) : (
+              <span className="absolute inset-0 grid-lines opacity-70" />
+            )}
           </span>
 
-          <div className="mt-10 space-y-5">
-            {post.body.map((para, i) => (
-              <p key={i} className="break-words text-base leading-relaxed text-up-ink/85">
-                {para}
-              </p>
-            ))}
-          </div>
+          {/*
+            Rich text from the CMS is rendered as markup — flattening it to
+            paragraphs dropped the headings, the bold runs and any image the
+            editor placed inside the article. The built-in posts have no HTML,
+            so they still render as the plain paragraphs they are.
+          */}
+          {post.bodyHtml ? (
+            <div
+              className="prose-cms mt-10"
+              dangerouslySetInnerHTML={{ __html: post.bodyHtml }}
+            />
+          ) : (
+            <div className="mt-10 space-y-5">
+              {post.body.map((para, i) => (
+                <p key={i} className="break-words text-base leading-relaxed text-up-ink/85">
+                  {para}
+                </p>
+              ))}
+            </div>
+          )}
+
+          {post.tags && post.tags.length > 0 && (
+            <div className="mt-10 flex flex-wrap items-center gap-2">
+              {post.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full bg-brand-50 px-3 py-1 text-[0.7rem] font-bold uppercase tracking-wide text-up-accent"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
 
           <div className="mt-12 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-line bg-subtle px-6 py-5">
             <p className="text-sm text-up-muted">Want this mapped to your own background and goals?</p>
@@ -105,7 +153,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           {related.length > 0 && (
             <div className="mt-14 border-t border-line pt-10">
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-up-muted">
-                More on {post.category}
+                More on {post.category ?? "the blog"}
               </p>
               <div className="mt-5 grid gap-5 sm:grid-cols-2">
                 {related.map((r) => (

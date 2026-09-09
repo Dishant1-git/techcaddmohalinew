@@ -3,6 +3,7 @@ import { Inter, Host_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { getNavPages } from "@/lib/cms/content";
 import Animator from "@/components/anim/Animator";
 import Cursor from "@/components/anim/Cursor";
 import FloatingActions from "@/components/layout/FloatingActions";
@@ -91,7 +92,18 @@ const armAnimations = `
 
 // suppressHydrationWarning on <html>: the inline script above adds `anim-armed`
 // before React hydrates, so server and client markup differ there by design.
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  /*
+    Pages an editor asked to appear in a menu.
+
+    Fetched once here rather than in each menu: the header and the footer would
+    otherwise make the same call on every render of every page. One read, split
+    by where the editor asked for it.
+  */
+  const navPages = await getNavPages();
+  const headerPages = navPages.filter((page) => page.placement === "header");
+  const footerPages = navPages.filter((page) => page.placement === "footer");
+
   return (
     <html
       lang="en"
@@ -108,9 +120,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <Animator />
         <Cursor />
-        <Navbar />
+        <Navbar cmsPages={headerPages} />
         <main>{children}</main>
-        <Footer />
+        <Footer cmsPages={footerPages} />
         <FloatingActions />
         <EnquiryModal />
       </body>

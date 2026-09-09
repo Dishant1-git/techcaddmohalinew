@@ -309,6 +309,40 @@ publicRouter.get(
   }),
 )
 
+/**
+ * Every published page, for an index the website can list.
+ *
+ * `/nav-pages` only returns the ones an editor put in a menu, so a page that
+ * was published but not added to the navigation was reachable only by typing
+ * its address. This is the whole set, without the bodies — a listing needs a
+ * title and a link, and shipping every page's content to draw a list of them
+ * would be wasteful.
+ */
+publicRouter.get(
+  '/pages',
+  asyncHandler(async (req, res) => {
+    const rows = await query<Row>(
+      `SELECT slug, title, nav_label, meta_description, updated_at
+         FROM pages
+        WHERE status = 'published'
+        ORDER BY nav_order ASC, title ASC
+        LIMIT ?`,
+      [limitFrom(req.query.limit, 100)],
+    )
+
+    res.json({
+      items: rows.map((row) => ({
+        slug: row.slug,
+        title: row.title,
+        label: (row.nav_label as string | null) || row.title,
+        description: row.meta_description ?? undefined,
+        updatedAt: row.updated_at,
+      })),
+      total: rows.length,
+    })
+  }),
+)
+
 publicRouter.get(
   '/pages/:slug',
   asyncHandler(async (req, res) => {

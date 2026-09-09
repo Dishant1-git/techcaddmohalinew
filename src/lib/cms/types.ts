@@ -91,8 +91,55 @@ export type CmsBlog = {
   categoryName?: string;
   coverImage?: CmsMedia;
   publishDate?: string;
-  tags?: { id: string; name: string; slug: string }[];
+  /** The API returns plain names, not objects. */
+  tags?: string[];
   createdAt?: string;
+};
+
+/* -------------------------------------------------------------------------- *
+ *                                    Pages                                    *
+ * -------------------------------------------------------------------------- */
+
+/** One block on a page, in the order the editor arranged them. */
+export type CmsPageSection = {
+  id: string;
+  type: "rich-text" | "image" | "video" | "cta" | "blogs";
+  title?: string;
+  body?: string;
+  media?: CmsMedia;
+  linkUrl?: string;
+  linkLabel?: string;
+  linkTarget?: "same" | "new";
+  visible: boolean;
+};
+
+export type CmsPage = {
+  id: string;
+  title: string;
+  slug: string;
+  template: string;
+  navPlacement: "none" | "header" | "footer";
+  navLabel?: string;
+  navOrder: number;
+  /** Rich text above the blocks. */
+  content?: string;
+  publishDate?: string;
+  sections?: CmsPageSection[];
+  seo?: {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: string[];
+    canonicalUrl?: string;
+    ogImage?: CmsMedia | null;
+  };
+  status: string;
+};
+
+/** What `/nav-pages` returns — just enough to draw a menu item. */
+export type CmsNavPage = {
+  slug: string;
+  label: string;
+  placement: "header" | "footer";
 };
 
 export type CmsEventAgendaItem = {

@@ -401,6 +401,8 @@ export const navItems: NavItem[] = [
       { label: "FAQ", href: "/faq" },
       { label: "Reviews", href: "/reviews" },
       { label: "College Partnerships", href: "/college-partnerships" },
+      // Everything the office publishes from the CMS, in one place.
+      { label: "Pages", href: "/pages" },
     ],
   },
 

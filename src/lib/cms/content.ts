@@ -1,10 +1,14 @@
 import { cmsGet, cmsList, cmsMediaUrl, isCmsConfigured } from "@/lib/cms/client";
+import { ICON_NAMES } from "@/components/ui/Icon";
 import type {
   CmsBlog,
+  CmsCategory,
   CmsCourse,
   CmsEvent,
   CmsFaqCategoryNode,
   CmsGalleryAlbum,
+  CmsNavPage,
+  CmsPage,
   CmsReview,
   CmsSite,
   CmsTestimonial,
@@ -17,7 +21,7 @@ import {
   type CategoryKey,
   type Course,
 } from "@/lib/courses";
-import { blogPosts as builtInPosts, type BlogCategory, type BlogPost } from "@/lib/blog";
+import { blogPosts as builtInPosts, type BlogPost } from "@/lib/blog";
 import { events as builtInEvents, type EventItem } from "@/lib/events";
 import { galleryTiles as builtInTiles, type GalleryTile } from "@/lib/gallery";
 import { googleReviews as builtInReviews, type GoogleReview } from "@/lib/reviews";
@@ -240,8 +244,6 @@ export async function getCourse(slug: string): Promise<Course | undefined> {
  *                                    Blog                                     *
  * -------------------------------------------------------------------------- */
 
-const BLOG_CATEGORIES = new Set<string>(builtInPosts.map((post) => post.category as string));
-
 /** ~200 words a minute, which is what the built-in posts were labelled at. */
 function readTime(body: string[]): string {
   const words = body.join(" ").split(/\s+/).filter(Boolean).length;
@@ -252,10 +254,22 @@ function toPost(item: CmsBlog, existing: BlogPost | undefined): BlogPost | null 
   const body = pick(toParagraphs(item.body), existing?.body ?? []);
   if (!body.length && !existing) return null;
 
-  const name = item.categoryName || "";
-  const category: BlogCategory = BLOG_CATEGORIES.has(name)
-    ? (name as BlogCategory)
-    : (existing?.category ?? "Career Advice");
+  /*
+    The CMS category wins, whatever it is called.
+
+    It used to be forced into one of the seven built-in headings and anything
+    else fell back to "Career Advice", so a post filed under a category the
+    office created was labelled as something it was not. `BlogPost.category` is
+    a plain string now, so the editor's own heading survives.
+  */
+  /*
+    No category is a real answer.
+
+    It used to fall back to "Career Advice", which labelled a post as something
+    it was not — the chip on the page claimed a category the editor never
+    chose. Undefined means the chip is simply not drawn.
+  */
+  const category = item.categoryName?.trim() || existing?.category;
 
   const date = (item.publishDate || item.createdAt || existing?.date || "").slice(0, 10);
   const unchanged = existing ? body === existing.body : false;
@@ -269,6 +283,11 @@ function toPost(item: CmsBlog, existing: BlogPost | undefined): BlogPost | null 
     date: date || new Date().toISOString().slice(0, 10),
     readTime: unchanged ? existing!.readTime : readTime(body),
     body,
+    bodyHtml: item.body?.trim() || undefined,
+    cover: item.coverImage?.url
+      ? { src: cmsMediaUrl(item.coverImage.url), alt: item.coverImage.alt || item.title }
+      : existing?.cover,
+    tags: item.tags?.length ? item.tags : existing?.tags,
   };
 }
 
@@ -791,6 +810,219 @@ export async function getFaqCategories(): Promise<FaqCategory[]> {
     });
     return { ...tab, items };
   });
+}
+
+
+/* -------------------------------------------------------------------------- *
+ *                                    Pages                                    *
+ * -------------------------------------------------------------------------- */
+
+export type PageSection = {
+  id: string;
+  type: "rich-text" | "image" | "video" | "cta" | "blogs";
+  title?: string;
+  /** Rich text, as HTML. Rendered as markup for `rich-text` blocks. */
+  html?: string;
+  image?: { src: string; alt: string; width?: number; height?: number };
+  link?: { url: string; label: string; newTab: boolean };
+};
+
+export type CmsManagedPage = {
+  slug: string;
+  title: string;
+  html?: string;
+  sections: PageSection[];
+  metaTitle?: string;
+  metaDescription?: string;
+  ogImage?: string;
+};
+
+/** A page an editor asked to appear in the site's own menus. */
+export type NavPage = { slug: string; label: string; placement: "header" | "footer" };
+
+/**
+ * A page written in the CMS, or `undefined` when there is no such page.
+ *
+ * Unlike the rest of this module there is no built-in fallback: these pages do
+ * not exist in the site's source at all, so an unreachable CMS means the URL
+ * simply is not a page — which is what `notFound()` is for.
+ */
+export async function getCmsPage(slug: string): Promise<CmsManagedPage | undefined> {
+  if (!isCmsConfigured()) return undefined;
+
+  const page = await cmsGet<CmsPage>(`/pages/${encodeURIComponent(slug)}`);
+  if (!page || page.status !== "published") return undefined;
+
+  const sections: PageSection[] = (page.sections ?? [])
+    // An editor can hide a block without deleting it; a hidden one is not
+    // "empty", it is deliberately withheld.
+    .filter((section) => section.visible)
+    .map((section) => ({
+      id: section.id,
+      type: section.type,
+      title: section.title || undefined,
+      html: section.body || undefined,
+      image: section.media?.url
+        ? {
+            src: cmsMediaUrl(section.media.url),
+            alt: section.media.alt || section.title || page.title,
+            width: section.media.width,
+            height: section.media.height,
+          }
+        : undefined,
+      link:
+        section.linkUrl && section.linkLabel
+          ? {
+              url: section.linkUrl,
+              label: section.linkLabel,
+              newTab: section.linkTarget === "new",
+            }
+          : undefined,
+    }))
+    // A block with nothing in it would render as a gap.
+    .filter((section) => section.html || section.image || section.link || section.title);
+
+  return {
+    slug: page.slug,
+    title: page.title,
+    html: page.content || undefined,
+    sections,
+    metaTitle: page.seo?.metaTitle || undefined,
+    metaDescription: page.seo?.metaDescription || undefined,
+    ogImage: page.seo?.ogImage?.url ? cmsMediaUrl(page.seo.ogImage.url) : undefined,
+  };
+}
+
+/**
+ * Every published page, for `generateStaticParams`.
+ *
+ * The public API has no list endpoint for pages — only `/pages/:slug` and the
+ * navigation list — so the slugs come from the menu. A page an editor did not
+ * put in a menu still works; it is rendered on demand rather than prebuilt.
+ */
+export async function getCmsPageSlugs(): Promise<string[]> {
+  const nav = await getNavPages();
+  return nav.map((page) => page.slug);
+}
+
+export type PageSummary = {
+  slug: string;
+  title: string;
+  description?: string;
+};
+
+/**
+ * Every published page, for the index at /pages.
+ *
+ * Distinct from `getNavPages`, which is only the ones an editor put in a menu.
+ * A page that was published but never added to the navigation had no route to
+ * it at all except typing the address; this is what the index lists.
+ */
+export async function getCmsPages(): Promise<PageSummary[]> {
+  if (!isCmsConfigured()) return [];
+  const items = await cmsList<{
+    slug: string;
+    title: string;
+    label?: string;
+    description?: string;
+  }>("/pages", 100);
+  if (!items?.length) return [];
+
+  return items
+    .filter((item) => item.slug && (item.title || item.label))
+    .map((item) => ({
+      slug: item.slug,
+      title: item.label || item.title,
+      description: item.description || undefined,
+    }));
+}
+
+/** Pages an editor asked to be linked from the header or the footer. */
+export async function getNavPages(): Promise<NavPage[]> {
+  if (!isCmsConfigured()) return [];
+  const items = await cmsList<CmsNavPage>("/nav-pages");
+  if (!items?.length) return [];
+
+  return items
+    .filter((item) => item.slug && item.label)
+    .map((item) => ({
+      slug: item.slug,
+      label: item.label,
+      placement: item.placement === "header" ? "header" : "footer",
+    }));
+}
+
+
+/* -------------------------------------------------------------------------- *
+ *                                 Categories                                  *
+ * -------------------------------------------------------------------------- */
+
+export type CourseCategory = (typeof categories)[number];
+
+/**
+ * The six course categories, with anything renamed in the CMS folded in.
+ *
+ * Only the words are taken: the title, the blurb and the icon. `key` and
+ * `accent` stay as the site defines them — the key is a route parameter and a
+ * filter value that other pages link to, and `accent` is a Tailwind gradient
+ * class pair, not a colour the CMS could supply. So an editor can retitle
+ * "CAD / CAM & Design" without breaking `/courses?category=cad-design` or
+ * leaving a card with no gradient.
+ *
+ * Matched on slug, so a category the CMS does not have keeps its built-in copy
+ * and a category the site does not have is ignored — the six are a design, not
+ * a list that grows.
+ */
+export async function getCourseCategories(): Promise<CourseCategory[]> {
+  if (!isCmsConfigured()) return [...categories];
+
+  const items = await cmsList<CmsCategory>("/categories", 100);
+  if (!items?.length) return [...categories];
+
+  const bySlug = new Map(items.map((item) => [item.slug, item]));
+
+  return categories.map((category) => {
+    const cms = bySlug.get(category.key);
+    if (!cms) return category;
+
+    return {
+      ...category,
+      title: pick(cms.name, category.title),
+      blurb: pick(toText(cms.description), category.blurb),
+      // Only a name the site's icon set actually has; anything else would
+      // render as a blank square.
+      icon: cms.icon && ICON_NAMES.has(cms.icon) ? cms.icon : category.icon,
+    };
+  });
+}
+
+
+/* -------------------------------------------------------------------------- *
+ *                                  Comments                                   *
+ * -------------------------------------------------------------------------- */
+
+export type BlogComment = {
+  id: string;
+  authorName: string;
+  /** A reply from the office, shown with a badge. */
+  isStaff: boolean;
+  body: string;
+  createdAt: string;
+  replies: BlogComment[];
+};
+
+/**
+ * The approved comments on a post.
+ *
+ * Only approved ones ever leave the CMS — the endpoint filters on status, so
+ * a pending or hidden comment cannot reach the page even by accident. An
+ * unreachable CMS returns an empty thread rather than an error: comments are
+ * an addition to an article, and a post should still read without them.
+ */
+export async function getBlogComments(slug: string): Promise<BlogComment[]> {
+  if (!isCmsConfigured()) return [];
+  const items = await cmsList<BlogComment>(`/blogs/${encodeURIComponent(slug)}/comments`);
+  return items ?? [];
 }
 
 /* -------------------------------------------------------------------------- *

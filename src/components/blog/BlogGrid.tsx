@@ -2,10 +2,12 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { blogPosts as builtInPosts, categoryArt, type BlogCategory, type BlogPost } from "@/lib/blog";
+import Image from "next/image";
+import { blogPosts as builtInPosts, artFor, type BlogPost } from "@/lib/blog";
 import Icon from "@/components/ui/Icon";
 
-type Filter = BlogCategory | "All";
+/** Any category the posts in hand actually use, or every post. */
+type Filter = string;
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
@@ -28,8 +30,8 @@ export default function BlogGrid({ posts = builtInPosts }: { posts?: BlogPost[] 
 
   const tabs: { key: Filter; label: string; count: number }[] = [
     { key: "All", label: "All", count: posts.length },
-    ...Array.from(new Set(posts.map((p) => p.category))).map((c) => ({
-      key: c as Filter,
+    ...Array.from(new Set(posts.map((p) => p.category).filter(Boolean) as string[])).map((c) => ({
+      key: c,
       label: c,
       count: posts.filter((p) => p.category === c).length,
     })),
@@ -72,9 +74,19 @@ export default function BlogGrid({ posts = builtInPosts }: { posts?: BlogPost[] 
         {visible.map((post) => (
           <Link key={post.slug} href={`/blog/${post.slug}`} className="group flex flex-col">
             <span
-              className={`relative block h-40 overflow-hidden rounded-2xl bg-gradient-to-br ${categoryArt[post.category]}`}
+              className={`relative block h-40 overflow-hidden rounded-2xl bg-gradient-to-br ${artFor(post.category)}`}
             >
-              <span className="absolute inset-0 grid-lines opacity-70" />
+              {post.cover ? (
+                <Image
+                  src={post.cover.src}
+                  alt={post.cover.alt}
+                  fill
+                  sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
+                  className="object-cover"
+                />
+              ) : (
+                <span className="absolute inset-0 grid-lines opacity-70" />
+              )}
               <span className="absolute inset-0 bg-gradient-to-t from-hero-950/45 to-transparent" />
               <span className="absolute left-4 top-4 rounded-full bg-white/90 px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wide text-up-ink">
                 {post.category}

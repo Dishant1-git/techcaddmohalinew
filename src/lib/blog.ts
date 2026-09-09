@@ -20,12 +20,34 @@ export const categoryArt: Record<BlogCategory, string> = {
 export type BlogPost = {
   slug: string;
   title: string;
-  category: BlogCategory;
+  /**
+   * A plain string, not the `BlogCategory` union.
+   *
+   * The built-in posts use the seven headings below, but an editor names their
+   * own in the CMS and those are not in the union. Nothing depends on the
+   * exact value except `categoryArt`, which falls back for anything it does
+   * not recognise — so widening this lets a CMS category through instead of
+   * forcing every post into one of seven.
+   */
+  category?: string;
   excerpt: string;
   author: string;
   date: string;
   readTime: string;
   body: string[];
+  /**
+   * The body as the editor wrote it, when it came from the CMS.
+   *
+   * `body` is the plain-text fallback the built-in posts use. Rich text has
+   * headings, bold, lists and inline images, and flattening it to paragraphs
+   * threw all of that away — so the markup is kept alongside and rendered when
+   * it is there.
+   */
+  bodyHtml?: string;
+  /** Header photograph, when the CMS has one. */
+  cover?: { src: string; alt: string };
+  /** Free-form tags from the CMS. */
+  tags?: string[];
 };
 
 export const blogPosts: BlogPost[] = [
@@ -240,3 +262,13 @@ export const blogPosts: BlogPost[] = [
 export const blogCategories = Array.from(new Set(blogPosts.map((p) => p.category))) as BlogCategory[];
 
 export const getPost = (slug: string) => blogPosts.find((p) => p.slug === slug);
+
+/**
+ * The gradient for a category strip.
+ *
+ * `categoryArt` only knows the seven built-in headings; a CMS category falls
+ * back to a neutral brand gradient rather than rendering an empty box.
+ */
+export function artFor(category: string | undefined): string {
+  return categoryArt[category as BlogCategory] ?? "from-brand-400 to-hero-900";
+}
