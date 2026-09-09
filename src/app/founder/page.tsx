@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Image from "next/image";
 import PageHero from "@/components/ui/PageHero";
 import SectionHeading from "@/components/ui/SectionHeading";
 import TeamMarquee from "@/components/about/TeamMarquee";
-import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import CtaBanner from "@/components/home/CtaBanner";
 import Icon from "@/components/ui/Icon";
 
@@ -15,33 +15,159 @@ export const metadata: Metadata = {
 
 const badges = ["Visionary Entrepreneur", "Technology Educator", "Skill Development Advocate"];
 
-const pillars = [
+const impactStats = [
+  { value: "2016", suffix: "", label: "Year he founded techcadd" },
+  { value: "15", suffix: "+", label: "Years of excellence" },
+  { value: "12,450", suffix: "+", label: "Students trained" },
+  { value: "450", suffix: "+", label: "Hiring partners" },
+];
+
+const credentials = [
   {
-    icon: "cloud",
-    title: "Emerging Technologies",
-    body: "Moving the catalogue beyond conventional computer education into AI, cloud, cyber security and automation.",
+    title: "ISO Certified",
+    body: "An externally audited quality-management process behind how the training is designed and delivered.",
   },
   {
-    icon: "code",
-    title: "Practical Training",
-    body: "Learning built on projects and hands-on work rather than theory alone.",
+    title: "MSME Registered",
+    body: "Registered as a genuine, government-recognised training business under the Udyam scheme.",
   },
   {
-    icon: "users",
-    title: "Industry Engagement",
-    body: "Working with employers and institutions so what is taught tracks what is actually hired for.",
-  },
-  {
-    icon: "briefcase",
-    title: "Career Development",
-    body: "Counselling, placement support and career pathways treated as part of the programme, not an afterthought.",
-  },
-  {
-    icon: "sparkles",
-    title: "Innovation",
-    body: "Bringing new technology into the classroom early, while it is still emerging.",
+    title: "Startup India Recognised",
+    body: "DPIIT-recognised under the Government of India's Startup India initiative.",
   },
 ];
+
+const pillars = [
+  {
+    variant: "emerging" as const,
+    title: "Emerging Technologies",
+    body: "Moving the catalogue beyond conventional computer education into AI, cloud, cyber security and automation.",
+    span: "lg:col-span-3",
+  },
+  {
+    variant: "practical" as const,
+    title: "Practical Training",
+    body: "Learning built on projects and hands-on work rather than theory alone.",
+    span: "lg:col-span-3",
+  },
+  {
+    variant: "industry" as const,
+    title: "Industry Engagement",
+    body: "Working with employers and institutions so what is taught tracks what is actually hired for.",
+    span: "sm:col-span-2 lg:col-span-2",
+  },
+  {
+    variant: "career" as const,
+    title: "Career Development",
+    body: "Counselling, placement support and career pathways treated as part of the programme, not an afterthought.",
+    span: "sm:col-span-2 lg:col-span-2",
+  },
+  {
+    variant: "innovation" as const,
+    title: "Innovation",
+    body: "Bringing new technology into the classroom early, while it is still emerging.",
+    span: "sm:col-span-2 lg:col-span-2",
+  },
+];
+
+type PillarVariant = (typeof pillars)[number]["variant"];
+
+function PillarArt({ variant }: { variant: PillarVariant }) {
+  const line = "var(--color-line)";
+  const brand = "var(--color-brand-600)";
+  switch (variant) {
+    case "emerging":
+      return (
+        <svg viewBox="0 0 200 140" className="h-full w-full px-6 py-4" fill="none" aria-hidden="true">
+          <g stroke={line} strokeWidth={3} strokeLinecap="round">
+            <path d="M76 34V20M100 34V20M124 34V20" />
+            <path d="M76 106v14M100 106v14M124 106v14" />
+            <path d="M64 58H50M64 70H50M64 82H50" />
+            <path d="M136 58h14M136 70h14M136 82h14" />
+          </g>
+          <rect x="64" y="34" width="72" height="72" rx="14" stroke={line} strokeWidth={3} />
+          <rect x="82" y="52" width="36" height="36" rx="8" fill={brand} fillOpacity={0.12} stroke={brand} strokeWidth={2.5} />
+          <path d="M164 24l3.5 9 9 3.5-9 3.5-3.5 9-3.5-9-9-3.5 9-3.5 3.5-9Z" fill={brand} fillOpacity={0.55} />
+        </svg>
+      );
+    case "practical":
+      return (
+        <svg viewBox="0 0 200 140" className="h-full w-full px-6 py-4" fill="none" aria-hidden="true">
+          <rect x="26" y="24" width="148" height="92" rx="10" stroke={line} strokeWidth={3} />
+          <path d="M26 46h148" stroke={line} strokeWidth={3} />
+          <g fill={line}>
+            <circle cx="41" cy="35" r="3.5" />
+            <circle cx="53" cy="35" r="3.5" />
+            <circle cx="65" cy="35" r="3.5" />
+          </g>
+          <g fill={line}>
+            <rect x="40" y="60" width="64" height="7" rx="3.5" />
+            <rect x="40" y="74" width="96" height="7" rx="3.5" />
+            <rect x="40" y="88" width="44" height="7" rx="3.5" />
+          </g>
+          <rect x="98" y="84" width="50" height="17" rx="8.5" fill={brand} />
+        </svg>
+      );
+    case "industry":
+      return (
+        <svg viewBox="0 0 200 140" className="h-full w-full px-6 py-4" fill="none" aria-hidden="true">
+          <g stroke={line} strokeWidth={2.5}>
+            <path d="M100 70 54 44M100 70l46-26M100 70 54 96M100 70l46 26" />
+          </g>
+          <circle cx="100" cy="70" r="38" stroke={line} strokeWidth={2} strokeDasharray="4 7" />
+          <circle cx="100" cy="70" r="20" fill={brand} fillOpacity={0.12} stroke={brand} strokeWidth={2.5} />
+          <circle cx="100" cy="70" r="7" fill={brand} />
+          <g fill="white" stroke={line} strokeWidth={2.5}>
+            <circle cx="54" cy="44" r="11" />
+            <circle cx="146" cy="44" r="11" />
+            <circle cx="54" cy="96" r="11" />
+            <circle cx="146" cy="96" r="11" />
+          </g>
+        </svg>
+      );
+    case "career":
+      return (
+        <svg viewBox="0 0 200 140" className="h-full w-full px-6 py-4" fill="none" aria-hidden="true">
+          <path d="M32 112h136" stroke={line} strokeWidth={3} strokeLinecap="round" />
+          <g fill={line}>
+            <rect x="42" y="88" width="16" height="24" rx="4" />
+            <rect x="68" y="76" width="16" height="36" rx="4" />
+            <rect x="94" y="82" width="16" height="30" rx="4" />
+          </g>
+          <g fill={brand}>
+            <rect x="120" y="60" width="16" height="52" rx="4" fillOpacity={0.5} />
+            <rect x="146" y="42" width="16" height="70" rx="4" />
+          </g>
+          <path
+            d="M50 78 76 66l26 6 26-22 26-18"
+            stroke={brand}
+            strokeWidth={2.5}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeDasharray="5 6"
+          />
+        </svg>
+      );
+    case "innovation":
+      return (
+        <svg viewBox="0 0 200 140" className="h-full w-full px-6 py-4" fill="none" aria-hidden="true">
+          <g stroke={line} strokeWidth={3} strokeLinecap="round">
+            <path d="M100 18v10M64 34l7 7M136 34l-7 7M46 70h10M144 70h10" />
+          </g>
+          <circle cx="100" cy="66" r="28" fill={brand} fillOpacity={0.1} stroke={brand} strokeWidth={2.5} />
+          <path
+            d="M92 62c0-6 4-10 8-10s8 4 8 10c0 4-3 6-4 10h-8c-1-4-4-6-4-10Z"
+            stroke={brand}
+            strokeWidth={2.5}
+            strokeLinejoin="round"
+          />
+          <g stroke={line} strokeWidth={3} strokeLinecap="round">
+            <path d="M90 100h20M93 110h14" />
+          </g>
+        </svg>
+      );
+  }
+}
 
 const engagements = [
   {
@@ -144,6 +270,30 @@ export default function FounderPage() {
         </div>
       </section>
 
+      {/* By the numbers */}
+      <section className="py-16 lg:py-20">
+        <div className="container-x">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-up-accent">By the numbers</p>
+            <h2 className="mt-4 font-display text-2xl font-extrabold text-up-ink sm:text-3xl">
+              What a decade of that method looks like
+            </h2>
+          </div>
+
+          <div data-anim="up" data-anim-stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {impactStats.map((s) => (
+              <div key={s.label} className="card-hover rounded-2xl border border-line bg-white p-6 text-center">
+                <p className="font-display text-3xl font-extrabold text-up-ink lg:text-4xl">
+                  {s.value}
+                  <span className="text-up-accent">{s.suffix}</span>
+                </p>
+                <p className="mt-1.5 text-sm text-up-muted">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* His Vision */}
       <section className="py-20 lg:py-28">
         <div className="container-x">
@@ -169,17 +319,23 @@ export default function FounderPage() {
             </h3>
           </div>
 
-          <div data-anim="up" data-anim-stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+          <ul data-anim="up" data-anim-stagger className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-6 lg:gap-6">
             {pillars.map((p) => (
-              <div key={p.title} className="card-hover rounded-2xl border border-line bg-white p-6 text-center">
-                <span className="mx-auto grid h-11 w-11 place-items-center rounded-xl bg-up-accent text-white">
-                  <Icon name={p.icon} size={20} />
-                </span>
-                <h4 className="mt-4 text-sm font-bold text-up-ink">{p.title}</h4>
-                <p className="mt-2 text-xs leading-relaxed text-up-muted">{p.body}</p>
-              </div>
+              <li key={p.title} className={`group ${p.span}`}>
+                <div className="flex h-full flex-col rounded-2xl border border-line bg-subtle p-5 transition-all duration-500 group-hover:-translate-y-2 group-hover:border-up-accent/40 group-hover:bg-white group-hover:shadow-[0_24px_50px_-24px_rgba(15,23,42,0.32)] lg:p-6">
+                  <div className="grid h-44 place-items-center overflow-hidden rounded-xl border border-line/70 bg-white transition-colors duration-500 group-hover:border-up-accent/25 group-hover:bg-brand-50/60 lg:h-48">
+                    <div className="grid h-full w-full place-items-center transition-transform duration-500 group-hover:scale-[1.06]">
+                      <PillarArt variant={p.variant} />
+                    </div>
+                  </div>
+                  <h4 className="mt-6 font-display text-lg font-bold text-up-ink transition-colors duration-500 group-hover:text-up-accent">
+                    {p.title}
+                  </h4>
+                  <p className="mt-2.5 text-sm leading-relaxed text-up-muted">{p.body}</p>
+                </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -283,9 +439,39 @@ export default function FounderPage() {
         </div>
       </section>
 
+      {/* Recognised institution */}
+      <section className="py-20 lg:py-28">
+        <div className="container-x">
+          <SectionHeading
+            align="center"
+            eyebrow="Recognised, not just self-described"
+            title="Built on credentials you can check"
+            subtitle="The institute he leads carries real, verifiable credentials, not just a claim on a homepage."
+          />
+
+          <div data-anim="up" data-anim-stagger className="mt-14 grid gap-6 sm:grid-cols-3">
+            {credentials.map((c) => (
+              <div key={c.title} className="rounded-2xl border border-line bg-subtle p-7 text-center">
+                <h3 className="text-base font-bold text-up-ink">{c.title}</h3>
+                <p className="mt-2.5 text-sm leading-relaxed text-up-muted">{c.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <Link
+              href="/accreditations-awards"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-up-accent"
+            >
+              See the full record
+              <Icon name="arrowRight" size={15} className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <TeamMarquee />
 
-      <QuickCallbackBar />
       <CtaBanner />
     </>
   );
