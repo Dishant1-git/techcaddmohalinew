@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { categoryLabel, courses, featuredCourses } from "@/lib/courses";
+import { categoryLabel, courses as builtInCourses, featuredCourses, type Course } from "@/lib/courses";
 import Icon from "@/components/ui/Icon";
 
 /** Ghosted word behind each card, the way the reference watermarks its tiles. */
@@ -18,7 +18,21 @@ const BADGE: Record<string, string> = {
   Trending: "bg-accent-400/30 text-hero-800",
 };
 
-export default function FeaturedCourses() {
+/**
+ * `items` are the six cards to show — the home page passes the CMS-merged set.
+ *
+ * The selection is still `featuredCourses()`: which courses are featured is a
+ * layout decision (six cards, each with its own watermark), not something the
+ * CMS picks. What the CMS changes is the copy inside them.
+ */
+export default function FeaturedCourses({
+  items = featuredCourses(),
+  total = builtInCourses.length,
+}: {
+  items?: Course[];
+  /** Size of the whole catalogue, for the "Browse all N courses" link. */
+  total?: number;
+}) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-white via-subtle to-white py-24 lg:py-32">
       {/* Frosted panels need something behind them to tint. On flat white the
@@ -62,7 +76,7 @@ export default function FeaturedCourses() {
           data-anim-stagger
           className="mt-14 grid gap-6 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:gap-7"
         >
-          {featuredCourses().map((course) => (
+          {items.map((course) => (
             <Link
               key={course.slug}
               href={`/courses/${course.slug}`}
@@ -124,7 +138,7 @@ export default function FeaturedCourses() {
             href="/courses"
             className="accent-fill group inline-flex items-center gap-2 rounded-full px-8 py-4 text-[0.9rem] font-bold transition-all hover:-translate-y-0.5"
           >
-            Browse all {courses.length} courses
+            Browse all {total} courses
             <Icon
               name="arrowRight"
               size={16}

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { blogPosts, blogCategories, categoryArt, type BlogCategory } from "@/lib/blog";
+import { blogPosts as builtInPosts, categoryArt, type BlogCategory, type BlogPost } from "@/lib/blog";
 import Icon from "@/components/ui/Icon";
 
 type Filter = BlogCategory | "All";
@@ -11,20 +11,27 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
 }
 
-export default function BlogGrid() {
+/**
+ * `posts` is the list to render — the page passes the CMS-merged one.
+ *
+ * The category tabs are derived from the posts in hand rather than from the
+ * built-in list, so a post filed under a category by an editor gets a tab and
+ * an empty tab never appears.
+ */
+export default function BlogGrid({ posts = builtInPosts }: { posts?: BlogPost[] }) {
   const [filter, setFilter] = useState<Filter>("All");
 
   const visible = useMemo(
-    () => (filter === "All" ? blogPosts : blogPosts.filter((p) => p.category === filter)),
-    [filter],
+    () => (filter === "All" ? posts : posts.filter((p) => p.category === filter)),
+    [filter, posts],
   );
 
   const tabs: { key: Filter; label: string; count: number }[] = [
-    { key: "All", label: "All", count: blogPosts.length },
-    ...blogCategories.map((c) => ({
-      key: c,
+    { key: "All", label: "All", count: posts.length },
+    ...Array.from(new Set(posts.map((p) => p.category))).map((c) => ({
+      key: c as Filter,
       label: c,
-      count: blogPosts.filter((p) => p.category === c).length,
+      count: posts.filter((p) => p.category === c).length,
     })),
   ];
 
@@ -32,7 +39,7 @@ export default function BlogGrid() {
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-5">
         <p className="text-xs font-bold uppercase tracking-[0.16em] text-up-muted">Latest posts</p>
-        <p className="text-xs text-up-muted">{blogPosts.length} articles</p>
+        <p className="text-xs text-up-muted">{posts.length} articles</p>
       </div>
 
       <div className="mt-5 flex flex-wrap gap-x-7 gap-y-3 border-b border-line">

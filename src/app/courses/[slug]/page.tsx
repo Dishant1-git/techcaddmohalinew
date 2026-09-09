@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { categoryLabel, courses, getCourse } from "@/lib/courses";
+import { categoryLabel } from "@/lib/courses";
+import { getCourse, getCourses } from "@/lib/cms/content";
 import { courseFaqs, ratingSummary } from "@/lib/coursePage";
 import { site } from "@/lib/site";
 import CourseCard from "@/components/ui/CourseCard";
@@ -39,7 +40,15 @@ import EnquiryForm from "@/components/courses/detail/EnquiryForm";
  * `data-anim` system, which is why nothing here carries those attributes.
  */
 
-export function generateStaticParams() {
+/**
+ * Prerendered slugs.
+ *
+ * Read through the CMS layer so a course added there gets a static page too.
+ * `dynamicParams` is left at its default, so a course published after a build
+ * still renders on first request rather than 404-ing until the next deploy.
+ */
+export async function generateStaticParams() {
+  const courses = await getCourses();
   return courses.map((c) => ({ slug: c.slug }));
 }
 
@@ -49,7 +58,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const course = getCourse(slug);
+  const course = await getCourse(slug);
   if (!course) return { title: "Course not found" };
 
   const title = `${course.title} Course in Mohali`;
@@ -70,7 +79,8 @@ export async function generateMetadata({
 
 export default async function CoursePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const course = getCourse(slug);
+  const courses = await getCourses();
+  const course = courses.find((c) => c.slug === slug);
   if (!course) notFound();
 
   const related = courses.filter((c) => c.category === course.category && c.slug !== course.slug);

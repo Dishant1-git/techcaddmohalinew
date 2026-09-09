@@ -1,5 +1,6 @@
 import { execute, ensureSchema, isDbConfigured, query } from "@/lib/db";
 import type { RowDataPacket } from "mysql2/promise";
+import { forwardEnquiryToCms } from "@/lib/cms/enquiries";
 
 /**
  * Every website form lands in one `enquiries` table.
@@ -90,6 +91,16 @@ export async function saveLead(lead: LeadInput) {
     cut(lead.ipAddress, 45),
     cut(lead.userAgent, 255),
   ]);
+
+  /*
+    Also deliver it to the CMS inbox, where the counselling team works.
+
+    Not awaited: the row above is the record of truth and is already committed,
+    so the visitor's "thank you" must not wait on a second system — and
+    `forwardEnquiryToCms` never rejects, so there is no unhandled rejection to
+    leak from here.
+  */
+  void forwardEnquiryToCms(lead);
 
   return result.insertId;
 }

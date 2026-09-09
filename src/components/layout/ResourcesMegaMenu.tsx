@@ -46,10 +46,16 @@ const CARDS: ResourceCard[] = [
     href: "/events",
     kicker: "Campus",
     caption: "Mohali & Jalandhar",
-    art: "from-brand-50 via-white to-brand-50",
+    // A third dark gradient, not a pale one: the card sat almost white beside
+    // its two neighbours and read as an unfinished tile rather than a
+    // deliberately lighter one. Warmer than the other two so the three are
+    // still telling apart at a glance.
+    art: "from-hero-950 via-brand-700 to-accent-500",
     icon: "calendar",
     headline: "Workshops, seminars & demo days",
-    tone: "light",
+    tone: "dark",
+    // Left empty on purpose: the card renders either the feature icons or the
+    // badge, and "Free to attend" is the more useful of the two here.
     features: [],
     badge: "Free to attend",
   },
@@ -134,7 +140,13 @@ export default function ResourcesMegaMenu({ links }: { links: NavChild[] }) {
                     </span>
                   ) : (
                     t.badge && (
-                      <span className="rounded-full bg-up-accent/10 px-2.5 py-1 text-[0.65rem] font-bold text-up-accent">
+                      <span
+                        className={`rounded-full px-2.5 py-1 text-[0.65rem] font-bold ${
+                          t.tone === "dark"
+                            ? "bg-white/15 text-white"
+                            : "bg-up-accent/10 text-up-accent"
+                        }`}
+                      >
                         {t.badge}
                       </span>
                     )

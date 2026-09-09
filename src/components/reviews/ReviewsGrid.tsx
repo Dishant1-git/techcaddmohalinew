@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Icon from "@/components/ui/Icon";
 import GoogleIcon from "@/components/reviews/GoogleIcon";
-import { googleReviews, googleReviewsUrl, avatarArt } from "@/lib/reviews";
+import { googleReviews as builtInReviews, googleReviewsUrl, avatarArt, type GoogleReview } from "@/lib/reviews";
 
-function Card({ review, index }: { review: (typeof googleReviews)[number]; index: number }) {
+function Card({ review, index }: { review: GoogleReview; index: number }) {
   const [expanded, setExpanded] = useState(false);
   const initials = review.name
     .split(" ")
@@ -22,7 +22,7 @@ function Card({ review, index }: { review: (typeof googleReviews)[number]; index
             {initials}
           </span>
           <span>
-            <span className="block text-sm font-bold text-up-ink">{review.name}</span>
+            <span className="block break-words text-sm font-bold text-up-ink">{review.name}</span>
             <span className="mt-0.5 flex items-center gap-1 text-xs text-up-muted">
               <GoogleIcon size={12} /> Google
             </span>
@@ -43,7 +43,7 @@ function Card({ review, index }: { review: (typeof googleReviews)[number]; index
       </div>
 
       <blockquote
-        className={`mt-3 flex-1 text-sm leading-relaxed text-up-ink/80 ${expanded ? "" : "line-clamp-4"}`}
+        className={`mt-3 flex-1 break-words text-sm leading-relaxed text-up-ink/80 ${expanded ? "" : "line-clamp-4"}`}
       >
         {review.quote}
       </blockquote>
@@ -61,13 +61,16 @@ function Card({ review, index }: { review: (typeof googleReviews)[number]; index
         <span className="inline-flex items-center rounded-full bg-brand-50 px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wide text-up-accent">
           {review.tag}
         </span>
+        {/* This review on Google when the CMS has its permalink, the listing
+            otherwise — the label changes so the link does not promise more
+            than it delivers. */}
         <a
-          href={googleReviewsUrl}
+          href={review.url || googleReviewsUrl}
           target="_blank"
           rel="noreferrer"
           className="inline-flex items-center gap-1 text-xs font-semibold text-up-muted transition-colors hover:text-up-accent"
         >
-          Read on Google
+          {review.url ? "Read on Google" : "See all on Google"}
           <Icon name="arrowUpRight" size={12} />
         </a>
       </div>
@@ -75,16 +78,17 @@ function Card({ review, index }: { review: (typeof googleReviews)[number]; index
   );
 }
 
-export default function ReviewsGrid() {
+/** `items` is the set to render — the page passes the CMS-merged one. */
+export default function ReviewsGrid({ items = builtInReviews }: { items?: GoogleReview[] }) {
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-5">
         <p className="text-xs font-bold uppercase tracking-[0.16em] text-up-muted">Recent reviews</p>
-        <p className="text-xs text-up-muted">{googleReviews.length} reviews shown</p>
+        <p className="text-xs text-up-muted">{items.length} reviews shown</p>
       </div>
 
       <div data-anim="up" data-anim-stagger className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {googleReviews.map((review, i) => (
+        {items.map((review, i) => (
           <Card key={`${review.name}-${i}`} review={review} index={i} />
         ))}
       </div>

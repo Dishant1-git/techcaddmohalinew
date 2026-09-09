@@ -4,6 +4,7 @@ import EventsGrid from "@/components/events/EventsGrid";
 import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import CtaBanner from "@/components/home/CtaBanner";
 import RelatedLinks from "@/components/ui/RelatedLinks";
+import { getEvents } from "@/lib/cms/content";
 
 export const metadata: Metadata = {
   title: "Events — Seminars, Workshops & Campus Sessions",
@@ -11,7 +12,9 @@ export const metadata: Metadata = {
     "Seminars, workshops and hands-on sessions techcadd has run at its campus and at colleges across Punjab — most of them free, all of them taught by the people who run our courses.",
 };
 
-export default function EventsPage() {
+export default async function EventsPage() {
+  const events = await getEvents();
+
   return (
     <>
       <PageHero
@@ -31,7 +34,7 @@ export default function EventsPage() {
 
       <section className="py-16 lg:py-20">
         <div className="container-x">
-          <EventsGrid />
+          <EventsGrid items={events} />
         </div>
       </section>
 

@@ -9,6 +9,46 @@ export type EventItem = {
   date: string;
   location: string;
   excerpt: string;
+
+  /* ---- Everything below is supplied by the CMS ------------------------- *
+   * All optional, because the built-in events above are a one-line summary
+   * each and predate the CMS. A detail page renders only the sections it has
+   * been given, so an event with nothing but a summary still gets a valid
+   * page rather than a scaffold of empty headings.
+   */
+
+  /** Long-form description, as paragraphs. */
+  body?: string[];
+  /** Photograph for the card and the detail hero. */
+  cover?: { src: string; alt: string };
+  /** Online, offline or hybrid, as the CMS records it. */
+  mode?: string;
+  /** Clock times, when the event has them. */
+  startTime?: string;
+  endTime?: string;
+  /** Last day, for events that run across several. */
+  endDate?: string;
+  venueName?: string;
+  venueAddress?: string;
+  city?: string;
+  mapUrl?: string;
+  hostName?: string;
+  registrationUrl?: string;
+  seats?: number;
+  tags?: string[];
+  /** Bullet takeaways — "what you will learn". */
+  highlights?: string[];
+  /** The running order. */
+  agenda?: { timeLabel?: string; title: string; detail?: string }[];
+  speakers?: {
+    name: string;
+    role?: string;
+    org?: string;
+    bio?: string;
+    photo?: { src: string; alt: string };
+  }[];
+  /** Photos from the day. */
+  images?: { src: string; alt: string; caption?: string }[];
 };
 
 export const eventArt = [

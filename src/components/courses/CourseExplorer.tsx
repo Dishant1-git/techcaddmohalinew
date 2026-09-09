@@ -2,20 +2,33 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
-import { categories, categoryLabel, courses, type CategoryKey } from "@/lib/courses";
+import { categories, categoryLabel, courses as builtInCourses, type CategoryKey, type Course } from "@/lib/courses";
 import CourseCard from "@/components/ui/CourseCard";
 import Icon from "@/components/ui/Icon";
 
 type Filter = CategoryKey | "all";
 
-export default function CourseExplorer({ initialCategory = "all" }: { initialCategory?: Filter }) {
+/**
+ * `items` is the catalogue to render — the page passes the CMS-merged list.
+ *
+ * It defaults to the built-in catalogue so this component still works when
+ * rendered without it, which is what keeps the CMS optional rather than a
+ * dependency the grid cannot draw without.
+ */
+export default function CourseExplorer({
+  initialCategory = "all",
+  items = builtInCourses,
+}: {
+  initialCategory?: Filter;
+  items?: Course[];
+}) {
   const [filter, setFilter] = useState<Filter>(initialCategory);
   const [query, setQuery] = useState("");
   const gridRef = useRef<HTMLDivElement>(null);
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return courses.filter((c) => {
+    return items.filter((c) => {
       const matchesCat = filter === "all" || c.category === filter;
       const matchesQuery =
         !q ||
@@ -24,7 +37,7 @@ export default function CourseExplorer({ initialCategory = "all" }: { initialCat
         c.tools.some((t) => t.toLowerCase().includes(q));
       return matchesCat && matchesQuery;
     });
-  }, [filter, query]);
+  }, [filter, query, items]);
 
   // Re-animate the grid whenever the result set changes.
   useEffect(() => {

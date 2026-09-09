@@ -146,8 +146,66 @@ categories, training programmes, FAQs, testimonials, stats and contact details.
 Editing those two files updates every page, including the statically generated
 course detail routes and the navigation mega-menu.
 
+These files are also the **fallback** for the CMS below: anything the CMS has
+not been given, or cannot be reached for, still renders from here.
+
+## CMS
+
+`cms-techcadd/` is an Express + MySQL API with a React admin, wired into this
+site so the office can edit the catalogue, blog, events, gallery, reviews and
+FAQs without a deploy.
+
+### How it is wired
+
+| | |
+| --- | --- |
+| `src/lib/cms/client.ts` | One tagged, cached `fetch` against the CMS's public API. Returns `null` on any failure. |
+| `src/lib/cms/content.ts` | Maps CMS records onto the site's own types and **merges them over** `src/lib/*.ts` by slug. |
+| `src/lib/cms/enquiries.ts` | Copies every form submission into the CMS's enquiries inbox. |
+| `src/app/api/revalidate/route.ts` | The webhook the CMS calls after each save. Drops the `cms` cache tag. |
+
+The merge rule is what keeps the site safe: a field an editor left blank keeps
+the copy that is already on the page, a record the CMS has never heard of is
+untouched, and a CMS that is down or empty leaves every page exactly as it was.
+Unset `CMS_API_URL` and the site runs entirely on its built-in content.
+
+### Running both
+
+The Mohali stack uses its own ports, because `E:	echcaddamritsar.com` on the
+same machine already owns 3000 and 4000:
+
+```bash
+# terminal 1 — the CMS API
+cd cms-techcadd/backend
+npm run db:migrate            # creates techcadd_cms_moh
+npm run db:seed               # first admin user
+npm run db:import-mohali      # seeds the CMS from this site's own content
+npm run dev                   # http://localhost:4100
+
+# terminal 2 — the CMS admin
+cd cms-techcadd/frontend && npm run dev    # http://localhost:5173
+
+# terminal 3 — the website
+npm run dev -- -p 3001                     # http://localhost:3001
+```
+
+`npm run db:import-mohali` is idempotent and never overwrites an edited row —
+run it again after adding courses to `src/lib/courses.ts` to make the new ones
+editable too.
+
+### Environment
+
+`REVALIDATE_SECRET` must be **identical** in `.env.local` and
+`cms-techcadd/backend/.env`, and `SITE_REVALIDATE_URL` there must point at this
+site's port. If they disagree the site still works — edits just wait out the
+`CMS_REVALIDATE_SECONDS` window instead of appearing immediately.
+
 ## Before going live
 
+- **CMS** — set `CMS_API_URL`, `CMS_MEDIA_URL` and `REVALIDATE_SECRET` on the
+  production host, and point the CMS's `SITE_REVALIDATE_URL` at the live site.
+  Leaving `CMS_API_URL` unset is a safe deploy: the site serves its built-in
+  content and nothing errors.
 - **Enquiry storage** — forms write to MySQL (see **Database** above). Set the
   `MYSQL_*` variables on the production host as well, and add an email/CRM
   notification in `src/lib/leads.ts` if the desk should be alerted rather than

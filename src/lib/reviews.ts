@@ -3,6 +3,14 @@ export type GoogleReview = {
   rating: number;
   tag: string;
   quote: string;
+  /**
+   * A link to this exact review on Google.
+   *
+   * Optional: the built-in reviews below were transcribed as a set and only
+   * have the one listing URL between them, so a card without this falls back
+   * to `googleReviewsUrl`. A review entered in the CMS can carry its own.
+   */
+  url?: string;
 };
 
 export const googleReviewsUrl =

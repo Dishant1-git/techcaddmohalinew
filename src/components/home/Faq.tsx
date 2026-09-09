@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { faqs } from "@/lib/courses";
+import { faqs as builtInFaqs } from "@/lib/courses";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Icon from "@/components/ui/Icon";
 import { site } from "@/lib/site";
 
-export default function Faq() {
+/** `items` are the questions to list — pages pass the CMS-merged set. */
+export default function Faq({ items = builtInFaqs }: { items?: { q: string; a: string }[] }) {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
@@ -59,7 +60,7 @@ export default function Faq() {
           </div>
 
           <div data-anim="up" data-anim-stagger className="space-y-3">
-            {faqs.map((f, i) => {
+            {items.map((f, i) => {
               const isOpen = open === i;
               return (
                 <div

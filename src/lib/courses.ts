@@ -431,17 +431,25 @@ export const courses: Course[] = [
 ];
 
 export const getCourse = (slug: string) => courses.find((c) => c.slug === slug);
+/**
+ * The six courses the home page leads with.
+ *
+ * Exported as slugs as well as records, because the home page now resolves
+ * them against the CMS-merged catalogue rather than this array — the selection
+ * is a layout decision (six cards, each with its own watermark) while the copy
+ * inside them is the CMS's.
+ */
+export const featuredSlugs = [
+  "artificial-intelligence",
+  "mern-full-stack",
+  "data-science",
+  "digital-marketing",
+  "cyber-security",
+  "cloud-computing",
+] as const;
+
 export const featuredCourses = () =>
-  courses.filter((c) =>
-    [
-      "artificial-intelligence",
-      "mern-full-stack",
-      "data-science",
-      "digital-marketing",
-      "cyber-security",
-      "cloud-computing",
-    ].includes(c.slug),
-  );
+  courses.filter((c) => (featuredSlugs as readonly string[]).includes(c.slug));
 
 export const trainingPrograms = [
   {

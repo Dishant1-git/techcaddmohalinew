@@ -7,6 +7,8 @@ import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import CtaBanner from "@/components/home/CtaBanner";
 import { googleRating, studentsTrained } from "@/lib/reviews";
 import RelatedLinks from "@/components/ui/RelatedLinks";
+import StudentStories from "@/components/reviews/StudentStories";
+import { getGoogleReviews, getStudentStories } from "@/lib/cms/content";
 
 export const metadata: Metadata = {
   title: "Reviews — What Our Students Say",
@@ -14,7 +16,9 @@ export const metadata: Metadata = {
     "Real Google reviews from techcadd Mohali students — on the trainers, the live projects, and the placement support, across Digital Marketing, AI, web development, cloud and more.",
 };
 
-export default function ReviewsPage() {
+export default async function ReviewsPage() {
+  const [reviews, stories] = await Promise.all([getGoogleReviews(), getStudentStories()]);
+
   return (
     <>
       <PageHero
@@ -44,9 +48,19 @@ export default function ReviewsPage() {
         </div>
       </PageHero>
 
-      <section className="py-16 lg:py-20">
+      {/* Stories lead when there are any: a face and a video carry further
+          than a wall of text, and the written reviews still follow below. */}
+      {stories.length > 0 && (
+        <section className="py-16 lg:py-20">
+          <div className="container-x">
+            <StudentStories items={stories} />
+          </div>
+        </section>
+      )}
+
+      <section className={stories.length > 0 ? "pb-16 lg:pb-20" : "py-16 lg:py-20"}>
         <div className="container-x">
-          <ReviewsGrid />
+          <ReviewsGrid items={reviews} />
         </div>
       </section>
 

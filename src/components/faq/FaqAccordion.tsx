@@ -3,35 +3,53 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
-import { faqCategories, defaultFaqCategory } from "@/lib/faq";
-import type { CategoryKey } from "@/lib/courses";
+import { faqCategories as builtInFaqCategories, type FaqCategory } from "@/lib/faq";
 import { site } from "@/lib/site";
 import Icon from "@/components/ui/Icon";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-export default function FaqAccordion() {
-  const [active, setActive] = useState<CategoryKey>(defaultFaqCategory);
+/** `groups` are the tabs to render — the page passes the CMS-merged set. */
+export default function FaqAccordion({ groups = builtInFaqCategories }: { groups?: FaqCategory[] }) {
+  /*
+    The first tab, whatever it is.
+
+    It used to be the hard-coded `defaultFaqCategory`, which is one of the six
+    built-in keys — so when the CMS supplies the tabs instead, that key matched
+    nothing and the page opened with no tab highlighted.
+  */
+  const [active, setActive] = useState<string>(groups[0]?.key ?? "");
   const [open, setOpen] = useState<number | null>(0);
 
   const activeCategory = useMemo(
-    () => faqCategories.find((c) => c.key === active) ?? faqCategories[0],
-    [active],
+    () => groups.find((c) => c.key === active) ?? groups[0],
+    [active, groups],
   );
 
-  function selectTab(key: CategoryKey) {
+  function selectTab(key: string) {
     setActive(key);
     setOpen(0);
   }
 
   return (
     <div>
-      <div className="flex flex-wrap gap-x-7 gap-y-3 border-b border-line">
-        {faqCategories.map((c) => (
+      {/*
+        One line that scrolls, rather than wrapping.
+
+        With the general tab there are seven of these and the last one wrapped
+        onto a row of its own, which reads as a mistake rather than a second
+        row. The count is not fixed either — it grows with the categories in
+        the CMS — so a layout that only works up to six was going to break
+        again. `no-scrollbar` hides the bar (the page styles a thick one) while
+        leaving the strip swipeable, which is also how it already behaves on a
+        phone.
+      */}
+      <div className="no-scrollbar flex gap-x-7 overflow-x-auto border-b border-line">
+        {groups.map((c) => (
           <button
             key={c.key}
             onClick={() => selectTab(c.key)}
-            className={`relative flex items-center gap-1.5 pb-4 text-sm font-semibold transition-colors ${
+            className={`relative flex shrink-0 items-center gap-1.5 whitespace-nowrap pb-4 text-sm font-semibold transition-colors ${
               active === c.key ? "text-up-accent" : "text-up-muted hover:text-up-ink"
             }`}
           >

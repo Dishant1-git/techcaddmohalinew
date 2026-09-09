@@ -3,6 +3,12 @@ export type GalleryTile = {
   src: string;
   alt: string;
   span: string;
+  /** Shown under the tile when the CMS supplies one. */
+  caption?: string;
+  /** Makes the tile a link. Set per image in the CMS. */
+  href?: string;
+  /** Which CMS album the photo came from, for the album filter. */
+  album?: string;
 };
 
 const spans = [

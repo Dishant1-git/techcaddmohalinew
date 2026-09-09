@@ -4,6 +4,7 @@ import FaqAccordion from "@/components/faq/FaqAccordion";
 import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import CtaBanner from "@/components/home/CtaBanner";
 import RelatedLinks from "@/components/ui/RelatedLinks";
+import { getFaqCategories } from "@/lib/cms/content";
 
 export const metadata: Metadata = {
   title: "FAQs — Admissions, Fees, Batches & Placement",
@@ -11,7 +12,9 @@ export const metadata: Metadata = {
     "Straight answers on admissions, batches, fees, certification and placement for every techcadd course — organised by track so you can find yours fast.",
 };
 
-export default function FaqPage() {
+export default async function FaqPage() {
+  const groups = await getFaqCategories();
+
   return (
     <>
       <PageHero
@@ -29,7 +32,7 @@ export default function FaqPage() {
 
       <section className="py-16 lg:py-20">
         <div className="container-x">
-          <FaqAccordion />
+          <FaqAccordion groups={groups} />
         </div>
       </section>
 

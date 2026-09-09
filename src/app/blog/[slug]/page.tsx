@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { blogPosts, categoryArt, getPost } from "@/lib/blog";
+import { categoryArt } from "@/lib/blog";
+import { getBlogPost, getBlogPosts } from "@/lib/cms/content";
 import Icon from "@/components/ui/Icon";
 import CtaBanner from "@/components/home/CtaBanner";
 import RelatedLinks from "@/components/ui/RelatedLinks";
 import { relatedForPost } from "@/lib/related";
 
-export function generateStaticParams() {
-  return blogPosts.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const posts = await getBlogPosts();
+  return posts.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
@@ -17,7 +19,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getBlogPost(slug);
   if (!post) return { title: "Post not found" };
   return { title: post.title, description: post.excerpt };
 }
@@ -28,10 +30,11 @@ function formatDate(iso: string) {
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const posts = await getBlogPosts();
+  const post = posts.find((p) => p.slug === slug);
   if (!post) notFound();
 
-  const related = blogPosts.filter((p) => p.category === post.category && p.slug !== post.slug).slice(0, 2);
+  const related = posts.filter((p) => p.category === post.category && p.slug !== post.slug).slice(0, 2);
 
   return (
     <>
@@ -60,7 +63,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             {post.category}
           </p>
 
-          <h1 data-anim="words" className="font-display text-3xl font-extrabold leading-[1.15] sm:text-4xl lg:text-[2.9rem]">
+          <h1 data-anim="words" className="break-words font-display text-3xl font-extrabold leading-[1.15] sm:text-4xl lg:text-[2.9rem]">
             {post.title}
           </h1>
 
@@ -82,7 +85,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
           <div className="mt-10 space-y-5">
             {post.body.map((para, i) => (
-              <p key={i} className="text-base leading-relaxed text-up-ink/85">
+              <p key={i} className="break-words text-base leading-relaxed text-up-ink/85">
                 {para}
               </p>
             ))}

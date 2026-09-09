@@ -4,6 +4,7 @@ import CourseExplorer from "@/components/courses/CourseExplorer";
 import CtaBanner from "@/components/home/CtaBanner";
 import Faq from "@/components/home/Faq";
 import type { CategoryKey } from "@/lib/courses";
+import { getCourses } from "@/lib/cms/content";
 import RelatedLinks from "@/components/ui/RelatedLinks";
 
 export const metadata: Metadata = {
@@ -18,12 +19,14 @@ export default async function CoursesPage({
   searchParams: Promise<{ category?: string }>;
 }) {
   const { category } = await searchParams;
+  // CMS-merged catalogue; falls back to src/lib/courses.ts when the CMS is off.
+  const courses = await getCourses();
 
   return (
     <>
       <PageHero
         crumbs={[{ label: "Courses" }]}
-        eyebrow="16 job-oriented tracks"
+        eyebrow={`${courses.length} job-oriented tracks`}
         title={
           <>
             Courses built around what Mohali employers hire for
@@ -43,7 +46,7 @@ export default async function CoursesPage({
         </div>
       </PageHero>
 
-      <CourseExplorer initialCategory={(category as CategoryKey) ?? "all"} />
+      <CourseExplorer initialCategory={(category as CategoryKey) ?? "all"} items={courses} />
       <Faq />
       <RelatedLinks route="/courses" />
       <CtaBanner />

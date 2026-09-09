@@ -4,6 +4,7 @@ import BlogGrid from "@/components/blog/BlogGrid";
 import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import CtaBanner from "@/components/home/CtaBanner";
 import RelatedLinks from "@/components/ui/RelatedLinks";
+import { getBlogPosts } from "@/lib/cms/content";
 
 export const metadata: Metadata = {
   title: "Blog — Course Guides, Hiring Trends & Career Advice",
@@ -11,7 +12,9 @@ export const metadata: Metadata = {
     "Course guides, hiring trends and career advice from the techcadd Mohali trainers and placement team — what employers actually ask for, across development, AI, marketing, security and CAD.",
 };
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const posts = await getBlogPosts();
+
   return (
     <>
       <PageHero
@@ -29,7 +32,7 @@ export default function BlogPage() {
 
       <section className="py-16 lg:py-20">
         <div className="container-x">
-          <BlogGrid />
+          <BlogGrid posts={posts} />
         </div>
       </section>
 

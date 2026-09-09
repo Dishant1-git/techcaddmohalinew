@@ -30,5 +30,6 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  "//": "cms-techcadd is a separate project with its own tsconfig, its own React version and Vite's import.meta types. Compiling it as part of the website reports dozens of errors that mean nothing here and hide the site's own.",
+  "exclude": ["node_modules", "cms-techcadd"]
 }

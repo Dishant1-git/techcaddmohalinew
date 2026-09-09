@@ -1,10 +1,13 @@
-import { testimonials } from "@/lib/courses";
+import { testimonials as builtInTestimonials } from "@/lib/courses";
+
+/** One quote card. Shared by the built-in quotes and the CMS testimonials. */
+type Quote = (typeof builtInTestimonials)[number];
 import { site } from "@/lib/site";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Icon from "@/components/ui/Icon";
 import TechMark from "@/components/ui/TechMark";
 
-function Card({ t }: { t: (typeof testimonials)[number] }) {
+function Card({ t }: { t: Quote }) {
   return (
     <figure className="glass glass-sheen relative mr-6 w-[21rem] shrink-0 rounded-3xl p-7 sm:w-[24rem]">
       {/* Stars on the left, source on the right: these are Google reviews, and
@@ -43,9 +46,10 @@ function Card({ t }: { t: (typeof testimonials)[number] }) {
   );
 }
 
-export default function Testimonials() {
-  const rowA = testimonials.slice(0, 3);
-  const rowB = testimonials.slice(3);
+/** `items` are the quotes to marquee — the home page passes the CMS-merged set. */
+export default function Testimonials({ items = builtInTestimonials }: { items?: Quote[] }) {
+  const rowA = items.slice(0, 3);
+  const rowB = items.slice(3);
 
   return (
     <section
