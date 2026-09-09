@@ -205,6 +205,8 @@ export const navItems: NavItem[] = [
         items: [
           { label: "Artificial Intelligence", href: "/courses/artificial-intelligence", badge: "Hot" },
           { label: "Generative AI", href: "/courses/generative-ai", badge: "New" },
+          { label: "Agentic AI", href: "/courses/agentic-ai", badge: "New" },
+          { label: "Prompt Engineering", href: "/courses/prompt-engineering", badge: "New" },
           { label: "Machine Learning", href: "/courses/machine-learning" },
           { label: "Deep Learning", href: "/courses/deep-learning" },
           { label: "Python for AI", href: "/courses/python-programming" },
@@ -270,6 +272,7 @@ export const navItems: NavItem[] = [
         items: [
           { label: "Artificial Intelligence", href: "/courses/artificial-intelligence" },
           { label: "Generative AI", href: "/courses/generative-ai", badge: "New" },
+          { label: "Prompt Engineering", href: "/courses/prompt-engineering", badge: "New" },
           { label: "Machine Learning", href: "/courses/machine-learning" },
           { label: "Deep Learning", href: "/courses/deep-learning" },
           { label: "Data Science", href: "/courses/data-science" },

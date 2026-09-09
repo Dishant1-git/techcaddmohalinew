@@ -83,7 +83,8 @@ export default function Certification({ course }: { course: Course }) {
                     {course.title}
                   </p>
                   <p className="mt-1 text-[0.7rem] text-up-muted">
-                    {course.duration} · {course.level}
+                    {course.duration ? `${course.duration} · ` : ""}
+                    {course.level}
                   </p>
 
                   <div className="mt-6 flex items-end justify-between gap-4 text-left">

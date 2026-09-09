@@ -91,7 +91,8 @@ export default function CourseCircuit({ course }: { course: Course }) {
   // Roughly the rendered width of the label at 14/800 with 2.2 tracking, plus
   // padding — SVG cannot measure text at render, and the plate is centred, so
   // an estimate a little wide is harmless.
-  const durationPlate = course.duration.length * 10.4 + 34;
+  const durationMark = course.duration ?? "Flexible batches";
+  const durationPlate = durationMark.length * 10.4 + 34;
 
   return (
     <div className="absolute inset-0 grid place-items-center">
@@ -240,7 +241,7 @@ export default function CourseCircuit({ course }: { course: Course }) {
               fontWeight="800"
               letterSpacing="2.2"
             >
-              {course.duration.toUpperCase()}
+              {durationMark.toUpperCase()}
             </text>
           </g>
         </svg>

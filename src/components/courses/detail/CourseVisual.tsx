@@ -86,8 +86,12 @@ export default function CourseVisual({ course }: { course: Course }) {
               {course.title}
             </p>
             <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-up-soft/75">
-              <span>{course.duration}</span>
-              <span className="h-1 w-1 rounded-full bg-white/30" />
+              {course.duration && (
+                <>
+                  <span>{course.duration}</span>
+                  <span className="h-1 w-1 rounded-full bg-white/30" />
+                </>
+              )}
               <span>{course.level}</span>
               <span className="h-1 w-1 rounded-full bg-white/30" />
               <span>Mohali &amp; live online</span>

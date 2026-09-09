@@ -332,7 +332,8 @@ export default function EnquiryForm({ course }: { course: Course }) {
                           </span>
                         </div>
                         <p id="ce-course-note" className="mt-2 text-[0.7rem] text-up-soft/45">
-                          Taken from the course page you are on — {course.duration} ·{" "}
+                          Taken from the course page you are on —{" "}
+                          {course.duration ? `${course.duration} · ` : ""}
                           {course.level}.
                         </p>
                       </div>

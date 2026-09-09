@@ -68,7 +68,7 @@ export async function generateMetadata({
   const title = seo?.title ?? `${course.title} Course in Mohali`;
   const description =
     seo?.description ??
-    `${course.blurb} ${course.duration} programme at techcadd Mohali with live projects, internship and placement assistance.`;
+    `${course.blurb}${course.duration ? ` ${course.duration}` : ""} programme at techcadd Mohali with live projects, internship and placement assistance.`;
 
   return {
     title,
@@ -122,7 +122,9 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
       hasCourseInstance: {
         "@type": "CourseInstance",
         courseMode: ["Onsite", "Online"],
-        courseWorkload: course.duration,
+        // Omitted rather than emitted empty for a course that advertises no
+        // fixed length — a blank courseWorkload is a schema warning.
+        ...(course.duration ? { courseWorkload: course.duration } : {}),
         location: {
           "@type": "Place",
           name: `${site.legalName}, ${site.city}`,
@@ -150,7 +152,11 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
 
       <CourseHero
         course={course}
-        categoryLabel={`${categoryLabel[course.category]} · ${course.duration}`}
+        categoryLabel={
+          course.duration
+            ? `${categoryLabel[course.category]} · ${course.duration}`
+            : categoryLabel[course.category]
+        }
         rating={rating}
       />
 

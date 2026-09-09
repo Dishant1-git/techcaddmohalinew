@@ -32,7 +32,7 @@ import { GradientMesh, JourneyPath, StepBadge } from "@/components/courses/after
  *                              Shared furniture                               *
  * -------------------------------------------------------------------------- */
 
-function StageHeading({
+export function StageHeading({
   step,
   kicker,
   title,
@@ -96,7 +96,7 @@ function StageHeading({
  * grid of these cards stutter. Motion values drive the transform directly and
  * never re-render.
  */
-function TiltCard({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function TiltCard({ children, className = "" }: { children: ReactNode; className?: string }) {
   const reduce = useReducedMotion();
   const spring = { stiffness: 220, damping: 22 };
   const rotateX = useSpring(useMotionValue(0), spring);
@@ -144,7 +144,7 @@ export function PathOverview({ course }: { course: Course }) {
           step={1}
           kicker="Where this starts"
           title="Straight from school into the work"
-          intro={`A ${course.duration.toLowerCase()} programme built for students who have just finished 12th and want a job-ready skill rather than three more years of theory.`}
+          intro={`A ${course.duration ? `${course.duration.toLowerCase()} ` : ""}programme built for students who have just finished 12th and want a job-ready skill rather than three more years of theory.`}
         />
 
         <div className="mt-14 grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
@@ -595,7 +595,7 @@ export function PathTools({ course }: { course: Course }) {
  *                            7 · Who has walked it                            *
  * -------------------------------------------------------------------------- */
 
-export function PathReviews({ course }: { course: Course }) {
+export function PathReviews({ course, step = 7 }: { course: Course; step?: number }) {
   const reduce = useReducedMotion();
   const reviews = courseReviews(course);
   const { average, reviewCount, buckets } = ratingBreakdown(course);
@@ -610,7 +610,7 @@ export function PathReviews({ course }: { course: Course }) {
 
       <div className="container-x relative">
         <StageHeading
-          step={7}
+          step={step}
           kicker="Who has walked it"
           title="Students who started where you are"
           intro="Alumni of this route, on what changed once they were sitting in interviews."
@@ -709,7 +709,15 @@ export function PathReviews({ course }: { course: Course }) {
  *                              8 · Before you go                              *
  * -------------------------------------------------------------------------- */
 
-export function PathFaqs({ faqs }: { faqs: { q: string; a: string }[] }) {
+export function PathFaqs({
+  faqs,
+  step = 8,
+  title = "Questions students ask us",
+}: {
+  faqs: { q: string; a: string }[];
+  step?: number;
+  title?: string;
+}) {
   const [open, setOpen] = useState<number | null>(0);
   const reduce = useReducedMotion();
 
@@ -717,10 +725,10 @@ export function PathFaqs({ faqs }: { faqs: { q: string; a: string }[] }) {
     <section id="faqs" className="relative scroll-mt-36 bg-subtle py-20 lg:py-28">
       <div className="container-x">
         <StageHeading
-          step={8}
+          step={step}
           tone="light"
           kicker="Before you go"
-          title="Questions students ask us"
+          title={title}
           intro="Still unsure? A ten-minute call with a counsellor usually settles it faster than any brochure."
         />
 

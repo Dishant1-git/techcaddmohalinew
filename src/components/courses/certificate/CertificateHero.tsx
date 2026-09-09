@@ -206,8 +206,9 @@ export default function CertificateHero({
                 </h2>
 
                 <p className="mx-auto mt-4 max-w-xs text-[0.72rem] leading-relaxed text-up-muted">
-                  A {course.duration.toLowerCase()} {course.level.toLowerCase()} programme completed
-                  with a live project, at the Mohali centre.
+                  A {course.duration ? `${course.duration.toLowerCase()} ` : ""}
+                  {course.level.toLowerCase()} programme completed with a live project, at the
+                  Mohali centre.
                 </p>
 
                 <div className="mt-8 flex items-end justify-between gap-6">
