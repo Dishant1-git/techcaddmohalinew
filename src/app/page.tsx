@@ -6,7 +6,7 @@ import Capabilities from "@/components/home/Capabilities";
 import AboutStrip from "@/components/home/AboutStrip";
 import Durations from "@/components/home/Durations";
 import Process from "@/components/home/Process";
-import FeaturedCourses from "@/components/home/FeaturedCourses";
+import CategoryGrid from "@/components/home/CategoryGrid";
 import WhyUs from "@/components/home/WhyUs";
 import Testimonials from "@/components/home/Testimonials";
 import TechOrbit from "@/components/home/TechOrbit";
@@ -26,7 +26,7 @@ export default function Home() {
       <Durations />
       <Process />
       <Categories />
-      <FeaturedCourses />
+      <CategoryGrid />
       <WhyUs />
       <Testimonials />
       <TechOrbit />

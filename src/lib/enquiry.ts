@@ -24,18 +24,20 @@ export function onOpenEnquiry(listener: Listener) {
 }
 
 /**
- * The modal also opens itself once, a few seconds after a page load.
+ * The modal also opens itself once a visit, a few seconds after a page load.
  *
- * Both keys live in localStorage, not sessionStorage: a session key resets in a
- * new tab or after the browser restarts, so the prompt would come back at people
- * who had already seen it. Once means once. The Book Demo button is unaffected —
- * that always opens it on demand.
+ * The key lives in sessionStorage, so it is scoped to one browsing session: a
+ * visitor who reads five pages in a sitting is asked once, not five times, and
+ * someone who comes back tomorrow is asked again. It used to be localStorage,
+ * which meant once ever — a single view during development suppressed the
+ * prompt on that browser permanently, with no way to tell it apart from a bug.
  *
- * To see the timed open again once your browser has recorded it, load any page
- * with `?enquiry=1`, or clear these two keys from localStorage.
+ * The Book Demo button is unaffected either way; that always opens it on demand.
+ *
+ * To see the timed open again inside the current session, load any page with
+ * `?enquiry=1`, or just open a new tab.
  */
 export const AUTO_KEY = "techcadd:enquiry-autoshown";
-export const SENT_KEY = "techcadd:enquiry-sent";
 
 /** Delay before the modal offers itself unprompted. */
 export const AUTO_DELAY_MS = 10_000;

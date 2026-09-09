@@ -77,6 +77,9 @@ export const categories: {
   },
 ];
 
+/** Every course in a category, in catalogue order. */
+export const coursesIn = (key: CategoryKey) => courses.filter((c) => c.category === key);
+
 export const categoryLabel: Record<CategoryKey, string> = {
   "ai-data": "AI & Data",
   development: "Development",
