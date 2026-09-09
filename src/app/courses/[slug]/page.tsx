@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { categoryLabel } from "@/lib/courses";
+// The catalogue comes from the CMS layer, which falls back to the static list.
 import { getCourse, getCourses } from "@/lib/cms/content";
-import { courseFaqs, ratingSummary } from "@/lib/coursePage";
+import { courseFaqs, courseSeo, ratingSummary } from "@/lib/coursePage";
 import { site } from "@/lib/site";
 import CourseCard from "@/components/ui/CourseCard";
 import CtaBanner from "@/components/home/CtaBanner";
@@ -61,15 +62,20 @@ export async function generateMetadata({
   const course = await getCourse(slug);
   if (!course) return { title: "Course not found" };
 
-  const title = `${course.title} Course in Mohali`;
-  const description = `${course.blurb} ${course.duration} programme at techcadd Mohali with live projects, internship and placement assistance.`;
+  // A page written to its own keyword brief supplies its own tag and
+  // description; every other course keeps the derived pair.
+  const seo = courseSeo[course.slug];
+  const title = seo?.title ?? `${course.title} Course in Mohali`;
+  const description =
+    seo?.description ??
+    `${course.blurb} ${course.duration} programme at techcadd Mohali with live projects, internship and placement assistance.`;
 
   return {
     title,
     description,
     alternates: { canonical: `/courses/${course.slug}` },
     openGraph: {
-      title: `${title} | techcadd Mohali`,
+      title: seo ? title : `${title} | techcadd Mohali`,
       description,
       url: `${site.url}/courses/${course.slug}`,
       type: "article",

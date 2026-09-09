@@ -1,12 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { site } from "@/lib/site";
 import Icon from "@/components/ui/Icon";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
+/**
+ * A slim callback strip: one field, one button.
+ *
+ * Deliberately not a second closing CTA. Twelve pages render this above
+ * <CtaBanner/>, so it must not repeat that block's eyebrow, headline or
+ * assurances — it is the quick option for someone who would rather be called
+ * than fill anything in, and the page's real close comes after it.
+ */
 export default function QuickCallbackBar() {
+  const pathname = usePathname();
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
@@ -28,9 +38,11 @@ export default function QuickCallbackBar() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: "Career Track tool visitor",
+          name: "Callback request",
           phone,
-          source: "Career Track tool — callback bar",
+          // The page it came from, not a fixed label: this bar is on a dozen
+          // of them and the desk needs to know which.
+          source: `Quick callback bar — ${pathname}`,
         }),
       });
       const payload = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
@@ -48,74 +60,62 @@ export default function QuickCallbackBar() {
   }
 
   return (
-    <section className="bg-subtle py-20 lg:py-24">
+    <section className="border-y border-line bg-white py-10 lg:py-14">
       <div className="container-x">
-        <div data-anim="up" className="mx-auto max-w-2xl text-center">
-          <p className="text-[0.7rem] font-bold uppercase tracking-[0.2em] text-up-accent">
-            Ready to get started?
-          </p>
-          <h2 className="mt-5 font-display text-3xl font-extrabold leading-tight text-up-ink sm:text-5xl">
-            Start building your career today.
-          </h2>
-          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-up-muted">
-            Talk to a counsellor today. One call is usually enough to know which track fits your
-            degree, your schedule and the job you want.
-          </p>
-
-          {status === "sent" ? (
-            <p className="mt-10 inline-flex items-center gap-2 rounded-full bg-brand-100 px-6 py-3.5 text-sm font-semibold text-up-accent">
-              <Icon name="check" size={16} strokeWidth={3} />
-              Got it — a counsellor will call you within one working day.
+        <div
+          data-anim="up"
+          className="flex flex-col gap-7 lg:flex-row lg:items-center lg:justify-between lg:gap-12"
+        >
+          <div className="max-w-xl">
+            <p className="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-up-accent">
+              Quick callback
             </p>
-          ) : (
-            <form
-              onSubmit={onSubmit}
-              className="mt-10 flex flex-col gap-3 sm:flex-row sm:justify-center"
-            >
-              <input
-                type="tel"
-                inputMode="tel"
-                required
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="Your mobile number"
-                className="w-full rounded-full border border-up-line bg-white px-6 py-4 text-sm text-up-ink outline-none transition-colors placeholder:text-up-muted/60 focus:border-up-accent sm:w-72"
-              />
-              <button
-                type="submit"
-                disabled={status === "sending"}
-                className="shrink-0 rounded-full bg-up-ink px-8 py-4 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
-              >
-                {status === "sending" ? "Sending…" : "Book Demo"}
-              </button>
-            </form>
-          )}
+            <h2 className="mt-2.5 font-display text-xl font-extrabold leading-snug text-up-ink sm:text-2xl">
+              Would you rather we called you?
+            </h2>
+            <p className="mt-2.5 text-sm leading-relaxed text-up-muted">
+              Leave a number and a counsellor calls back within one working day — or reach us now
+              on{" "}
+              <a href={site.phoneHref} className="font-semibold text-up-accent hover:underline">
+                {site.phone}
+              </a>
+              .
+            </p>
+          </div>
 
-          {status === "error" && <p className="mt-3 text-sm text-red-600">{error}</p>}
+          <div className="lg:shrink-0">
+            {status === "sent" ? (
+              <p className="inline-flex items-center gap-2 rounded-full bg-brand-100 px-5 py-3 text-sm font-semibold text-up-accent">
+                <Icon name="check" size={16} strokeWidth={3} />
+                Got it — we will call you within one working day.
+              </p>
+            ) : (
+              <form onSubmit={onSubmit} className="flex flex-col gap-3 sm:flex-row">
+                <label htmlFor="callback-phone" className="sr-only">
+                  Your mobile number
+                </label>
+                <input
+                  id="callback-phone"
+                  type="tel"
+                  inputMode="tel"
+                  required
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="Your mobile number"
+                  className="w-full rounded-full border border-up-line bg-white px-5 py-3.5 text-sm text-up-ink outline-none transition-colors placeholder:text-up-muted/60 focus:border-up-accent sm:w-64"
+                />
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="shrink-0 rounded-full bg-up-ink px-7 py-3.5 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {status === "sending" ? "Sending…" : "Request a call"}
+                </button>
+              </form>
+            )}
 
-          <a
-            href={site.phoneHref}
-            className="mt-8 inline-flex items-center gap-3 rounded-full bg-up-accent px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-up-accent/25 transition-all hover:-translate-y-0.5"
-          >
-            <span className="grid h-6 w-6 place-items-center rounded-full bg-white/20">
-              <Icon name="phone" size={13} />
-            </span>
-            <span className="flex flex-col items-start leading-tight">
-              <span className="text-[0.6rem] font-semibold uppercase tracking-wider text-white/70">
-                Call now
-              </span>
-              {site.phone}
-            </span>
-          </a>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-up-muted">
-            {["Free career counselling", "No registration fee", "Placement support included"].map(
-              (item) => (
-                <span key={item} className="inline-flex items-center gap-1.5">
-                  <Icon name="check" size={13} strokeWidth={3} className="text-up-accent" />
-                  {item}
-                </span>
-              ),
+            {status === "error" && (
+              <p className="mt-3 text-sm text-red-600 lg:text-right">{error}</p>
             )}
           </div>
         </div>

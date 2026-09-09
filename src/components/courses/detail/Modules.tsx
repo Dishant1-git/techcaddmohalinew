@@ -232,14 +232,16 @@ function ModuleCard({
   const active = state === "active";
   const previous = course.modules[index - 1];
 
-  // A line of orientation per module, from the shape of the programme rather
-  // than from copy we do not have: where it sits, and what it follows.
+  // A line of orientation per module. A module that carries its own written
+  // line uses it; otherwise it is derived from the shape of the programme —
+  // where the module sits, and what it follows.
   const stage =
-    index === 0
+    m.blurb ??
+    (index === 0
       ? "Where the programme starts — no prior experience assumed."
       : index === total - 1
         ? "The final stretch: the live project, the review and the portfolio hand-off."
-        : `Picks up from ${previous?.title.toLowerCase()} and adds the working skills on top.`;
+        : `Picks up from ${previous?.title.toLowerCase()} and adds the working skills on top.`);
 
   const label = active ? "Open now" : state === "covered" ? "Covered" : "Up next";
 

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { courses } from "@/lib/courses";
 import { site } from "@/lib/site";
-import { AUTO_DELAY_MS, AUTO_KEY, SENT_KEY, onOpenEnquiry } from "@/lib/enquiry";
+import { AUTO_DELAY_MS, AUTO_KEY, onOpenEnquiry } from "@/lib/enquiry";
 import Icon from "@/components/ui/Icon";
 import TechMark from "@/components/ui/TechMark";
 
@@ -42,23 +42,21 @@ export default function EnquiryModal() {
 
   useEffect(() => {
     // `?enquiry=1` or `#enquiry` opens it straight away and ignores the
-    // once-only flag. That is the way to re-test the timed open after your
-    // browser has already recorded it, and it makes the modal linkable from a
+    // once-a-visit flag. That is the way to re-test the timed open inside a
+    // session that has already had it, and it makes the modal linkable from a
     // campaign. A forced open deliberately does not burn the flag.
     const forced =
       new URLSearchParams(window.location.search).get("enquiry") === "1" ||
       window.location.hash === "#enquiry";
 
     if (!forced) {
-      // Once ever, and never to someone who already sent an enquiry.
+      // Once per session. Reading defensively: private mode and blocked storage
+      // both throw here, and the fallback is to skip the unprompted open rather
+      // than risk showing it on every single page view.
       let already = true;
       try {
-        already =
-          localStorage.getItem(AUTO_KEY) === "1" || localStorage.getItem(SENT_KEY) === "1";
-      } catch {
-        // Private mode or blocked storage: skip the unprompted open rather than
-        // risk showing it on every single page view.
-      }
+        already = sessionStorage.getItem(AUTO_KEY) === "1";
+      } catch {}
       if (already) return;
     }
 
@@ -69,7 +67,7 @@ export default function EnquiryModal() {
         if (!forced) {
           // Written before opening, so a reload mid-view cannot bring it back.
           try {
-            localStorage.setItem(AUTO_KEY, "1");
+            sessionStorage.setItem(AUTO_KEY, "1");
           } catch {}
         }
         setOpen(true);
@@ -152,9 +150,6 @@ export default function EnquiryModal() {
       });
       const body = (await res.json()) as { ok?: boolean; error?: string };
       if (!res.ok || !body.ok) throw new Error(body.error || "Could not send that just now.");
-      try {
-        localStorage.setItem(SENT_KEY, "1");
-      } catch {}
       setStatus("done");
     } catch (err) {
       setStatus("idle");

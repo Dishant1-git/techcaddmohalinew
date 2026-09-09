@@ -6,22 +6,18 @@ import Capabilities from "@/components/home/Capabilities";
 import AboutStrip from "@/components/home/AboutStrip";
 import Durations from "@/components/home/Durations";
 import Process from "@/components/home/Process";
-import FeaturedCourses from "@/components/home/FeaturedCourses";
+import CategoryGrid from "@/components/home/CategoryGrid";
 import WhyUs from "@/components/home/WhyUs";
 import Testimonials from "@/components/home/Testimonials";
 import TechOrbit from "@/components/home/TechOrbit";
 import Faq from "@/components/home/Faq";
 import CtaBanner from "@/components/home/CtaBanner";
-import { getCourses, getTestimonials } from "@/lib/cms/content";
-import { featuredSlugs } from "@/lib/courses";
+import { getTestimonials } from "@/lib/cms/content";
 
 export default async function Home() {
-  // One catalogue read serves both the featured strip and its "browse all"
-  // count, so the home page makes a single CMS call rather than two.
-  const [courses, testimonials] = await Promise.all([getCourses(), getTestimonials()]);
-  const featured = featuredSlugs
-    .map((slug) => courses.find((course) => course.slug === slug))
-    .filter((course): course is (typeof courses)[number] => Boolean(course));
+  // CategoryGrid derives its own cards from `src/lib/courses.ts`, so the only
+  // CMS read this page still needs is the one behind the quotes marquee.
+  const testimonials = await getTestimonials();
 
   return (
     // Section order mirrors techcaddjalandhar.com's home page: AI first, then
@@ -35,7 +31,7 @@ export default async function Home() {
       <Durations />
       <Process />
       <Categories />
-      <FeaturedCourses items={featured} total={courses.length} />
+      <CategoryGrid />
       <WhyUs />
       <Testimonials items={testimonials} />
       <TechOrbit />
