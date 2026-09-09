@@ -21,7 +21,19 @@ const field =
 
 const label = "mb-2 block text-[0.66rem] font-bold uppercase tracking-[0.16em] text-up-soft/65";
 
-export default function PathwayEnquiry({ course }: { course: Course }) {
+export default function PathwayEnquiry({
+  course,
+  step = 9,
+  title = "Start your journey",
+  paragraphs,
+}: {
+  course: Course;
+  /** Written After-12th pages number their stages differently. */
+  step?: number;
+  title?: string;
+  /** Replaces the standard call-back line when a page brings its own copy. */
+  paragraphs?: string[];
+}) {
   const reduce = useReducedMotion();
   const { status, error, captcha, captchaLoading, refreshCaptcha, onSubmit, reset } = useEnquiry(
     course,
@@ -40,15 +52,27 @@ export default function PathwayEnquiry({ course }: { course: Course }) {
         <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
           {/* ---- Left ---------------------------------------------------- */}
           <div>
-            <StepBadge n={9} label="Final stage" />
+            <StepBadge n={step} label="Final stage" />
 
             <h2 className="mt-6 font-display text-3xl font-extrabold leading-[1.1] sm:text-4xl lg:text-[2.9rem]">
-              Start your journey
+              {title}
             </h2>
-            <p className="mt-5 max-w-md text-base leading-relaxed text-up-soft/70">
-              Send your details and a counsellor from the Mohali centre will call you back — usually
-              the same working day — with batch dates, fees and the free demo class schedule.
-            </p>
+            {paragraphs ? (
+              paragraphs.map((p) => (
+                <p
+                  key={p}
+                  className="mt-5 max-w-md text-base leading-relaxed text-up-soft/70"
+                >
+                  {p}
+                </p>
+              ))
+            ) : (
+              <p className="mt-5 max-w-md text-base leading-relaxed text-up-soft/70">
+                Send your details and a counsellor from the Mohali centre will call you back —
+                usually the same working day — with batch dates, fees and the free demo class
+                schedule.
+              </p>
+            )}
 
             <div className="mt-9 space-y-3">
               {[
@@ -211,7 +235,9 @@ export default function PathwayEnquiry({ course }: { course: Course }) {
                         </span>
                       </div>
                       <p id="pw-course-note" className="mt-2 text-[0.7rem] text-up-soft/45">
-                        Taken from the page you are on — {course.duration} · {course.level}.
+                        Taken from the page you are on —{" "}
+                        {course.duration ? `${course.duration} · ` : ""}
+                        {course.level}.
                       </p>
                     </div>
 

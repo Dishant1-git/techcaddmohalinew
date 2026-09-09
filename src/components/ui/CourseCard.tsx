@@ -28,7 +28,8 @@ export default function CourseCard({ course }: { course: Course }) {
           {course.title}
         </h3>
         <p className="relative mt-2 text-xs text-up-soft/70">
-          {course.duration} · {course.level}
+          {course.duration ? `${course.duration} · ` : ""}
+          {course.level}
         </p>
       </div>
 

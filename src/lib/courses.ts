@@ -2,7 +2,13 @@ export type Course = {
   slug: string;
   title: string;
   category: CategoryKey;
-  duration: string;
+  /**
+   * Optional, deliberately. Most courses advertise a length; a course whose
+   * written brief gives none — because the length varies by batch and mode —
+   * omits it rather than inventing one, and every surface that prints it
+   * falls back to copy that does not name a figure.
+   */
+  duration?: string;
   level: "Beginner" | "Beginner → Advanced" | "Intermediate" | "Advanced";
   badge?: "Hot" | "New" | "Trending";
   blurb: string;
@@ -269,6 +275,258 @@ export const courses: Course[] = [
       "Prompt Engineer",
       "AI Product Specialist",
       "AI Consultant",
+    ],
+  },
+  {
+    slug: "agentic-ai",
+    title: "Agentic AI",
+    category: "ai-data",
+    duration: "3 – 9 Months",
+    level: "Beginner → Advanced",
+    badge: "New",
+    blurb:
+      "Agents that plan, call real tools and finish the job — Python, LangGraph, MCP and production deployment.",
+    // Written to the Agentic AI keyword brief. Paragraphs are separated by a
+    // blank line and rendered as such by <Overview/>.
+    overview:
+      "Agentic AI is software that pursues a goal on its own instead of just answering a single prompt — it plans, calls real tools like APIs and databases, reads the results, and keeps going until the task is done. That's the shift companies across the Mohali–Chandigarh Tricity are hiring for right now, and very few local candidates can actually build it.\n\nTechcadd's Agentic AI course in Mohali is a hands-on, project-first program for students, graduates, and working professionals who want to move from \"using AI tools\" to engineering AI systems that act. You'll work with Python, LangChain, LangGraph, the Claude and OpenAI APIs, vector databases, and MCP servers — the same stack used on live client work at Techcadd, not just slides.\n\nWith flexible batches (weekday, evening, weekend, and 1-on-1), a structured module ladder with 3/6/9-month exit points, an internship letter, and placement support, this is Mohali's most practical route into AI Engineer and Agent Developer roles.",
+    // The seven foundation modules, then the two later stages. The written
+    // version of the same ladder lives in `learnDetailBySlug`.
+    modules: [
+      {
+        title: "Programming Foundations",
+        blurb: "Module 01 starts at Python from the first line — no programming background assumed.",
+        points: [
+          "Python from absolute zero",
+          "The command line",
+          "Git and GitHub",
+          "HTTP/REST",
+          "SQL",
+        ],
+      },
+      {
+        title: "LLM Foundations, Prompting & Structured Output",
+        points: [
+          "Tokenization",
+          "Context windows",
+          "Returning schema-valid JSON reliably",
+        ],
+      },
+      {
+        title: "Tool Calling, Function Execution & MCP",
+        points: [
+          "Building a ReAct loop from scratch",
+          "Working with Model Context Protocol servers",
+        ],
+      },
+      {
+        title: "Retrieval-Augmented Generation & Knowledge Grounding",
+        points: ["Embeddings", "Hybrid search", "Reranking", "Clause-level citations"],
+      },
+      {
+        title: "Memory, State & Context Management",
+        points: [
+          "Short-term memory",
+          "Long-term memory",
+          "Episodic memory",
+          "Multi-user isolation",
+        ],
+      },
+      {
+        title: "Agent Frameworks, Graph Orchestration & Delegation",
+        points: ["LangGraph nodes", "Conditional routing", "Human-in-the-loop approvals"],
+      },
+      {
+        title: "Evaluation, Guardrails, Deployment & Capstone",
+        points: ["Gold datasets", "CI regression gates", "Shipping a deployed agent"],
+      },
+      {
+        title: "Engineer stage (Modules 8–20)",
+        blurb: "The six-month exit point.",
+        points: [
+          "Async engineering and multi-provider model routing",
+          "DSPy optimisation and GraphRAG",
+          "Durable execution with Temporal and multi-agent systems",
+          "Browser and coding agents, and red-teaming",
+          "Kubernetes deployment with cost engineering",
+        ],
+      },
+      {
+        title: "Architect stage (Modules 21–33)",
+        blurb: "The nine-month exit point — from building an agent to owning the platform.",
+        points: [
+          "CDC data ingestion and billion-scale vector infrastructure",
+          "A2A agent interoperability and a full evaluation service",
+          "Fine-tuning and reinforcement-learning post-training",
+          "Voice and multimodal agents",
+          "Governance mapped to the EU AI Act and NIST AI RMF",
+        ],
+      },
+    ],
+    tools: [
+      "Python",
+      "LangGraph",
+      "LangChain",
+      "CrewAI",
+      "Claude API",
+      "OpenAI API",
+      "Gemini API",
+      "Ollama",
+      "FastAPI",
+      "Pydantic",
+      "MCP SDK",
+      "Qdrant",
+      "Chroma",
+      "pgvector",
+      "Neo4j",
+      "LangSmith",
+      "Langfuse",
+      "RAGAS",
+      "promptfoo",
+      "Garak",
+      "PyRIT",
+      "Playwright",
+      "Browser Use",
+      "Docker",
+      "Kubernetes",
+      "Terraform",
+      "Temporal",
+    ],
+    outcomes: [
+      "Ship a containerised FastAPI service and a document-extraction engine",
+      "Publish an MCP server and build a cited RAG compliance copilot",
+      "Build a human-in-the-loop approval agent with LangGraph",
+      "Deploy a support agent with a cost-per-conversation report",
+    ],
+    roles: ["AI Engineer", "Agent Developer", "Automation Architect", "AI Consultant"],
+  },
+  {
+    slug: "prompt-engineering",
+    title: "Prompt Engineering",
+    category: "ai-data",
+    // No `duration`: the written brief states only that it "varies based on
+    // the batch and mode selected", so the page asks you to call rather than
+    // advertising a figure that was never given.
+    level: "Beginner → Advanced",
+    badge: "New",
+    blurb:
+      "ChatGPT, Claude, Gemini and Midjourney — prompting frameworks, AI workflows and a portfolio of real projects.",
+    // Written to the Prompt Engineering keyword brief. Paragraphs are
+    // separated by a blank line and rendered as such by <Overview/>.
+    overview:
+      "Techcadd's Prompt Engineering course in Mohali is a hands-on, career-focused program designed to help students, graduates, and working professionals master the art of communicating with AI tools like ChatGPT, Claude, Gemini, and Midjourney. As Mohali's IT and startup ecosystem grows around Sector 74, Phase 8B, and the IT Park corridor, companies across the Chandigarh tri-city region are actively hiring people who can write effective prompts, build AI workflows, and apply generative AI to real business problems.\n\nThis course takes you from the fundamentals of how large language models work to advanced prompting techniques — zero-shot, few-shot, chain-of-thought, and role-based prompting — through live, project-based classroom training at our Mohali centre. You'll practice on real use cases in content creation, coding assistance, data analysis, and automation, guided by industry-experienced trainers.\n\nBy the end, you'll have a portfolio of AI projects and the practical skills to work as a Prompt Engineer, AI Content Specialist, or GenAI-savvy professional — right here in Mohali, without relocating to a metro city.",
+    // The eight phases of the written curriculum. The prose version of each
+    // one lives in `learnDetailBySlug` on the "what you learn" section.
+    modules: [
+      {
+        title: "Foundations of Generative AI",
+        blurb:
+          "The conceptual base, so you understand why prompts work the way they do — not just which buttons to click.",
+        points: [
+          "How large language models process language and generate responses",
+          "How generative AI differs from traditional software",
+          "Text generation — ChatGPT, Claude, Gemini",
+          "Image generation — Midjourney, DALL·E, Stable Diffusion",
+          "Emerging tools for video, audio and music generation",
+        ],
+      },
+      {
+        title: "Mastering ChatGPT",
+        blurb: "From casual ChatGPT user to power user.",
+        points: [
+          "Conversation design and context management",
+          "Custom instructions and memory handling",
+          "Structuring multi-turn conversations",
+          "Consistently high-quality output for writing, research, coding help and business tasks",
+        ],
+      },
+      {
+        title: "Prompt Engineering Excellence",
+        blurb: "The core module — the prompting frameworks used by professionals.",
+        points: [
+          "Zero-shot prompting — getting results without examples",
+          "Few-shot prompting — using examples to guide output style and format",
+          "Chain-of-thought prompting — encouraging step-by-step AI reasoning",
+          "Role-based / persona prompting — assigning the AI a specific expert role",
+          "Prompt chaining and iteration — refining prompts through structured feedback loops",
+          "Instruction clarity, context-setting and constraint design",
+        ],
+      },
+      {
+        title: "Visual AI & Midjourney",
+        blurb: "Visual prompt engineering for design, marketing and content use cases.",
+        points: [
+          "Generating high-quality images with Midjourney",
+          "Style parameters and aspect ratios",
+          "Reference imaging",
+          "Iterative prompt refinement",
+        ],
+      },
+      {
+        title: "NLP Fundamentals & AI Applications",
+        blurb: "What is happening “under the hood” when you interact with an AI system.",
+        points: [
+          "Natural Language Processing concepts with NLTK and spaCy",
+          "How chatbots process text",
+          "Sentiment analyzers and text classifiers",
+          "Useful context for anyone moving toward more technical AI roles",
+        ],
+      },
+      {
+        title: "AI Tools for Productivity & Automation",
+        blurb: "Where prompt engineering applies beyond chat.",
+        points: [
+          "Automating workflows with prompts",
+          "Building simple AI-powered assistants",
+          "Integrating AI into everyday business tasks",
+          "Integrating AI into everyday content tasks",
+        ],
+      },
+      {
+        title: "Ethics, Limitations & Responsible AI Use",
+        blurb: "Essential knowledge for using these tools responsibly in professional settings.",
+        points: [
+          "AI hallucinations",
+          "Bias in generated output",
+          "Data privacy",
+          "The ethical boundaries of AI-generated content",
+        ],
+      },
+      {
+        title: "Capstone Projects",
+        blurb: "Real, presentable AI projects you can showcase to employers or clients.",
+        points: [
+          "Combining text and visual prompting skills",
+          "Building practical, presentable outputs",
+          "A portfolio of real AI projects",
+        ],
+      },
+    ],
+    tools: [
+      "ChatGPT",
+      "Claude",
+      "Google Gemini",
+      "Midjourney",
+      "DALL·E",
+      "Stable Diffusion",
+      "NLTK",
+      "spaCy",
+      "AI productivity tools",
+      "AI automation tools",
+    ],
+    outcomes: [
+      "Write effective, structured prompts using zero-shot, few-shot, chain-of-thought and role-based frameworks",
+      "Direct ChatGPT, Claude and Gemini through multi-turn conversations for writing, research, coding help and business tasks",
+      "Generate and refine visual output in Midjourney using style parameters, aspect ratios and reference imaging",
+      "Finish with a portfolio of real AI projects combining text and visual prompting skills",
+    ],
+    roles: [
+      "Prompt Engineer",
+      "AI Content Specialist",
+      "AI-assisted Developer",
+      "Digital Marketing Executive with AI skills",
+      "Chatbot Trainer",
+      "Freelance AI Consultant",
     ],
   },
   {

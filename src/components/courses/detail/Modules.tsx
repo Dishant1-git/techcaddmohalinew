@@ -107,7 +107,7 @@ export default function Modules({ course }: { course: Course }) {
         <SectionTitle
           eyebrow="Modules"
           title="The curriculum, module by module"
-          subtitle={`${count} modules and ${totalTopics} topics across ${course.duration}. Each one closes in something you build, review and keep in your portfolio.`}
+          subtitle={`${count} modules and ${totalTopics} topics${course.duration ? ` across ${course.duration}` : ""}. Each one closes in something you build, review and keep in your portfolio.`}
         />
 
         {/* ---- Reduced motion: one plain, fully open list ------------------ */}

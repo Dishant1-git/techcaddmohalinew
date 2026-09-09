@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { courses, getCourse } from "@/lib/courses";
 import { courseFaqs, ratingSummary } from "@/lib/coursePage";
+import { after12Page } from "@/lib/after12Pages";
 import { variants } from "@/lib/courseVariants";
 import { site } from "@/lib/site";
 import Icon from "@/components/ui/Icon";
@@ -19,6 +20,22 @@ import {
   PathWho,
   PathWhy,
 } from "@/components/courses/after12/PathwaySections";
+import {
+  WrittenApproach,
+  WrittenCurriculum,
+  WrittenFit,
+  WrittenLearn,
+  WrittenOverview,
+  WrittenPopular,
+  WrittenProgram,
+  WrittenProjects,
+  WrittenScope,
+  WrittenTools,
+  WrittenWho,
+  WrittenWhyNow,
+  WrittenWhyUs,
+  WrittenWorth,
+} from "@/components/courses/after12/PathwayWritten";
 
 /**
  * The After 12th design.
@@ -43,8 +60,11 @@ export async function generateMetadata({
   const course = getCourse(slug);
   if (!course) return { title: "Course not found" };
 
-  const title = variant.metaTitle(course);
-  const description = `${course.blurb} A ${course.duration.toLowerCase()} job-oriented course after 12th at techcadd Mohali — live projects, internship and placement assistance.`;
+  const written = after12Page(slug);
+  const title = written ? written.hero.title : variant.metaTitle(course);
+  const description = written
+    ? written.hero.paragraphs[0]
+    : `${course.blurb} A ${course.duration ? `${course.duration.toLowerCase()} ` : ""}job-oriented course after 12th at techcadd Mohali — live projects, internship and placement assistance.`;
 
   return {
     title,
@@ -68,8 +88,9 @@ export default async function After12thCoursePage({
   const course = getCourse(slug);
   if (!course) notFound();
 
+  const written = after12Page(slug);
   const rating = ratingSummary(course);
-  const faqs = courseFaqs(course);
+  const faqs = written ? written.faqs : courseFaqs(course);
 
   const related = courses
     .filter((c) => c.category === course.category && c.slug !== course.slug)
@@ -82,8 +103,8 @@ export default async function After12thCoursePage({
     {
       "@context": "https://schema.org",
       "@type": "Course",
-      name: variant.metaTitle(course),
-      description: course.overview,
+      name: written ? written.hero.title : variant.metaTitle(course),
+      description: written ? written.overview.paragraphs.join(" ") : course.overview,
       url: `${site.url}${variant.basePath}/${course.slug}`,
       provider: {
         "@type": "EducationalOrganization",
@@ -91,7 +112,7 @@ export default async function After12thCoursePage({
         url: site.url,
       },
       educationalLevel: course.level,
-      teaches: course.tools,
+      teaches: written ? written.tools.items.map((t) => t.name) : course.tools,
       aggregateRating: {
         "@type": "AggregateRating",
         ratingValue: rating.average,
@@ -100,7 +121,9 @@ export default async function After12thCoursePage({
       hasCourseInstance: {
         "@type": "CourseInstance",
         courseMode: ["Onsite", "Online"],
-        courseWorkload: course.duration,
+        courseWorkload:
+          written?.program.highlights.find((h) => h.label === "Duration")?.value ??
+          course.duration,
         location: {
           "@type": "Place",
           name: `${site.legalName}, ${site.city}`,
@@ -126,25 +149,70 @@ export default async function After12thCoursePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
 
-      <PathwayHero course={course} />
+      <PathwayHero
+        course={course}
+        written={
+          written && {
+            badge: written.hero.badge,
+            title: written.hero.title,
+            paragraphs: written.hero.paragraphs,
+            highlights: written.program.highlights,
+          }
+        }
+      />
 
       {/* The rail is sticky within this wrapper, so it pins across the stages
           and releases before the footer blocks. */}
-      <div className="relative">
-        <SectionRail skin="pathway" />
+      {written ? (
+        <>
+          <WrittenProgram program={written.program} />
 
-        <PathOverview course={course} />
-        <PathModules course={course} />
-        <PathLearn course={course} />
-        <PathWhy course={course} />
-        <PathWho course={course} />
-        <PathTools course={course} />
-        <PathReviews course={course} />
-        <PathFaqs faqs={faqs} />
-        <PathwayEnquiry course={course} />
-      </div>
+          <div className="relative">
+            <SectionRail skin="pathway" sections={written.sections} />
 
-      {/* ---- Other routes after 12th --------------------------------------- */}
+            <WrittenOverview step={1} overview={written.overview} roles={course.roles} />
+            <WrittenLearn step={2} learn={written.learn} />
+            <WrittenCurriculum step={3} curriculum={written.curriculum} />
+            <WrittenTools step={4} tools={written.tools} />
+            <WrittenWho step={5} who={written.who} />
+            <WrittenWorth step={6} worth={written.worth} />
+            <WrittenWhyNow step={7} whyNow={written.whyNow} />
+            <WrittenScope step={8} takesYou={written.takesYou} />
+            <WrittenProjects step={9} projects={written.projects} />
+            <WrittenApproach step={10} approach={written.approach} />
+            <WrittenWhyUs step={11} whyUs={written.whyUs} />
+            <PathReviews course={course} step={12} />
+            <PathFaqs faqs={faqs} step={13} title="Frequently Asked Questions" />
+            <PathwayEnquiry
+              course={course}
+              step={14}
+              title={written.enquiry.title}
+              paragraphs={written.enquiry.paragraphs}
+            />
+          </div>
+
+          <WrittenPopular popular={written.popular} />
+          <WrittenFit fit={written.fit} />
+        </>
+      ) : (
+        <div className="relative">
+          <SectionRail skin="pathway" />
+
+          <PathOverview course={course} />
+          <PathModules course={course} />
+          <PathLearn course={course} />
+          <PathWhy course={course} />
+          <PathWho course={course} />
+          <PathTools course={course} />
+          <PathReviews course={course} />
+          <PathFaqs faqs={faqs} />
+          <PathwayEnquiry course={course} />
+        </div>
+      )}
+
+      {/* ---- Other routes after 12th ---------------------------------------
+          A written page closes on its own "Popular courses" block instead. */}
+      {!written && (
       <section className="relative overflow-hidden bg-white py-20 lg:py-24">
         <div className="pointer-events-none absolute inset-0 grid-lines-light opacity-60" />
 
@@ -179,7 +247,8 @@ export default async function After12thCoursePage({
                 className="group relative flex flex-col overflow-hidden rounded-3xl border border-line bg-subtle p-7 transition-all hover:-translate-y-1 hover:border-up-accent/40 hover:bg-white"
               >
                 <span className="text-[0.62rem] font-bold uppercase tracking-[0.18em] text-up-muted">
-                  {c.duration} · {c.level}
+                  {c.duration ? `${c.duration} · ` : ""}
+                  {c.level}
                 </span>
                 <span className="mt-3 font-display text-lg font-extrabold leading-tight text-up-ink">
                   {c.title}
@@ -199,6 +268,7 @@ export default async function After12thCoursePage({
           </div>
         </div>
       </section>
+      )}
     </>
   );
 }

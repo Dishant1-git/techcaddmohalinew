@@ -93,8 +93,19 @@ const SKINS: Record<
   },
 };
 
-export default function SectionRail({ skin = "catalogue" }: { skin?: RailSkin } = {}) {
-  const [active, setActive] = useState(courseSections[0].id);
+export default function SectionRail({
+  skin = "catalogue",
+  sections = courseSections,
+}: {
+  skin?: RailSkin;
+  /**
+   * The sections this page actually renders, in DOM order. Pages that follow
+   * the standard nine-section contract leave it alone; a written page passes
+   * its own list so the rail cannot advertise a section that is not there.
+   */
+  sections?: readonly { id: string; label: string }[];
+} = {}) {
+  const [active, setActive] = useState(sections[0].id);
   const railRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -127,14 +138,14 @@ export default function SectionRail({ skin = "catalogue" }: { skin?: RailSkin } 
       const line = chromeHeight() + 24;
       const atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 4;
 
-      let current = courseSections[0].id;
-      for (const section of courseSections) {
+      let current = sections[0].id;
+      for (const section of sections) {
         const el = document.getElementById(section.id);
         if (el && el.getBoundingClientRect().top <= line) current = section.id;
       }
 
       // The last section is usually too short to reach the line on its own.
-      if (atBottom) current = courseSections[courseSections.length - 1].id;
+      if (atBottom) current = sections[sections.length - 1].id;
 
       setActive(current);
     };
@@ -153,7 +164,7 @@ export default function SectionRail({ skin = "catalogue" }: { skin?: RailSkin } 
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [chromeHeight]);
+  }, [chromeHeight, sections]);
 
   /* ---- Keep the lit pill in view on narrow screens ---------------------- */
 
@@ -212,10 +223,10 @@ export default function SectionRail({ skin = "catalogue" }: { skin?: RailSkin } 
             className={`hidden shrink-0 items-center gap-2 font-display text-[0.7rem] font-bold tabular-nums tracking-[0.14em] lg:flex ${s.readout}`}
           >
             <span className={s.readoutIndex}>
-              {String(courseSections.findIndex((x) => x.id === active) + 1).padStart(2, "0")}
+              {String(sections.findIndex((x) => x.id === active) + 1).padStart(2, "0")}
             </span>
             <span className={`h-3 w-px ${s.readoutRule}`} />
-            <span>{String(courseSections.length).padStart(2, "0")}</span>
+            <span>{String(sections.length).padStart(2, "0")}</span>
           </span>
 
           {/* Edge fades, so a cut-off pill reads as "more this way". */}
@@ -231,7 +242,7 @@ export default function SectionRail({ skin = "catalogue" }: { skin?: RailSkin } 
             aria-label="Course sections"
             className="flex gap-1 overflow-x-auto py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            {courseSections.map((section) => {
+            {sections.map((section) => {
               const isActive = active === section.id;
               return (
                 <a

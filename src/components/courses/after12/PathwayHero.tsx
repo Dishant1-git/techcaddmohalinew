@@ -19,19 +19,33 @@ import { GradientMesh } from "@/components/courses/after12/Motifs";
  * it. Loud where the certificate design is formal, and deliberately the most
  * energetic of the three.
  */
-export default function PathwayHero({ course }: { course: Course }) {
+export default function PathwayHero({
+  course,
+  written,
+}: {
+  course: Course;
+  /** A written After-12th page supplies its own headline, copy and tiles. */
+  written?: {
+    badge: string;
+    title: string;
+    paragraphs: string[];
+    highlights: { label: string; value: string }[];
+  };
+}) {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const art = categoryArt(course);
   const rating = ratingSummary(course);
-  const highlights = courseHighlights(course);
+  const highlights = written
+    ? written.highlights.map((h) => ({ value: h.value, label: h.label }))
+    : courseHighlights(course);
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const copyY = useTransform(scrollYProgress, [0, 1], [0, 80]);
   const numeralY = useTransform(scrollYProgress, [0, 1], [0, -140]);
   const numeralOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  const words = `${course.title} after 12th`.split(" ");
+  const words = (written?.title ?? `${course.title} after 12th`).split(" ");
 
   return (
     <section
@@ -80,7 +94,7 @@ export default function PathwayHero({ course }: { course: Course }) {
         >
           <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent-yellow to-accent-glow px-4 py-1.5 text-[0.7rem] font-extrabold uppercase tracking-[0.14em] text-hero-950">
             <Icon name={art.icon} size={13} />
-            Start right after school
+            {written?.badge ?? "Start right after school"}
           </span>
           <span className="inline-flex items-center gap-1.5 text-xs text-up-soft/70">
             <Icon name="star" size={13} className="fill-accent-yellow text-accent-yellow" />
@@ -105,22 +119,36 @@ export default function PathwayHero({ course }: { course: Course }) {
           ))}
         </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: EASE }}
-          className="mt-7 max-w-2xl text-base leading-relaxed text-up-soft/75 sm:text-lg"
-        >
-          {course.blurb} No degree required to begin — this programme takes you from school-leaver
-          to hireable.
-        </motion.p>
+        {written ? (
+          written.paragraphs.map((p, i) => (
+            <motion.p
+              key={p}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 + i * 0.1, ease: EASE }}
+              className="mt-7 max-w-3xl text-base leading-relaxed text-up-soft/75 sm:text-lg"
+            >
+              {p}
+            </motion.p>
+          ))
+        ) : (
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: EASE }}
+            className="mt-7 max-w-2xl text-base leading-relaxed text-up-soft/75 sm:text-lg"
+          >
+            {course.blurb} No degree required to begin — this programme takes you from school-leaver
+            to hireable.
+          </motion.p>
+        )}
 
         {/* Route preview: the four stages, as a horizontal run. */}
         <motion.ol
           initial="hidden"
           animate="show"
           variants={{ show: { transition: { staggerChildren: 0.09, delayChildren: 0.5 } } }}
-          className="mt-12 grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          className="mt-12 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4"
         >
           {highlights.map((h, i) => (
             <motion.li

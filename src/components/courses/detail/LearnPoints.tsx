@@ -143,8 +143,15 @@ function WrittenSyllabus({
                   </span>
                   <div className="min-w-0">
                     <h3 className="text-base font-bold leading-snug text-up-ink">{topic.title}</h3>
+
+                    {/* The first paragraph is the lead-in the list hangs off —
+                        it almost always ends in a colon — so the bullets sit
+                        directly under it and anything the brief wrote *after*
+                        the list follows the list. A topic with one paragraph,
+                        which is every course but Prompt Engineering, renders
+                        exactly as it did before. */}
                     <div className="mt-3 space-y-3">
-                      {topic.body.map((paragraph) => (
+                      {topic.body?.slice(0, 1).map((paragraph) => (
                         <p
                           key={paragraph.slice(0, 48)}
                           className="text-sm leading-relaxed text-up-muted"
@@ -171,6 +178,19 @@ function WrittenSyllabus({
                           </li>
                         ))}
                       </ul>
+                    )}
+
+                    {(topic.body?.length ?? 0) > 1 && (
+                      <div className="mt-3 space-y-3">
+                        {topic.body!.slice(1).map((paragraph) => (
+                          <p
+                            key={paragraph.slice(0, 48)}
+                            className="text-sm leading-relaxed text-up-muted"
+                          >
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
                     )}
                   </div>
                 </div>

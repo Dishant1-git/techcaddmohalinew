@@ -98,7 +98,11 @@ export function categoryArt(course: Course) {
 export function courseHighlights(course: Course) {
   const topics = course.modules.reduce((n, m) => n + m.points.length, 0);
   return [
-    { icon: "clock", value: course.duration, label: "Programme length" },
+    // A course that advertises no fixed length shows the batch tile instead,
+    // which is the honest answer and keeps the row at four.
+    course.duration
+      ? { icon: "clock", value: course.duration, label: "Programme length" }
+      : { icon: "clock", value: "Flexible", label: "Batch-based schedule" },
     { icon: "layers", value: `${course.modules.length} modules`, label: `${topics} topics covered` },
     { icon: "target", value: course.level, label: "Difficulty level" },
     { icon: "briefcase", value: "100%", label: "Placement assistance" },
@@ -128,7 +132,12 @@ export function learningPoints(course: Course) {
  * grid of one-line skills. Where a slug appears here, <LearnPoints/> renders
  * this instead of the derived list; every other course keeps the grid.
  */
-export type LearnTopic = { title: string; body: string[]; points?: string[] };
+/**
+ * `body` is optional: a stage written as a bare list of modules has a heading
+ * and its bullets and nothing to say in between, and an empty lead-in
+ * paragraph would render as a gap above the list.
+ */
+export type LearnTopic = { title: string; body?: string[]; points?: string[] };
 export type LearnDetail = {
   intro?: string;
   topics: LearnTopic[];
@@ -138,6 +147,120 @@ export type LearnDetail = {
 };
 
 const learnDetailBySlug: Record<string, LearnDetail> = {
+  "agentic-ai": {
+    intro:
+      "This isn't a theory-only syllabus. The program runs as a single ladder of 33 modules with three exit points — 3, 6, and 9 months — and every module ends with a graded deliverable that goes straight into your portfolio. Module 01 starts at Python from the first line, so no programming background is required to join our Mohali batch; from Module 02 onward, every session is agent engineering.",
+    count: { value: "33", label: "modules, three exit points" },
+    topics: [
+      {
+        title: "Foundation stage — Agent Practitioner (Modules 1–7, 3 months)",
+        points: [
+          "Programming Foundations — Python, the command line, Git and GitHub, HTTP/REST, and SQL from absolute zero",
+          "LLM Foundations, Prompting & Structured Output — tokenization, context windows, and returning schema-valid JSON reliably",
+          "Tool Calling, Function Execution & MCP — building a ReAct loop from scratch and working with Model Context Protocol servers",
+          "Retrieval-Augmented Generation & Knowledge Grounding — embeddings, hybrid search, reranking, and clause-level citations",
+          "Memory, State & Context Management — short-term, long-term, and episodic memory with multi-user isolation",
+          "Agent Frameworks, Graph Orchestration & Delegation — LangGraph nodes, conditional routing, and human-in-the-loop approvals",
+          "Evaluation, Guardrails, Deployment & Capstone — gold datasets, CI regression gates, and shipping a deployed agent",
+        ],
+      },
+      {
+        title: "What you build in Stage 1",
+        body: [
+          "A containerised FastAPI service, a document-extraction engine, a published MCP server, a cited RAG compliance copilot, a human-in-the-loop approval agent, and a fully deployed support agent with a cost-per-conversation report.",
+        ],
+      },
+      {
+        title: "Engineer stage (Modules 8–20, 6 months)",
+        body: [
+          "Adds async engineering, multi-provider model routing, DSPy optimisation, GraphRAG, durable execution with Temporal, multi-agent systems, browser and coding agents, red-teaming, and Kubernetes deployment with cost engineering.",
+        ],
+      },
+      {
+        title: "Architect stage (Modules 21–33, 9 months)",
+        body: [
+          "Moves from building an agent to owning the platform: CDC data ingestion, billion-scale vector infrastructure, A2A agent interoperability, a full evaluation service, fine-tuning and reinforcement-learning post-training, voice and multimodal agents, and governance mapped to the EU AI Act and NIST AI RMF.",
+        ],
+      },
+      {
+        title: "The tools you'll actually use — installed on our Mohali lab machines",
+        body: [
+          "Python, LangGraph, LangChain, CrewAI, the Claude API, OpenAI API, and Gemini API, Ollama for local models, FastAPI, Pydantic, the MCP SDK, Qdrant, Chroma, pgvector, Neo4j, LangSmith, Langfuse, RAGAS, promptfoo, Garak and PyRIT for red-teaming, Playwright and Browser Use for browser agents, and Docker, Kubernetes, Terraform, and Temporal for production deployment.",
+        ],
+      },
+    ],
+    outro: [
+      "Every module names the exact tool stack, the commercial problem it solves, and the graded artefact you'll walk into an interview with — so students at our Mohali centre leave with a portfolio, not just a certificate.",
+    ],
+  },
+  "prompt-engineering": {
+    intro:
+      "Techcadd's Prompt Engineering course in Mohali follows a structured, phase-wise curriculum that takes you from complete beginner to confident, job-ready AI practitioner. Here's what the journey covers:",
+    count: { value: "8", label: "phases, beginner to job-ready" },
+    topics: [
+      {
+        title: "Phase 1: Foundations of Generative AI",
+        body: [
+          "You'll start by understanding what generative AI actually is — how large language models (LLMs) process language, generate responses, and differ from traditional software. You'll explore categories of generative AI tools: text generation (ChatGPT, Claude, Gemini), image generation (Midjourney, DALL·E, Stable Diffusion), and emerging tools for video, audio, and music generation. This phase builds the conceptual base so you understand why prompts work the way they do — not just which buttons to click.",
+        ],
+      },
+      {
+        title: "Phase 2: Mastering ChatGPT",
+        body: [
+          "This module transforms you from a casual ChatGPT user into a power user. You'll learn conversation design, context management, custom instructions, memory handling, and how to structure multi-turn conversations that consistently produce high-quality output for writing, research, coding help, and business tasks.",
+        ],
+      },
+      {
+        title: "Phase 3: Prompt Engineering Excellence (Core Module)",
+        body: [
+          "This is the heart of the course. You'll learn the core prompting frameworks used by professionals:",
+          "You'll practice these techniques across real applications — content writing, data analysis, coding assistance, customer support scripting, and creative brainstorming — until structuring an effective prompt becomes second nature.",
+        ],
+        points: [
+          "Zero-shot prompting — getting results without examples",
+          "Few-shot prompting — using examples to guide output style and format",
+          "Chain-of-thought prompting — encouraging step-by-step AI reasoning",
+          "Role-based / persona prompting — assigning the AI a specific expert role",
+          "Prompt chaining and iteration — refining prompts through structured feedback loops",
+          "Instruction clarity, context-setting, and constraint design — the building blocks of every effective prompt",
+        ],
+      },
+      {
+        title: "Phase 4: Visual AI & Midjourney",
+        body: [
+          "You'll move into visual prompt engineering, learning how to generate high-quality images using Midjourney — covering style parameters, aspect ratios, reference imaging, and iterative prompt refinement for design, marketing, and content use cases.",
+        ],
+      },
+      {
+        title: "Phase 5: NLP Fundamentals & AI Applications",
+        body: [
+          "A lighter introduction to Natural Language Processing concepts using libraries like NLTK and spaCy, helping you understand what's happening \"under the hood\" when you interact with chatbots, sentiment analyzers, and text classifiers — useful context for anyone moving toward more technical AI roles.",
+        ],
+      },
+      {
+        title: "Phase 6: AI Tools for Productivity & Automation",
+        body: [
+          "You'll explore how prompt engineering applies beyond chat — automating workflows, building simple AI-powered assistants, and integrating AI into everyday business and content tasks.",
+        ],
+      },
+      {
+        title: "Phase 7: Ethics, Limitations & Responsible AI Use",
+        body: [
+          "Understanding AI hallucinations, bias, data privacy, and the ethical boundaries of AI-generated content — essential knowledge for using these tools responsibly in professional settings.",
+        ],
+      },
+      {
+        title: "Phase 8: Capstone Projects",
+        body: [
+          "You'll finish the course by building a portfolio of real, presentable AI projects — combining text and visual prompting skills into practical outputs you can showcase to employers or clients.",
+        ],
+      },
+    ],
+    outro: [
+      "Tools & Platforms You'll Work With: ChatGPT, Claude, Google Gemini, Midjourney, DALL·E, Stable Diffusion, NLTK, spaCy, plus AI-powered productivity and automation tools used in real workplace settings.",
+      "By the end, you won't just understand prompt engineering in theory — you'll have hands-on fluency across the exact tools Mohali and tricity employers are actively looking for.",
+    ],
+  },
   "generative-ai": {
     intro:
       "The Generative AI Course in Mohali by Techcadd is structured to take students from understanding how modern AI systems work to actually building and deploying AI-powered applications. The curriculum on Techcadd’s current Generative AI course page focuses on LLMs, prompt design and evaluation, OpenAI and Claude, open-source models, embeddings, vector databases, RAG, image and audio generation, Python-based AI applications, deployment, safety, and cost management.",
@@ -381,6 +504,72 @@ export type SectionCopy = {
 type SectionKey = "learn" | "why" | "who" | "enquire";
 
 const sectionCopyBySlug: Record<string, Partial<Record<SectionKey, SectionCopy>>> = {
+  "agentic-ai": {
+    learn: {
+      title: "What you will actually build in this Agentic AI course in Mohali",
+    },
+    why: {
+      title: "Why this Agentic AI program is worth your year",
+      intro:
+        "There are several places to learn Agentic AI across Mohali and the wider Tricity, and the brochure syllabus can look similar at most of them. What actually differs is who teaches you, whether you ever touch real client work, and whether anyone still picks up the phone once you've paid. Techcadd has trained students across Punjab since 2007 on the same model: small batches, working practitioners as trainers, real client projects as coursework — now brought to our Mohali centre for students across Phase 5, Phase 7, Phase 8, Sector 70, Sector 71, Zirakpur, and Kharar.",
+      note: "Bottom line: If you're comparing institutes for an Agentic AI course in Mohali, the question isn't which one has the longer module list — it's which one puts you on real work, with a trainer who corrects you, and a placement cell that doesn't disappear after the fee clears. That's the case for Techcadd.",
+    },
+    who: {
+      title: "Who can do this Agentic AI course in Mohali",
+      intro:
+        "Techcadd's Agentic AI course in Mohali is built for people at six different starting points, and the batch is deliberately mixed. What matters far more than your background is turning up consistently and finishing what each module asks you to build.",
+      note: "Where our Mohali students commute from: Students reach our Mohali centre from Phase 5, Phase 7, Phase 8, Phase 9, Phase 11, Sector 70, Sector 71, and Sohana, with weekend batch students travelling in from Zirakpur, Kharar, Derabassi, and Panchkula. Whether you've just finished 12th, are completing a degree at a Tricity college, or are switching from a non-technical job, this Agentic AI course in Mohali starts at zero — which is why weekday, evening, weekend, and 1-on-1 timings all exist, with every class running two hours.",
+    },
+    enquire: {
+      title: "Start your Agentic AI career in Mohali",
+      intro:
+        "Talk to a course counsellor about batch timings, fees, EMI options, and whether this course fits your degree or your current job. One call is usually enough to find out. Book a free demo class — see the lab before you decide.",
+      facts: [
+        { label: "Batches", value: "Weekday, evening, weekend and 1-on-1 — every class runs two hours" },
+        {
+          label: "Exit points",
+          value: "3 months (Practitioner), 6 months (Engineer), 9 months (Architect) — nested, not parallel",
+        },
+        {
+          label: "Starts from",
+          value: "Module 01 teaches Python from the first line — no programming background required",
+        },
+        {
+          label: "On completion",
+          value:
+            "An industry-recognised certificate plus a documented internship letter based on real client work",
+        },
+        {
+          label: "Fresher salary",
+          value: "Around ₹25,000–₹50,000 a month in the Mohali/Tricity market with a working portfolio",
+        },
+      ],
+    },
+  },
+  "prompt-engineering": {
+    // The standfirst for this section comes from `learnDetailBySlug.intro`,
+    // which is what <LearnPoints/> reads; only the heading is set here.
+    learn: {
+      title: "What you'll learn & tools covered",
+    },
+    why: {
+      title: "Why this program, and why Techcadd for Prompt Engineering in Mohali",
+      intro:
+        "Why prompt engineering, why now, why Mohali — and then why Techcadd. The first eight reasons below answer the first question; the nine after them answer the second.",
+      note: "In short: the timing is right, the location is right, and the format is designed to get you results — not just a certificate, but a genuinely usable, career-moving skill.",
+    },
+    who: {
+      title: "Who can enrol in the Prompt Engineering course in Mohali",
+      intro:
+        "Anyone can enrol — 12th-pass students, college graduates, IT professionals, digital marketers, freelancers, job seekers, and even career returnees. The course is built to be accessible across skill levels.",
+      note: "No prior programming knowledge is required to start. The curriculum is designed to be accessible for 12th-pass students, graduates from any stream, working professionals, and career switchers — while still going deep enough to genuinely prepare you for AI-related job roles.",
+    },
+    enquire: {
+      title: "Ready to Master AI? Start Your Prompt Engineering Journey in Mohali Today",
+      intro:
+        "Join Techcadd's Prompt Engineering Course in Mohali and gain the in-demand AI skills that employers across Chandigarh, Mohali, and Panchkula are actively hiring for. Learn hands-on, build a real portfolio, and take the first confident step into an AI-powered career — right here in your city.",
+    },
+  },
   "generative-ai": {
     learn: {
       title: "What you will learn & tools covered",
@@ -475,6 +664,164 @@ export function sectionCopy(course: Course, section: SectionKey): SectionCopy | 
 
 /** "Why choose this program" cards, replacing the generic six. */
 const whyChooseBySlug: Record<string, { icon: string; title: string; body: string }[]> = {
+  // The first six answer "why this program"; the seven after them answer
+  // "why Techcadd".
+  "agentic-ai": [
+    {
+      icon: "chart",
+      title: "Demand",
+      body: "Agentic systems are where AI budgets are moving, and practitioners are genuinely rare across the Mohali–Chandigarh Tricity. That gap is the whole argument for this program: there is strong local demand from IT Park Mohali, Quark City, and the many product and service companies setting up in Sector 82 and Phase 8, there are real budgets behind these hires, and there are very few trained people locally to hand the work to.",
+    },
+    {
+      icon: "terminal",
+      title: "Method",
+      body: "What separates this Agentic AI course in Mohali from a playlist of tutorials is supervision on real work. From the second half of the program, you build on live client projects with a trainer beside you, make decisions that have consequences, and correct them the following week. That loop — build, get corrected, rebuild — is the actual skill. No employer in Mohali or Chandigarh will take your word for it without work they can inspect.",
+    },
+    {
+      icon: "briefcase",
+      title: "Earnings",
+      body: "Be realistic about the money. A fresher who finishes this course with a working portfolio typically starts around ₹25,000–₹50,000 a month in the Mohali/Tricity market, and moves up quickly with experience. Roles include AI Engineer, Agent Developer, Automation Architect, and AI Consultant. The ceiling is high, but it is earned — nobody pays a beginner well for a certificate alone.",
+    },
+    {
+      icon: "target",
+      title: "The alternative",
+      body: "The alternative is what most people try first: free videos, a cheap online course, six months of drifting, and knowledge you cannot demonstrate in an interview. A structured Agentic AI course with live projects, a mentor who corrects you, an internship letter, and a placement cell that actually calls employers in Mohali and Chandigarh is the difference between knowing the subject and being hired to do it.",
+    },
+    {
+      icon: "rocket",
+      title: "Why now — Agentic AI is powering the next generation of Mohali's tech talent",
+      body: "Live client work from week one, supervised by a trainer — not slides, not simulations. AI Engineer roles in the Mohali–Chandigarh Tricity start around ₹25,000–₹50,000 a month for a fresher with a working portfolio. Mohali's IT ecosystem — IT Park, Quark City, and the growing startup base around Sector 82 — is actively hiring for agent-building skills that most local candidates simply don't have yet. A Mohali address costs you nothing on a remote brief either — students from this program go on to bill clients in Delhi, Dubai, and beyond, since agentic AI work isn't limited by geography.",
+    },
+    {
+      icon: "check",
+      title: "What decides whether it's worth it",
+      body: "It isn't the syllabus — most institutes in Mohali show a similar module list. What decides it is whether you ever touch real client work, whether a trainer actually reviews what you built this week, and whether anyone still picks up the phone for you after you've paid and finished. That's the bar this Agentic AI course in Mohali is built to clear.",
+    },
+    {
+      icon: "users",
+      title: "Trainers who still do the work",
+      body: "Your trainer at Techcadd Mohali isn't a full-time lecturer reading off slides. They deliver client projects for Techcadd's own services arm, so what you see in class — the tools, the failure modes, the fixes — is current, not a five-year-old case study.",
+    },
+    {
+      icon: "code",
+      title: "Live projects, real consequences",
+      body: "You work on genuine client requirements under supervision, building the same kind of agents companies in IT Park Mohali and Quark City are actually hiring for. This is where a real portfolio comes from, and it's the first thing an interviewer in Chandigarh or Mohali asks to see.",
+    },
+    {
+      icon: "monitor",
+      title: "Small batches and open lab hours",
+      body: "Batches at our Mohali centre stay small enough that a trainer sees your screen daily. Lab time runs outside class hours, and doubt-clearing sessions continue until the concept actually lands — not until the clock runs out.",
+    },
+    {
+      icon: "certificate",
+      title: "Internship letter and certificate",
+      body: "Every student finishes the Agentic AI course in Mohali with an industry-recognised certificate and a documented internship letter based on real client work — accepted for industrial training requirements at most Punjab universities, including colleges across the Chandigarh–Mohali education belt.",
+    },
+    {
+      icon: "phone",
+      title: "A placement cell that persists",
+      body: "Mock interviews, CV reviews, and hiring drives with partners across Mohali, Chandigarh, and Panchkula, repeated after a rejection rather than abandoned. Techcadd's placement cell keeps calling on your behalf, not just until you enrol.",
+    },
+    {
+      icon: "shield",
+      title: "Since 2007, 25,000+ students trained",
+      body: "Nearly two decades of hiring relationships across Punjab and the Tricity is why a call from our placement cell gets answered, and why local employers in Mohali know exactly what a Techcadd certificate means.",
+    },
+    {
+      icon: "layers",
+      title: "What you're really being taught",
+      body: "Tools in any AI syllabus will be replaced within a few years — frameworks change every quarter. What doesn't change are the underlying skills: evaluation over demos, engineering discipline over model tricks, and the judgement to know when not to build an autonomous agent at all. That's the standard Techcadd Mohali trainers hold you to on every module, because it's the standard a real interview in this field actually tests.",
+    },
+  ],
+  // The first eight answer "why prompt engineering, why now, why Mohali"; the
+  // nine after them answer "why Techcadd".
+  "prompt-engineering": [
+    {
+      icon: "sparkles",
+      title: "AI Is No Longer Optional — It's the New Baseline Skill",
+      body: "Just like computer literacy became non-negotiable in the 2000s and digital marketing became essential in the 2010s, prompt engineering is becoming the core skill of the 2020s AI economy. Every industry — IT, healthcare, education, finance, retail, and marketing — is integrating generative AI into daily operations. Professionals who can direct AI tools effectively are becoming significantly more valuable than those who can't, regardless of their original field of study.",
+    },
+    {
+      icon: "pin",
+      title: "Mohali Is Emerging as a Serious Tech and AI Hub",
+      body: "Mohali is no longer just \"next to Chandigarh.\" With IT Park, Sector 74, Phase 8B, and the Sahibzada Ajit Singh Nagar tech corridor rapidly filling up with IT companies, startups, and BPOs, the demand for AI-literate professionals in this region has grown sharply. Local businesses — from IT firms to marketing agencies to ed-tech startups — are actively looking for people who understand how to work with tools like ChatGPT, Claude, and Midjourney. Studying a Prompt Engineering course in Mohali means you're training exactly where the jobs are opening up, without needing to relocate to Bangalore, Delhi, or Gurugram.",
+    },
+    {
+      icon: "clock",
+      title: "Faster ROI Than Traditional Degrees",
+      body: "A full-time degree can take three to four years. Techcadd's Prompt Engineering program is designed to get you job-ready in a fraction of that time, with a curriculum focused entirely on practical, employable skills rather than long theoretical detours. For students and professionals who need to start earning sooner, this is a realistic, high-value alternative.",
+    },
+    {
+      icon: "chart",
+      title: "High Demand, Limited Local Supply of Trained Talent",
+      body: "While national job platforms show a rising number of prompt engineering and AI-support roles, the number of properly trained candidates in tier-2 cities like Mohali remains low. This gap works in your favor — early movers who train now, while the field is still growing, position themselves ahead of the curve as more companies begin hiring locally for these roles over the next few years.",
+    },
+    {
+      icon: "target",
+      title: "Skills That Apply Across Every Career Path",
+      body: "Unlike narrow technical certifications, prompt engineering skills transfer across careers. A marketer, a developer, a customer support executive, and a business owner in Mohali can all apply the same core prompting techniques to completely different problems. This makes the program a safe, future-proof investment regardless of which direction your career eventually takes.",
+    },
+    {
+      icon: "rocket",
+      title: "Hands-On, Project-Based Learning — Not Just Theory",
+      body: "This program is built around real prompting exercises, live AI tool practice, and portfolio-ready projects, not passive lecture-watching. You leave with actual work you can show employers or clients — something theoretical courses often fail to provide.",
+    },
+    {
+      icon: "certificate",
+      title: "Recognized Certification for Local and Remote Opportunities",
+      body: "A certificate from a known Mohali-based training institute adds credibility when applying to local companies, freelance platforms, or remote-first organizations that increasingly hire AI-literate talent from tier-2 cities across India.",
+    },
+    {
+      icon: "users",
+      title: "Community and Mentorship, Not Isolated Online Learning",
+      body: "Learning prompt engineering through a self-paced YouTube video or random online course often leaves gaps. Techcadd's Mohali centre offers structured, in-person guidance, doubt-resolution, and peer learning — something that significantly improves retention and real-world application compared to solo online learning.",
+    },
+    {
+      icon: "shield",
+      title: "A Trusted Name in IT & Computer Education Since 2016",
+      body: "Techcadd isn't a fly-by-night AI bootcamp that popped up when ChatGPT went viral. Founded in 2016, Techcadd has built a track record training students across Punjab in software development, CAD/CAE, data science, and now generative AI — giving the Mohali centre a foundation of real institutional experience, not hype-driven curriculum.",
+    },
+    {
+      icon: "pin",
+      title: "A Locally Rooted, Tricity-Focused Institute",
+      body: "Unlike generic online platforms that treat every student the same regardless of location, Techcadd's Prompt Engineering course in Mohali is designed with the tricity job market in mind — Chandigarh, Mohali, Panchkula, Zirakpur, and Kharar. Trainers understand which local companies are hiring, what skills regional employers actually expect, and how to position students for opportunities in this specific market — something a purely online, one-size-fits-all course simply cannot offer.",
+    },
+    {
+      icon: "layers",
+      title: "Structured, Phase-Wise Curriculum — Not Random Video Lessons",
+      body: "Techcadd's program is built in a clear, progressive structure: starting with the foundations of generative AI, moving into ChatGPT mastery, then into dedicated Prompt Engineering excellence, followed by visual AI tools like Midjourney, and finishing with capstone projects. This phase-wise design means you're never thrown into advanced prompting techniques before you understand the basics of how AI models actually process instructions — reducing confusion and building real confidence.",
+    },
+    {
+      icon: "terminal",
+      title: "Hands-On, Project-Based Classroom Training",
+      body: "Every module is reinforced through live practice — not passive watching. Students work directly on real prompting tasks across writing, coding assistance, business analysis, and image generation, using tools like ChatGPT, Claude, Gemini, and Midjourney. By the end of the course, you don't just \"know\" prompt engineering — you have a portfolio of real projects to show.",
+    },
+    {
+      icon: "users",
+      title: "Experienced, Industry-Aware Trainers",
+      body: "Techcadd's instructors bring practical, real-world exposure rather than purely academic backgrounds, ensuring what you learn in class reflects how AI tools are actually used in workplaces today — not outdated textbook theory.",
+    },
+    {
+      icon: "code",
+      title: "Beginner-Friendly, No Coding Background Required",
+      body: "You don't need to know Python or have an IT degree to start. The curriculum is designed to be accessible for 12th-pass students, graduates from any stream, working professionals, and career switchers — while still going deep enough to genuinely prepare you for AI-related job roles.",
+    },
+    {
+      icon: "monitor",
+      title: "Offline, In-Person Learning at the Mohali Centre",
+      body: "While online courses are convenient, they often lack accountability and doubt-resolution. Techcadd's Mohali centre offers classroom-based, face-to-face training, where you can ask questions in real time, learn alongside peers, and get direct mentor feedback — something that consistently improves outcomes compared to solo online learning.",
+    },
+    {
+      icon: "briefcase",
+      title: "Career Support and Placement Assistance",
+      body: "Techcadd doesn't just teach and leave you to figure out the job search alone. Students get guidance on resume building, portfolio presentation, and interview preparation, along with placement support to connect skills learned in class with real opportunities in Mohali and the wider tricity job market.",
+    },
+    {
+      icon: "check",
+      title: "Affordable, Transparent Pricing",
+      body: "Compared to premium metro-city bootcamps or expensive international certifications, Techcadd's Mohali-based pricing makes quality AI education accessible to local students and professionals without compromising on curriculum depth or trainer quality.",
+    },
+  ],
   "cyber-security": [
     {
       icon: "shield",
@@ -1763,6 +2110,78 @@ const whyChooseBySlug: Record<string, { icon: string; title: string; body: strin
 
 /** "Who can join" cards, replacing the category default. */
 const audienceBySlug: Record<string, { title: string; body: string; icon: string }[]> = {
+  "agentic-ai": [
+    {
+      icon: "users",
+      title: "Students after 12th",
+      body: "Join from any stream — Science, Commerce, or Arts. You start from Python fundamentals with no assumed knowledge, and most students run this Agentic AI course in Mohali alongside a degree at a local college using the weekday or weekend batch. Students from Phase 3B2, Phase 7, Phase 9, and Sector 70–71 in Mohali regularly join straight after their 12th boards to get a head start before college even begins.",
+    },
+    {
+      icon: "certificate",
+      title: "Graduates and final-year students",
+      body: "If you're finishing a BCA, B.Tech, BBA, or B.Com from a college in the Mohali–Chandigarh Tricity — Chandigarh University Gharuan, Chitkara University, Chandigarh Group of Colleges Landran, or DAV College Mohali — this is the shortest route from degree to salary. Enter placement season with real project work in hand instead of a blank CV.",
+    },
+    {
+      icon: "briefcase",
+      title: "Working professionals",
+      body: "The weekend and evening batches exist for people already earning, including those working in Mohali's IT Park, Quark City, or the many IT/ITES companies across Phase 8. Career switchers typically become interview-ready for AI Engineer roles within five to six months without leaving their current job.",
+    },
+    {
+      icon: "rocket",
+      title: "Business owners and freelancers",
+      body: "Business owners in Mohali and Zirakpur take this Agentic AI training to stop outsourcing work they cannot judge for themselves. Freelancers take it to bill clients beyond Punjab — Mohali's growing tech ecosystem means location no longer limits remote-work opportunities in this field.",
+    },
+    {
+      icon: "refresh",
+      title: "Career restarters",
+      body: "A gap on your CV counts for less than work you can point to. This course starts at zero and finishes with a portfolio and a documented internship letter — exactly what an interviewer in Chandigarh, Mohali, or Panchkula asks about after a career break.",
+    },
+    {
+      icon: "monitor",
+      title: "Self-taught learners",
+      body: "If free YouTube tutorials left you with notes but nothing actually built, what changes here is a trainer who reviews your work every week and a deadline attached to every module — not another playlist to abandon halfway.",
+    },
+  ],
+  // The brief carries no standalone audience section; these are the seven
+  // groups its FAQ names, each expanded only with lines the brief itself
+  // writes about that group.
+  "prompt-engineering": [
+    {
+      icon: "users",
+      title: "12th-Pass Students",
+      body: "No prior programming knowledge is required to start. A full-time degree can take three to four years — this program is designed to get you job-ready in a fraction of that time, with a curriculum focused entirely on practical, employable skills rather than long theoretical detours.",
+    },
+    {
+      icon: "certificate",
+      title: "College Graduates",
+      body: "Graduates from any stream can enrol. Prompt engineering skills transfer across careers, so the program is a safe, future-proof investment regardless of which direction your career eventually takes — and you leave with a portfolio of real projects rather than only a certificate.",
+    },
+    {
+      icon: "terminal",
+      title: "IT Professionals",
+      body: "Professionals who can direct AI tools effectively are becoming significantly more valuable than those who can't, regardless of their original field of study. The course goes deep enough to genuinely prepare you for AI-related job roles, covering prompting frameworks, visual AI and automation.",
+    },
+    {
+      icon: "megaphone",
+      title: "Digital Marketers",
+      body: "A marketer and a developer in Mohali can apply the same core prompting techniques to completely different problems. You'll practice across content writing, creative brainstorming and image generation for design, marketing and content use cases.",
+    },
+    {
+      icon: "rocket",
+      title: "Freelancers",
+      body: "A certificate from a known Mohali-based training institute adds credibility when applying to freelance platforms or remote-first organizations that increasingly hire AI-literate talent from tier-2 cities across India. You leave with actual work you can show clients.",
+    },
+    {
+      icon: "target",
+      title: "Job Seekers",
+      body: "While national job platforms show a rising number of prompt engineering and AI-support roles, the number of properly trained candidates in tier-2 cities like Mohali remains low. This gap works in your favor — early movers who train now position themselves ahead of the curve.",
+    },
+    {
+      icon: "refresh",
+      title: "Career Returnees and Switchers",
+      body: "The curriculum is designed to be accessible for career switchers, starting from what generative AI actually is before moving into advanced prompting techniques. You're never thrown into advanced material before you understand how AI models process instructions.",
+    },
+  ],
   "cyber-security": [
     {
       icon: "users",
@@ -2772,6 +3191,18 @@ const audienceBySlug: Record<string, { title: string; body: string; icon: string
 
 /** "What you need to start", replacing the generic eligibility list. */
 const eligibilityBySlug: Record<string, string[]> = {
+  "agentic-ai": [
+    "No programming experience needed — Module 01 teaches Python from the first line",
+    "Open from any stream after 12th — Science, Commerce or Arts",
+    "Weekday, evening, weekend and 1-on-1 batches, every class running two hours",
+    "What matters is turning up consistently and finishing what each module asks you to build",
+  ],
+  "prompt-engineering": [
+    "No coding background required — no prior programming knowledge is needed to start",
+    "Open to 12th-pass students, college graduates, IT professionals, digital marketers, freelancers, job seekers and career returnees",
+    "Built to be accessible across skill levels",
+    "Classroom-based, in-person training at the Mohali centre",
+  ],
   "cyber-security": [
     "Minimum qualification: 12th pass (any stream)",
     "Basic familiarity with computers and internet usage",
@@ -3378,6 +3809,106 @@ export function eligibility(course: Course) {
 
 /** Course FAQs written for a specific page, replacing the derived set. */
 const faqsBySlug: Record<string, { q: string; a: string }[]> = {
+  "agentic-ai": [
+    {
+      q: "What is Agentic AI?",
+      a: "Agentic AI is software that pursues a goal on its own rather than answering a single prompt. Given an outcome, it plans its own next step, calls a real tool such as an API, database, or browser, reads what came back, and repeats — until the goal is met, the budget runs out, or it asks a human. Four properties define an agent: goal-directedness, tool use, memory, and autonomy.",
+    },
+    {
+      q: "Where is the Agentic AI course in Mohali taught?",
+      a: "Techcadd's Agentic AI course runs at our Mohali training centre, easily accessible for students from Phase 5, Phase 7, Phase 8, Phase 9, Sector 70, Sector 71, and nearby areas including Zirakpur, Kharar, Derabassi, and Panchkula.",
+    },
+    {
+      q: "How long is the Agentic AI certificate program in Mohali?",
+      a: "There are three exit points on one 33-module ladder: 3 months (Practitioner), 6 months (Engineer), and 9 months (Architect). They're nested, not parallel — the 6-month program includes the 3-month one and continues onward, and the 9-month includes both — so choosing a shorter track costs you scope, never depth.",
+    },
+    {
+      q: "Do I need programming experience to join this course?",
+      a: "No. Module 01 teaches Python from the first line, along with the command line, Git, HTTP/REST, and SQL, ending with a working containerised service. Everything after assumes only what you learned in Module 01, which is why the course is open to complete beginners and career changers alike.",
+    },
+    {
+      q: "Which tools and frameworks does the Agentic AI course cover?",
+      a: "The stack includes Python, FastAPI, and Pydantic; the Claude, OpenAI, and Gemini APIs with Ollama for local models; LangGraph, LangChain, and CrewAI for orchestration; the Model Context Protocol (MCP) SDK for tools; Qdrant, Chroma, pgvector, and Neo4j for retrieval; and Docker, Kubernetes, and Temporal for production deployment.",
+    },
+    {
+      q: "What jobs can I get after this Agentic AI course in Mohali?",
+      a: "Graduates move into roles such as AI Engineer, Agent Developer, Automation Architect, and AI Consultant — hired both locally across the Mohali–Chandigarh Tricity and remotely by companies elsewhere in India and abroad.",
+    },
+    {
+      q: "What salary can a fresher expect after this course in Mohali?",
+      a: "A fresher with a working portfolio typically starts around ₹25,000–₹50,000 a month in the Mohali/Tricity market, rising substantially within two years of hands-on delivery experience.",
+    },
+    {
+      q: "What is the fee for the Agentic AI course in Mohali?",
+      a: "Shorter foundation-stage courses are more affordable, while the comprehensive 6-month program with live projects, an internship, and placement support is priced higher. Techcadd counsellors at the Mohali centre share the current fee sheet and EMI options on request, and a demo class is free.",
+    },
+    {
+      q: "Are weekend and evening batches available in Mohali?",
+      a: "Yes. Techcadd Mohali runs weekday, evening, and weekend batches in parallel so working professionals from IT Park Mohali and Quark City, as well as college students, can attend without disrupting their schedule. 1-on-1 training is also available.",
+    },
+    {
+      q: "Will I get a certificate and internship letter?",
+      a: "Yes. Every student receives an industry-recognised certificate on completion plus a documented internship letter based on real client work, accepted for industrial training requirements at most Punjab universities.",
+    },
+    {
+      q: "Is placement guaranteed after this course?",
+      a: "No responsible training provider can honestly guarantee a job, and you should be cautious of any Mohali institute that claims one. Techcadd guarantees placement support: CV reviews, mock interviews, portfolio preparation, and repeated hiring drives across Mohali, Chandigarh, and Panchkula.",
+    },
+    {
+      q: "Can I freelance or work remotely with Agentic AI skills learned in Mohali?",
+      a: "Yes. A Mohali address doesn't limit remote client work in this field. Students from this course go on to work with clients outside Punjab and even outside India, since agentic AI development is fundamentally remote-friendly.",
+    },
+  ],
+  "prompt-engineering": [
+    {
+      q: "What is the Prompt Engineering course in Mohali at Techcadd about?",
+      a: "Techcadd's Prompt Engineering course in Mohali teaches students how to write effective, structured prompts for AI tools like ChatGPT, Claude, Gemini, and Midjourney. It covers prompting frameworks, real-world use cases, and hands-on projects designed to make you job-ready in AI-related roles.",
+    },
+    {
+      q: "Do I need a coding background to join this course?",
+      a: "No. This course is designed for beginners, including 12th-pass students, graduates from any stream, and working professionals. No prior programming knowledge is required to start.",
+    },
+    {
+      q: "Who can enrol in the Prompt Engineering course in Mohali?",
+      a: "Anyone can enrol — 12th-pass students, college graduates, IT professionals, digital marketers, freelancers, job seekers, and even career returnees. The course is built to be accessible across skill levels.",
+    },
+    {
+      q: "How long is the Prompt Engineering course at Techcadd Mohali?",
+      a: "The course duration varies based on the batch and mode selected. Contact the Techcadd Mohali centre directly for the current schedule, weekday/weekend batch options, and exact duration.",
+    },
+    {
+      q: "Is this course online, offline, or both?",
+      a: "Techcadd offers classroom-based, offline training at its Mohali centre, giving students direct mentor access and hands-on, in-person practice with real AI tools.",
+    },
+    {
+      q: "What tools will I learn during the course?",
+      a: "You'll work with ChatGPT, Claude, Google Gemini, Midjourney, DALL·E, Stable Diffusion, and NLP libraries like NLTK and spaCy, along with AI-powered productivity and automation tools.",
+    },
+    {
+      q: "Will I get a certificate after completing the course?",
+      a: "Yes, students receive a course completion certificate from Techcadd, which can be added to resumes and professional profiles to demonstrate verified prompt engineering skills.",
+    },
+    {
+      q: "Does Techcadd provide placement assistance after the course?",
+      a: "Yes, Techcadd offers career support including resume guidance, portfolio building, interview preparation, and placement assistance to help connect students with opportunities in Mohali and the wider tricity region.",
+    },
+    {
+      q: "What kind of jobs can I get after this course?",
+      a: "Graduates can pursue roles such as Prompt Engineer, AI Content Specialist, AI-assisted Developer, Digital Marketing Executive with AI skills, Chatbot Trainer, and Freelance AI Consultant, among other AI-adjacent roles.",
+    },
+    {
+      q: "Is prompt engineering a good career choice in 2026?",
+      a: "Yes. As businesses across industries integrate generative AI into daily operations, demand for professionals who can effectively direct AI tools is rising steadily, including in emerging tech hubs like Mohali and Chandigarh.",
+    },
+    {
+      q: "How is Techcadd's Prompt Engineering course different from online courses?",
+      a: "Unlike generic online videos, Techcadd offers structured, phase-wise, project-based classroom training with direct mentor feedback, local job-market awareness, and hands-on practice — leading to stronger retention and real-world application.",
+    },
+    {
+      q: "What is the fee for the Prompt Engineering course in Mohali?",
+      a: "Course fees vary depending on batch type and duration. Please contact the Techcadd Mohali centre or fill out the enquiry form on this page for current pricing and available offers.",
+    },
+  ],
   "cyber-security": [
     {
       q: "What is the duration of the Cyber Security course at Techcadd Mohali?",
@@ -4893,7 +5424,7 @@ export function courseFaqs(course: Course) {
   const specific = [
     {
       q: `How long is the ${course.title} course and what are the batch timings?`,
-      a: `${course.title} runs for ${course.duration} at our Sector 75 campus in Mohali. Morning, afternoon, evening and weekend batches run in parallel, there is a live-online seat in the same batch, and every session is recorded to your student portal.`,
+      a: `${course.title} runs ${course.duration ? `for ${course.duration} ` : ""}at our Sector 75 campus in Mohali. Morning, afternoon, evening and weekend batches run in parallel, there is a live-online seat in the same batch, and every session is recorded to your student portal.`,
     },
     {
       q: `Do I need any experience before joining ${course.title}?`,
@@ -4940,6 +5471,116 @@ export type CourseReview = {
 
 /** Reviews collected for a specific course page, replacing the rotated set. */
 const reviewsBySlug: Record<string, CourseReview[]> = {
+  "agentic-ai": [
+    {
+      name: "Simran Kaur",
+      role: "Final-Year BCA Student",
+      company: "Sector 70, Mohali",
+      quote:
+        "The Agentic AI course at Techcadd Mohali got me interview-ready faster than I expected. My interviewer asked to see my MCP server project, and that was basically the whole conversation.",
+      rating: 5,
+      initials: "SK",
+    },
+    {
+      name: "Vikram Chopra",
+      role: "Weekend Batch",
+      company: "Zirakpur",
+      quote:
+        "I travelled in from Zirakpur for the weekend batch and it was worth every trip. Small batch, real client work, no time wasted on theory nobody actually uses on the job.",
+      rating: 5,
+      initials: "VC",
+    },
+    {
+      name: "Neha Bansal",
+      role: "Placed Fresher",
+      company: "Phase 8, Mohali",
+      quote:
+        "Techcadd's placement cell kept calling me for drives across Mohali and Chandigarh until I was actually placed. That persistence mattered more to me than the certificate itself.",
+      rating: 5,
+      initials: "NB",
+    },
+    {
+      name: "Arshdeep Singh",
+      role: "Career Switcher",
+      company: "Kharar",
+      quote:
+        "I was switching careers at 27 and worried I'd be behind everyone else. Half the batch at the Mohali centre was doing the same thing — nobody made me feel slow.",
+      rating: 5,
+      initials: "AS",
+    },
+    {
+      name: "Pooja Rani",
+      role: "Graduate",
+      company: "Derabassi",
+      quote:
+        "I joined with almost zero coding background and finished with a deployed agent I could actually demo. The trainer corrected my work daily instead of just moving to the next slide.",
+      rating: 5,
+      initials: "PR",
+    },
+    {
+      name: "Karan Mehta",
+      role: "B.Tech Student",
+      company: "Chitkara University, Mohali",
+      quote:
+        "What made Agentic AI click for me was the lab time. You could sit back after class in the Mohali centre and someone would still explain it until it actually made sense.",
+      rating: 5,
+      initials: "KM",
+    },
+    {
+      name: "Rohit Verma",
+      role: "Working Professional",
+      company: "IT Park, Mohali",
+      quote:
+        "Working full-time in IT Park Mohali, the evening batch was the only reason I could do this without quitting my job. Interview-ready for an AI Engineer role in about five months.",
+      rating: 5,
+      initials: "RV",
+    },
+    {
+      name: "Amanpreet Sidhu",
+      role: "Business Owner",
+      company: "Chandigarh",
+      quote:
+        "I run a small digital agency in Chandigarh and took this course to stop outsourcing AI work I couldn't evaluate myself. Now I scope and review agent projects with confidence.",
+      rating: 5,
+      initials: "AS",
+    },
+    {
+      name: "Divya Sharma",
+      role: "Placed Fresher",
+      company: "Sohana, Mohali",
+      quote:
+        "Compared two other institutes in Mohali before joining Techcadd. The difference was real client work versus recorded demos — that's what actually got me placed.",
+      rating: 5,
+      initials: "DS",
+    },
+    {
+      name: "Harmanjot Singh",
+      role: "Final-Year B.Tech",
+      company: "Chandigarh University, Gharuan",
+      quote:
+        "The internship letter from live client work was accepted for my university's industrial training requirement without any issue — one less thing to worry about in final year.",
+      rating: 5,
+      initials: "HS",
+    },
+    {
+      name: "Manpreet Kaur",
+      role: "Career Restarter",
+      company: "Panchkula",
+      quote:
+        "I'm a self-taught learner who had watched dozens of YouTube tutorials and built nothing real. A deadline attached to every module here is what finally got me shipping projects.",
+      rating: 5,
+      initials: "MK",
+    },
+    {
+      name: "Gurleen Kaur",
+      role: "Graduate",
+      company: "Sector 71, Mohali",
+      quote:
+        "Small batch size at the Mohali centre meant the trainer actually knew what each of us was stuck on. That's rare compared to the crowded batches I sat through elsewhere.",
+      rating: 5,
+      initials: "GK",
+    },
+  ],
   "cyber-security": [
     {
       name: "Ramanpreet Singh",

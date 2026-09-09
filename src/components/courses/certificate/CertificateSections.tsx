@@ -136,7 +136,7 @@ export function CertOverview({ course }: { course: Course }) {
 
   const particulars: [string, string][] = [
     ["Programme", course.title],
-    ["Duration", course.duration],
+    ["Duration", course.duration ?? "Varies by batch"],
     ["Level", course.level],
     ["Modules", `${course.modules.length}`],
     ["Mode", "Classroom / Live online"],
@@ -151,7 +151,7 @@ export function CertOverview({ course }: { course: Course }) {
           index="01"
           eyebrow="Programme brief"
           title="What this certificate covers"
-          intro={`A ${course.duration.toLowerCase()} ${course.level.toLowerCase()} programme, assessed on project work and closed with a verifiable credential.`}
+          intro={`A ${course.duration ? `${course.duration.toLowerCase()} ` : ""}${course.level.toLowerCase()} programme, assessed on project work and closed with a verifiable credential.`}
         />
 
         <div className="mt-14 grid gap-14 lg:grid-cols-[1.25fr_0.75fr] lg:gap-20">

@@ -206,7 +206,8 @@ export default function CertificateEnquiry({
                         </span>
                       </div>
                       <p id="ct-course-note" className="mt-2 text-[0.66rem] text-up-muted/70">
-                        Taken from the programme page you are reading — {course.duration} ·{" "}
+                        Taken from the programme page you are reading —{" "}
+                        {course.duration ? `${course.duration} · ` : ""}
                         {course.level}.
                       </p>
                     </div>

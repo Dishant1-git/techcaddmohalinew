@@ -58,7 +58,7 @@ export async function generateMetadata({
   if (!course) return { title: "Programme not found" };
 
   const title = variant.metaTitle(course);
-  const description = `${course.blurb} ${course.duration} certificate programme at techcadd Mohali — ISO-certified credential, live project and placement assistance.`;
+  const description = `${course.blurb}${course.duration ? ` ${course.duration}` : ""} certificate programme at techcadd Mohali — ISO-certified credential, live project and placement assistance.`;
 
   return {
     title,
@@ -116,7 +116,7 @@ export default async function CertificateProgramPage({
       hasCourseInstance: {
         "@type": "CourseInstance",
         courseMode: ["Onsite", "Online"],
-        courseWorkload: course.duration,
+        ...(course.duration ? { courseWorkload: course.duration } : {}),
         location: {
           "@type": "Place",
           name: `${site.legalName}, ${site.city}`,
@@ -205,7 +205,7 @@ export default async function CertificateProgramPage({
                 className="group flex flex-col bg-white p-7 transition-colors hover:bg-subtle"
               >
                 <span className="text-[0.62rem] font-bold uppercase tracking-[0.18em] text-up-muted">
-                  {c.duration}
+                  {c.duration ?? "Flexible batches"}
                 </span>
                 <span className="mt-3 font-display text-lg font-extrabold leading-tight text-up-ink">
                   {c.title}

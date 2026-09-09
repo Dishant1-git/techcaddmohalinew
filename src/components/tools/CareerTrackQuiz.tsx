@@ -301,7 +301,7 @@ export default function CareerTrackQuiz() {
                 <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1.5 text-xs text-up-muted">
                   <span className="inline-flex items-center gap-1.5">
                     <Icon name="clock" size={13} className="text-up-accent" />
-                    {result.course.duration}
+                    {result.course.duration ?? "Flexible batches"}
                   </span>
                   <span className="inline-flex items-center gap-1.5">
                     <Icon name="briefcase" size={13} className="text-up-accent" />
@@ -322,7 +322,9 @@ export default function CareerTrackQuiz() {
                     },
                     {
                       title: `Start ${result.course.title}`,
-                      body: `${result.course.duration} of live, project-based classes with a working trainer.`,
+                      body: result.course.duration
+                        ? `${result.course.duration} of live, project-based classes with a working trainer.`
+                        : "Live, project-based classes with a working trainer.",
                     },
                     {
                       title: "Portfolio piece + placement support",
