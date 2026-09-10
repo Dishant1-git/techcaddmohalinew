@@ -9,9 +9,14 @@ import { teamPhotos } from "@/lib/team";
  * The team portrait panel: a contained card holding two rows of oval portraits
  * on a checkerboard of heights, over a soft pastel wash.
  *
+ * Cards are circles or pills, and the two alternate in both directions: a
+ * column that opens on a circle closes on a pill, and the column beside it does
+ * the reverse. Only the height differs — `rounded-full` turns a square card
+ * into a circle and a taller one into a pill on its own.
+ *
  * The loop is: both rows slide one card to the left, hold two seconds, then
- * every card trades height with its neighbours — short grows, tall shrinks —
- * and round again.
+ * every card trades height with its neighbours — circles becoming pills and
+ * pills circles — and round again.
  *
  * Two things hold the layout still while that runs:
  *
@@ -25,11 +30,20 @@ import { teamPhotos } from "@/lib/team";
  *    re-crop.
  */
 
-/** Card geometry per breakpoint, in px. Heights must match `.team-cell` in
- *  globals.css, which is what renders before this timeline builds. */
+/**
+ * Card geometry per breakpoint, in px.
+ *
+ * `short` is deliberately equal to `width`: with `rounded-full`, a square card
+ * is a circle and a taller one is a pill, so the two states are two shapes
+ * rather than two sizes of the same shape. Any other short value gives a
+ * slightly squashed pill, which reads as a mistake rather than a choice.
+ *
+ * Heights must match `.team-cell` in globals.css, which is what renders before
+ * this timeline builds.
+ */
 const SIZES = {
-  desktop: { tall: 288, short: 208, width: 200, gap: 20 },
-  mobile: { tall: 224, short: 160, width: 150, gap: 12 },
+  desktop: { tall: 288, short: 200, width: 200, gap: 20 },
+  mobile: { tall: 224, short: 150, width: 150, gap: 12 },
 };
 
 /** Enough copies that a row stays wider than its frame all the way round. */
@@ -41,7 +55,8 @@ const ROW_B = teamPhotos.slice(6);
 function Row({
   photos,
   rowRef,
-  /** Offsets the checkerboard so the second row opens on the opposite size. */
+  /** Offsets the checkerboard so the second row opens on the opposite shape:
+   *  a column reading circle-over-pill sits beside one reading pill-over-circle. */
   offset = 0,
 }: {
   photos: string[];
