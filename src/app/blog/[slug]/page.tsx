@@ -8,6 +8,10 @@ import Icon from "@/components/ui/Icon";
 import CtaBanner from "@/components/home/CtaBanner";
 import RelatedLinks from "@/components/ui/RelatedLinks";
 import { relatedForPost } from "@/lib/related";
+import { getBlogComments } from "@/lib/cms/content";
+import { withHeadings } from "@/lib/cms/headings";
+import TableOfContents from "@/components/content/TableOfContents";
+import Comments from "@/components/blog/Comments";
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts();
@@ -36,6 +40,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) notFound();
 
   const related = posts.filter((p) => p.category === post.category && p.slug !== post.slug).slice(0, 2);
+
+  /*
+    The article's own headings, and the approved comments.
+
+    `withHeadings` rewrites the editor's markup to carry an id per heading and
+    hands back the list, so the anchors and the contents rail are generated
+    from one pass and cannot drift apart.
+  */
+  const { html: bodyHtml, headings } = withHeadings(post.bodyHtml);
+  const comments = await getBlogComments(post.slug);
 
   return (
     <>
@@ -85,7 +99,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </section>
 
       <article className="py-16 lg:py-20">
-        <div className="container-x max-w-3xl">
+        <div className="container-x">
+          {/* The rail sits beside the article on a wide screen and above it on
+              a narrow one, where a sticky column would eat the viewport. */}
+          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-14">
+            <aside className="order-first hidden lg:block">
+              <TableOfContents headings={headings} />
+            </aside>
+
+            <div className="min-w-0 max-w-3xl">
           <span
             className={`relative block h-56 overflow-hidden rounded-3xl bg-gradient-to-br ${artFor(post.category)} sm:h-72`}
           >
@@ -111,10 +133,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             editor placed inside the article. The built-in posts have no HTML,
             so they still render as the plain paragraphs they are.
           */}
-          {post.bodyHtml ? (
+          {bodyHtml ? (
             <div
               className="prose-cms mt-10"
-              dangerouslySetInnerHTML={{ __html: post.bodyHtml }}
+              dangerouslySetInnerHTML={{ __html: bodyHtml }}
             />
           ) : (
             <div className="mt-10 space-y-5">
@@ -171,6 +193,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </div>
             </div>
           )}
+
+              <Comments slug={post.slug} comments={comments} />
+            </div>
+          </div>
         </div>
       </article>
 

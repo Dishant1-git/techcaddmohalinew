@@ -8,6 +8,8 @@ import CtaBanner from "@/components/home/CtaBanner";
 import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import { getCmsPage, getCmsPageSlugs, getBlogPosts } from "@/lib/cms/content";
 import { artFor } from "@/lib/blog";
+import { withHeadings, type Heading } from "@/lib/cms/headings";
+import TableOfContents from "@/components/content/TableOfContents";
 import { site } from "@/lib/site";
 
 /**
@@ -115,29 +117,58 @@ export default async function CmsPage({ params }: { params: Promise<{ slug: stri
   const page = await getCmsPage(slug);
   if (!page) notFound();
 
+  /*
+    Anchors and an index, from one pass over the markup.
+
+    A page's headings come from two places — its own rich text and each
+    rich-text block — so both are rewritten and their headings concatenated in
+    the order they appear on the page. A block's own title is a heading too, so
+    it joins the list even though it is not part of any HTML.
+  */
+  const body = withHeadings(page.html);
+  const blocks = page.sections.map((section) => ({
+    section,
+    rich: section.type === "rich-text" || section.type === "cta" ? withHeadings(section.html) : null,
+  }));
+
+  const headings: Heading[] = [
+    ...body.headings,
+    ...blocks.flatMap(({ section, rich }) => [
+      ...(section.title
+        ? [{ id: `section-${section.id}`, text: section.title, level: 2 as const }]
+        : []),
+      ...(rich?.headings ?? []),
+    ]),
+  ];
+
   return (
     <>
       <PageHero crumbs={[{ label: page.title }]} eyebrow="techcadd" title={page.title} />
 
       <section className="py-16 lg:py-20">
-        {/* `container-x` sets the page gutters but stretches full width, so the
-            reading column needs its own centring — without `mx-auto` it sat
-            hard against the left gutter. */}
         <div className="container-x">
-          <div className="mx-auto max-w-3xl">
-          {page.html && (
+          {/* The rail beside the column on a wide screen; the column alone on a
+              narrow one, where a sticky index would eat the viewport. */}
+          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-14">
+            <aside className="order-first hidden lg:block">
+              <TableOfContents headings={headings} />
+            </aside>
+
+            <div className="min-w-0 max-w-3xl">
+          {body.html && (
             <div data-anim="up">
-              <RichText html={page.html} />
+              <RichText html={body.html} />
             </div>
           )}
 
-          {page.sections.map((section) => (
+          {blocks.map(({ section, rich }) => (
             <div key={section.id} className="mt-12 first:mt-0">
               {section.title && (
                 <>
                   <h2
+                    id={`section-${section.id}`}
                     data-anim="words"
-                    className="break-words font-display text-2xl font-extrabold text-up-ink"
+                    className="scroll-mt-28 break-words font-display text-2xl font-extrabold text-up-ink"
                   >
                     {section.title}
                   </h2>
@@ -149,9 +180,9 @@ export default async function CmsPage({ params }: { params: Promise<{ slug: stri
               )}
 
               {/* rich-text and cta both carry prose; image and video do not. */}
-              {section.type === "rich-text" && section.html && (
+              {section.type === "rich-text" && rich?.html && (
                 <div data-anim="up">
-                  <RichText html={section.html} />
+                  <RichText html={rich.html} />
                 </div>
               )}
 
@@ -188,7 +219,7 @@ export default async function CmsPage({ params }: { params: Promise<{ slug: stri
                   data-anim="up"
                   className="rounded-3xl border border-line bg-subtle p-8 text-center"
                 >
-                  {section.html && <RichText html={section.html} />}
+                  {rich?.html && <RichText html={rich.html} />}
                   {section.link && (
                     <Link
                       href={section.link.url}
@@ -219,6 +250,7 @@ export default async function CmsPage({ params }: { params: Promise<{ slug: stri
               )}
             </div>
             ))}
+            </div>
           </div>
         </div>
       </section>
