@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PageHero from "@/components/ui/PageHero";
 import SectionHeading from "@/components/ui/SectionHeading";
 import AlbumGrid from "@/components/gallery/AlbumGrid";
+import GalleryMarquee from "@/components/gallery/GalleryMarquee";
 import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import CtaBanner from "@/components/home/CtaBanner";
 import RelatedLinks from "@/components/ui/RelatedLinks";
@@ -29,7 +30,7 @@ export default async function GalleryPage() {
             labs <span className="text-white/45">and</span> live projects.
           </>
         }
-        subtitle="Open an album to see the photographs from that day, full size."
+        subtitle="Hover a tile to hold it still. The wall drifts on its own; click any photograph to see it full size."
       >
         <div
           data-anim="up"
@@ -50,11 +51,30 @@ export default async function GalleryPage() {
       <section className="py-16 lg:py-20">
         <div className="container-x">
           <SectionHeading eyebrow="Life at techcadd" title="Our Gallery" tone="light" />
-          <div className="mt-10">
-            <AlbumGrid albums={albums} />
-          </div>
+        </div>
+
+        {/* Outside the container on purpose: the rows are meant to run off
+            both edges of the screen rather than stop at a column. */}
+        <div className="mt-10 lg:mt-14">
+          <GalleryMarquee />
         </div>
       </section>
+
+      {albums.length > 0 && (
+        <section className="pb-16 lg:pb-20">
+          <div className="container-x">
+            <SectionHeading
+              eyebrow="Albums"
+              title="Every photograph, by the day it happened"
+              subtitle="Open an album to see the photographs from that day, full size."
+              tone="light"
+            />
+            <div className="mt-10">
+              <AlbumGrid albums={albums} />
+            </div>
+          </div>
+        </section>
+      )}
 
       <RelatedLinks route="/gallery" />
       <QuickCallbackBar />

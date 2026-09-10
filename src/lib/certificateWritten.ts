@@ -327,6 +327,29 @@ export function certificateWritten(course: Course): WrittenCertificatePage | und
 }
 
 /**
+ * The rail for a programme with no written brief — exactly the sections the
+ * derived design renders, in DOM order.
+ *
+ * The shared `courseSections` list cannot be the fallback here: it advertises
+ * Certification, Future scope and Compare, and the derived certificate page
+ * renders none of the three. A pill whose target is not on the page is a tab
+ * that does nothing when clicked — the rail's own click handler bails when
+ * `getElementById` comes back null, and the browser has no anchor to fall back
+ * to either. So the list a page hands the rail has to be the list it renders.
+ */
+export const derivedCertificateSections: { id: string; label: string }[] = [
+  { id: "overview", label: "Overview" },
+  { id: "modules", label: "Modules" },
+  { id: "learn", label: "What you learn" },
+  { id: "why", label: "Why choose us" },
+  { id: "who", label: "Who can join" },
+  { id: "tools", label: "Tools" },
+  { id: "reviews", label: "Reviews" },
+  { id: "faqs", label: "FAQs" },
+  { id: "enquire", label: "Enquire" },
+];
+
+/**
  * One section's heading, written or derived.
  *
  * Every `Cert*` section takes its heading as an optional prop and falls back to

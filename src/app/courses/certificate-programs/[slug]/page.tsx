@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { certificateCourse, certificateRouteCourses } from "@/lib/content/certificatePrograms";
-import { certificateWritten } from "@/lib/certificateWritten";
+import { certificateWritten, derivedCertificateSections } from "@/lib/certificateWritten";
 import { courseFaqs, ratingSummary } from "@/lib/coursePage";
 import { variants } from "@/lib/courseVariants";
 import { site } from "@/lib/site";
@@ -179,7 +179,10 @@ export default async function CertificateProgramPage({
       {/* The rail is sticky within this wrapper, so it pins across the
           programme sections and releases before the footer blocks. */}
       <div className="relative">
-        <SectionRail skin="certificate" sections={written?.sections} />
+        <SectionRail
+          skin="certificate"
+          sections={written?.sections ?? derivedCertificateSections}
+        />
 
         <CertOverview course={course} heading={head("overview")} />
         <CertModules course={course} heading={head("modules")} />

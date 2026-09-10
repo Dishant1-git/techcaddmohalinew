@@ -63,6 +63,26 @@
   }
 }
 
+/* The gallery wall's two directions. Both move by half the track, which is one
+   full copy of the tiles — see `.marquee-left` / `.marquee-right`. */
+@keyframes marquee-track-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-track-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 @keyframes float {
   0%,
   100% {
@@ -202,6 +222,45 @@
 
   .rail-scroll::-webkit-scrollbar {
     display: none;
+  }
+
+  /* ---- Gallery wall -------------------------------------------------------
+     A row of photographs that drifts sideways for ever. The track holds its
+     tiles twice and travels exactly half its own width, so the second copy is
+     standing where the first started when the loop restarts — no seam. The
+     row pauses under the pointer, because a tile that is still moving cannot
+     be clicked. */
+  .marquee-left,
+  .marquee-right {
+    animation-duration: var(--marquee-duration, 60s);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+  }
+
+  .marquee-left {
+    animation-name: marquee-track-left;
+  }
+
+  .marquee-right {
+    animation-name: marquee-track-right;
+  }
+
+  .marquee-left:hover,
+  .marquee-right:hover {
+    animation-play-state: paused;
+  }
+
+  /* The rows run off both edges of the screen; fading them there is what keeps
+     the wall from looking like it was cut with scissors. */
+  .marquee-fade {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 5%,
+      #000 95%,
+      transparent 100%
+    );
   }
 
   /* ---- Liquid glass -------------------------------------------------------
