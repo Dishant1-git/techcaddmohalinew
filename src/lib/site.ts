@@ -224,32 +224,27 @@ export const navItems: NavItem[] = [
         "Build projects with machine learning, data science, automation and generative AI.",
     },
     columns: [
+      // Four and five. The panel is a shortlist, not the catalogue — the
+      // machine-learning, data and BI tracks that used to sit here are all
+      // reachable from the AI category page the "All AI courses" link ends on.
       {
         heading: "AI Fundamentals",
         icon: "sparkles",
         items: [
-          { label: "AI-Powered Courses", href: "/courses/ai/ai-powered-courses", badge: "New" },
-          { label: "Artificial Intelligence", href: "/courses/ai/artificial-intelligence", badge: "Hot" },
-          { label: "Generative AI", href: "/courses/ai/generative-ai", badge: "New" },
-          { label: "Agentic AI", href: "/courses/ai/agentic-ai", badge: "New" },
-          { label: "Prompt Engineering", href: "/courses/ai/prompt-engineering", badge: "New" },
-          { label: "Machine Learning", href: "/courses/ai/machine-learning" },
-          { label: "Deep Learning", href: "/courses/ai/deep-learning" },
-          { label: "Python for AI", href: "/courses/ai/python-programming" },
+          { label: "Generative AI", href: "/courses/ai/generative-ai" },
+          { label: "Artificial Intelligence (AI)", href: "/courses/ai/artificial-intelligence" },
+          { label: "Prompt Engineering", href: "/courses/ai/prompt-engineering" },
+          { label: "ChatGPT & AI Tools", href: "/courses/ai/chatgpt-ai-tools", badge: "Hot" },
         ],
       },
       {
         heading: "AI Development",
         icon: "rocket",
         items: [
-          { label: "Data Science", href: "/courses/ai/data-science" },
-          { label: "Data Analytics", href: "/courses/ai/data-analytics" },
-          { label: "Power BI", href: "/courses/ai/power-bi" },
-          { label: "Tableau", href: "/courses/ai/tableau" },
+          { label: "Agentic AI", href: "/courses/ai/agentic-ai", badge: "New" },
           { label: "AI-Powered Marketing", href: "/courses/ai/ai-powered-marketing", badge: "Trending" },
-          { label: "ChatGPT & AI Tools", href: "/courses/ai/chatgpt-ai-tools", badge: "New" },
-          { label: "RAG (Retrieval-Augmented Generation)", href: "/courses/ai/rag", badge: "New" },
-          { label: "AI + Full Stack", href: "/courses/ai/mern-full-stack" },
+          { label: "RAG (Retrieval-Augmented Generation)", href: "/courses/ai/rag" },
+          { label: "AI-Powered Courses", href: "/courses/ai/ai-powered-courses" },
           { label: "All AI courses in Mohali", href: "/courses/ai/all-ai-courses" },
         ],
       },

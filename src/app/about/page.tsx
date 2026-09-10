@@ -11,6 +11,7 @@ import Icon from "@/components/ui/Icon";
 import HowWeWork from "@/components/about/HowWeWork";
 import { site } from "@/lib/site";
 import RelatedLinks from "@/components/ui/RelatedLinks";
+import TeamWall from "@/components/about/TeamWall";
 
 export const metadata: Metadata = {
   title: "About the Institute",
@@ -551,6 +552,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <TeamWall />
 
       <WhyUs />
       <Testimonials />

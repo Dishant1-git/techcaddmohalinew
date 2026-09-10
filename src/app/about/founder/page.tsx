@@ -5,7 +5,6 @@ import CtaBanner from "@/components/home/CtaBanner";
 import Icon from "@/components/ui/Icon";
 import { founder, founderStory, leadership } from "@/lib/about";
 import RelatedLinks from "@/components/ui/RelatedLinks";
-import TeamWall from "@/components/about/TeamWall";
 
 export const metadata: Metadata = {
   title: "Our Founder",
@@ -398,8 +397,6 @@ export default function FounderPage() {
           </div>
         </div>
       </section>
-
-      <TeamWall />
 
       <RelatedLinks route="/about/founder" />
       <CtaBanner />
