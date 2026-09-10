@@ -376,6 +376,7 @@ export const navItems: NavItem[] = [
           { label: "Data Science Diploma", href: "/training#durations" },
           { label: "Cyber Security Diploma", href: "/training#durations" },
           { label: "Digital Marketing Diploma", href: "/training#durations" },
+          { label: "Cloud Computing Diploma", href: "/after-12th/cloud-computing-diploma", badge: "New" },
           { label: "Two specialisations & a mentor", href: "/training#durations" },
         ],
       },
