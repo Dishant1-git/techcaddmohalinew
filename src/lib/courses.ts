@@ -2966,6 +2966,81 @@ export const courses: Course[] = [
     ],
   },
   {
+    slug: "cloud-computing-diploma",
+    title: "Cloud Computing Diploma",
+    category: "cyber-cloud",
+    duration: "9 Months",
+    level: "Beginner",
+    badge: "New",
+    blurb:
+      "A 9-month, job-oriented Cloud Computing Diploma covering infrastructure, virtualization, networking, storage, security and deployment — practical and beginner-friendly.",
+    overview:
+      "Techcadd's 9-Month Cloud Computing Diploma Program in Mohali is a job-oriented diploma built for students, graduates, IT professionals and job seekers across Mohali, Chandigarh and nearby areas. Over nine months, the course covers essential cloud computing concepts, cloud infrastructure, virtualization, networking, storage, security, deployment models and popular cloud platforms — taking a complete beginner through to industry-relevant, job-ready knowledge. Training goes beyond theory: students get hands-on practice with cloud environments, practical assignments, real-world scenarios, doubt-clearing support and placement assistance to prepare for roles such as Cloud Support Engineer, Cloud Administrator, Cloud Engineer, DevOps Associate and Cloud Operations Executive.",
+    modules: [
+      {
+        title: "Cloud Computing Fundamentals",
+        points: [
+          "What cloud computing is and how it works",
+          "Benefits and limitations of cloud technology",
+          "Why organisations run on the cloud",
+        ],
+      },
+      {
+        title: "Cloud Service & Deployment Models",
+        points: ["IaaS, PaaS and SaaS", "Public, private and hybrid cloud", "Practical use cases for each model"],
+      },
+      {
+        title: "Virtualization",
+        points: ["Virtual machines and hypervisors", "Virtual infrastructure fundamentals", "Running workloads on shared hardware"],
+      },
+      {
+        title: "Cloud Networking & Storage",
+        points: [
+          "Virtual networks, IP addressing and connectivity",
+          "Network security basics",
+          "Cloud storage concepts and data management",
+        ],
+      },
+      {
+        title: "Cloud Compute, Security & Administration",
+        points: [
+          "Creating and managing virtual computing resources",
+          "Access control, authentication and data protection",
+          "Managing cloud users, services and infrastructure",
+        ],
+      },
+      {
+        title: "Deployment, Monitoring & Capstone Project",
+        points: [
+          "Deploying applications and services to the cloud",
+          "Monitoring resources and troubleshooting common issues",
+          "A practical, portfolio-ready cloud project",
+        ],
+      },
+    ],
+    tools: [
+      "Cloud consoles (AWS / Azure / GCP fundamentals)",
+      "Linux",
+      "Networking utilities",
+      "Virtualization software (VirtualBox / VMware)",
+      "Git & GitHub",
+      "Cloud monitoring dashboards",
+    ],
+    outcomes: [
+      "Explain cloud service and deployment models, and when businesses reach for each one",
+      "Set up and manage virtual machines, cloud networking and cloud storage",
+      "Apply core cloud security practices — access control, authentication and data protection",
+      "Deploy, monitor and troubleshoot a real cloud-based project end to end",
+    ],
+    roles: [
+      "Cloud Support Engineer",
+      "Cloud Administrator",
+      "Cloud Engineer",
+      "DevOps Associate",
+      "Cloud Operations Executive",
+    ],
+  },
+  {
     slug: "linux",
     title: "Linux",
     category: "cyber-cloud",
