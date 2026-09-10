@@ -165,6 +165,14 @@
     mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 40%, transparent 100%);
   }
 
+  /* Editorial dot field — the printed-halftone accent behind the founder
+     page's photo panels. Unmasked on purpose: it is meant to end on a hard
+     edge, the way a block of dots does on a page. */
+  .dot-grid {
+    background-image: radial-gradient(rgb(11 26 77 / 0.22) 1.5px, transparent 1.5px);
+    background-size: 14px 14px;
+  }
+
   .grid-lines-light {
     background-image:
       linear-gradient(to right, rgba(11, 26, 77, 0.06) 1px, transparent 1px),
@@ -350,6 +358,30 @@
   .accent-fill:hover {
     background-color: #ffdf72;
     box-shadow: 0 22px 50px -16px rgb(255 210 63 / 0.75);
+  }
+
+  /* ---- Team panel ----------------------------------------------------------
+     Only the resting heights live here. The swap is a GSAP timeline in
+     <TeamWall/>, because it has to be sequenced against the slide rather than
+     run on its own clock — but these are what render before the timeline builds,
+     and what stays under reduced motion, where the animation never runs at all.
+     They must match SIZES in that component. */
+  .team-cell {
+    height: 14rem;
+  }
+
+  .team-cell-short {
+    height: 10rem;
+  }
+
+  @media (min-width: 640px) {
+    .team-cell {
+      height: 18rem;
+    }
+
+    .team-cell-short {
+      height: 13rem;
+    }
   }
 
   .animate-wave {

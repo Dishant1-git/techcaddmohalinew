@@ -76,12 +76,31 @@ export const collage: CollageTile[] = [
   },
 ];
 
-export const founder = {
+export const founder: {
+  name: string;
+  /** Shown in the portrait frame when no photograph is registered. */
+  initials: string;
+  role: string;
+  quote: string;
+  bio: string;
+  /**
+   * Drop a file in `public/founder/` and register it here. Listed explicitly
+   * rather than guessed from the name, so a portrait that has not been added
+   * can never render as a broken image — the frame falls back to the initials
+   * on the gradient, which is a finished design rather than a gap.
+   */
+  photo?: { src: string; alt: string };
+  principles: { title: string; body: string }[];
+} = {
   name: "Mr. Gourav Gupta",
   initials: "GG",
   role: "Founder & CEO, techcadd",
   quote: "The future belongs to learners who continuously adapt, innovate and build.",
   bio: "He started techcadd in 2016 to give young people in Punjab technology skills and the confidence to use them. The method has not changed since that first classroom: practising engineers as trainers, project work instead of slide decks, and a curriculum rewritten whenever the industry moves — which is how AI, cloud and cyber security joined the syllabus.",
+  photo: {
+    src: "/founder/gouravsir.jpg",
+    alt: "Mr. Gourav Gupta, Founder and CEO of techcadd",
+  },
   principles: [
     { title: "Practitioner-led", body: "Every trainer still builds for a living." },
     { title: "Industry-aligned", body: "Curriculum reviewed against live hiring briefs." },
@@ -91,6 +110,73 @@ export const founder = {
     },
   ],
 };
+
+/**
+ * The founder's story, in four beats.
+ *
+ * Carried over from the standalone `/founder` page — the same duplicate the
+ * leadership pillars below came from. It is the only long-form writing the site
+ * has about why techcadd started, and it was stranded on a page nothing links
+ * to.
+ */
+export const founderStory = [
+  {
+    label: "Before 2016",
+    title: "The gap he kept seeing",
+    body: "Working alongside technical graduates, one pattern repeated: strong marks, complete syllabi, and no evidence. Students could describe a technology without ever having shipped anything with it, and interviewers in Jalandhar had learned to stop asking about coursework.",
+  },
+  {
+    label: "2016",
+    title: "techcadd opens in Jalandhar",
+    body: "The institute started with a single principle carried over from that observation: a student should leave with work an employer can open and inspect. Live client briefs went into the syllabus from the beginning rather than being added as a capstone at the end.",
+  },
+  {
+    label: "The model",
+    title: "Practitioners in the classroom",
+    body: "Trainers stayed on live delivery work instead of moving into full-time teaching, so the examples in class came from the current quarter. Small batches kept it possible for a trainer to look at every student's screen, which is what makes correction daily rather than occasional.",
+  },
+  {
+    label: "Today",
+    title: "A network across Punjab",
+    body: "techcadd now runs across Jalandhar, Ludhiana, Hoshiarpur, Phagwara, Amritsar, Patiala, Bathinda and Mukerian, works with universities on industrial training and placement drives, and continues under Mr. Gourav Gupta as Founder and CEO.",
+  },
+];
+
+/**
+ * What has widened at the institute under the founder, rather than what he is
+ * like — five areas the catalogue and the method actually moved into.
+ *
+ * The writing is carried over from the standalone `/founder` page, which
+ * duplicates this one and is no longer linked from anywhere. It was already
+ * written for techcadd; it was just sitting on the copy nobody reaches.
+ */
+export const leadership = [
+  {
+    icon: "cloud",
+    title: "Emerging Technologies",
+    body: "Moving the catalogue beyond conventional computer education into AI, cloud, cyber security and automation.",
+  },
+  {
+    icon: "code",
+    title: "Practical Training",
+    body: "Learning built on projects and hands-on work rather than theory alone.",
+  },
+  {
+    icon: "users",
+    title: "Industry Engagement",
+    body: "Working with employers and institutions so what is taught tracks what is actually hired for.",
+  },
+  {
+    icon: "briefcase",
+    title: "Career Development",
+    body: "Counselling, placement support and career pathways treated as part of the programme, not an afterthought.",
+  },
+  {
+    icon: "sparkles",
+    title: "Innovation",
+    body: "Bringing new technology into the classroom early, while it is still emerging.",
+  },
+];
 
 /**
  * Accreditations and recognitions.
