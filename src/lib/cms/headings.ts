@@ -13,6 +13,16 @@
  * fragments — the editor produces them, not a person typing raw HTML.
  */
 
+/**
+ * Below this, there is no contents rail.
+ *
+ * A one-entry index takes a column's width to repeat the title. Exported so
+ * the pages that lay the rail out use the same number the rail does — they
+ * have to agree, or a page reserves a column for something that renders
+ * nothing and the article ends up pushed off-centre.
+ */
+export const MIN_HEADINGS_FOR_TOC = 2;
+
 export type Heading = {
   id: string;
   /** Heading text with any inline markup stripped. */

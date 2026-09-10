@@ -8,7 +8,7 @@ import CtaBanner from "@/components/home/CtaBanner";
 import QuickCallbackBar from "@/components/tools/QuickCallbackBar";
 import { getCmsPage, getCmsPageSlugs, getBlogPosts } from "@/lib/cms/content";
 import { artFor } from "@/lib/blog";
-import { withHeadings, type Heading } from "@/lib/cms/headings";
+import { withHeadings, MIN_HEADINGS_FOR_TOC, type Heading } from "@/lib/cms/headings";
 import TableOfContents from "@/components/content/TableOfContents";
 import { site } from "@/lib/site";
 
@@ -141,18 +141,41 @@ export default async function CmsPage({ params }: { params: Promise<{ slug: stri
     ]),
   ];
 
+  const showToc = headings.length >= MIN_HEADINGS_FOR_TOC;
+
   return (
     <>
-      <PageHero crumbs={[{ label: page.title }]} eyebrow="techcadd" title={page.title} />
+      <PageHero
+        crumbs={[{ label: page.title }]}
+        eyebrow="techcadd"
+        title={page.title}
+        align="center"
+      />
 
       <section className="py-16 lg:py-20">
         <div className="container-x">
           {/* The rail beside the column on a wide screen; the column alone on a
               narrow one, where a sticky index would eat the viewport. */}
-          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-14">
-            <aside className="order-first hidden lg:block">
-              <TableOfContents headings={headings} />
-            </aside>
+          {/*
+            The rail's column only exists when there is a rail.
+
+            It was always reserved, so an article with too few headings to
+            index kept a 15rem empty track beside it and the text sat well
+            right of centre. With no rail the article is simply a centred
+            column, which is what it looked like before the rail existed.
+          */}
+          <div
+            className={
+              showToc
+                ? "mx-auto grid max-w-6xl gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-14"
+                : "mx-auto max-w-3xl"
+            }
+          >
+            {showToc && (
+              <aside className="order-first hidden lg:block">
+                <TableOfContents headings={headings} />
+              </aside>
+            )}
 
             <div className="min-w-0 max-w-3xl">
           {body.html && (
