@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { courses, getCourse } from "@/lib/courses";
+import { certificateCourse, certificateRouteCourses } from "@/lib/content/certificatePrograms";
+import { certificateWritten } from "@/lib/certificateWritten";
 import { courseFaqs, ratingSummary } from "@/lib/coursePage";
 import { variants } from "@/lib/courseVariants";
 import { site } from "@/lib/site";
@@ -21,20 +22,29 @@ import {
   CertWho,
   CertWhy,
 } from "@/components/courses/certificate/CertificateSections";
+import {
+  CertCertification,
+  CertClosing,
+  CertInstitute,
+  CertModes,
+  CertProjects,
+  CertScope,
+} from "@/components/courses/certificate/CertificateWritten";
 
 /**
- * The Certificate Programs design.
+ * The Certificate Programs design, at `/courses/certificate-programs/<slug>`.
  *
- * Same nine sections as `/courses/[slug]`, and the same course records — this
- * is the credential presentation of them, reached from the Certificate
- * Programs menu. See `@/lib/courseVariants` for why the three designs live at
- * three URLs rather than one.
+ * Same sections as the catalogue route, and the same course records — this is
+ * the credential presentation of them, reached from the Certificate Programs
+ * menu. The menu's own list is the sibling `page.tsx`. See
+ * `@/lib/courseVariants` for why the four designs live at four URLs rather
+ * than one.
  */
 
 const variant = variants.certificate;
 
 export function generateStaticParams() {
-  return courses.map((c) => ({ slug: c.slug }));
+  return certificateRouteCourses.map((c) => ({ slug: c.slug }));
 }
 
 /**
@@ -54,11 +64,16 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const course = getCourse(slug);
+  const course = certificateCourse(slug);
   if (!course) return { title: "Programme not found" };
 
-  const title = variant.metaTitle(course);
-  const description = `${course.blurb}${course.duration ? ` ${course.duration}` : ""} certificate programme at techcadd Mohali — ISO-certified credential, live project and placement assistance.`;
+  // A programme written to its own brief titles itself; the rest take the
+  // variant's derived title.
+  const written = certificateWritten(course);
+  const title = written?.hero.title ?? variant.metaTitle(course);
+  const description =
+    written?.hero.lead ??
+    `${course.blurb}${course.duration ? ` ${course.duration}` : ""} certificate programme at techcadd Mohali — ISO-certified credential, live project and placement assistance.`;
 
   return {
     title,
@@ -79,25 +94,31 @@ export default async function CertificateProgramPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const course = getCourse(slug);
+  const course = certificateCourse(slug);
   if (!course) notFound();
 
   const rating = ratingSummary(course);
   const faqs = courseFaqs(course);
   const reference = referenceFor(course.slug);
 
-  const related = courses
+  // A programme written to its own brief states its own headings and renders
+  // the extra sections that brief has copy for. Every other programme derives
+  // the eight numbered sections and renders none of them.
+  const written = certificateWritten(course);
+  const head = (id: string) => written?.headings[id];
+
+  const related = certificateRouteCourses
     .filter((c) => c.category === course.category && c.slug !== course.slug)
     .slice(0, 4);
   const suggestions = related.length
     ? related
-    : courses.filter((c) => c.slug !== course.slug).slice(0, 4);
+    : certificateRouteCourses.filter((c) => c.slug !== course.slug).slice(0, 4);
 
   const schema = [
     {
       "@context": "https://schema.org",
       "@type": "Course",
-      name: variant.metaTitle(course),
+      name: written?.hero.title ?? variant.metaTitle(course),
       description: course.overview,
       url: `${site.url}${variant.basePath}/${course.slug}`,
       provider: {
@@ -127,7 +148,10 @@ export default async function CertificateProgramPage({
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: faqs.map((f) => ({
+      // The written page asks and answers its future-scope section as questions
+      // too, so they belong in the same block rather than being invisible to
+      // search because they render under their own heading.
+      mainEntity: [...faqs, ...(written?.scope ?? [])].map((f) => ({
         "@type": "Question",
         name: f.q,
         acceptedAnswer: { "@type": "Answer", text: f.a },
@@ -145,29 +169,51 @@ export default async function CertificateProgramPage({
       {/* The guilloché geometry, emitted once for every <Guilloche/> below. */}
       <GuillocheDefs />
 
-      <CertificateHero course={course} serial={reference} />
+      <CertificateHero course={course} serial={reference} written={written?.hero} />
 
       {/* Length first: which of 3 / 6 / 9 months you take is the question that
           comes up before the syllabus does. Outside the rail wrapper below, so
-          it stays clear of the nine numbered sections the three course designs
-          share. */}
-      <CertificateTracks course={course} />
+          it stays clear of the numbered sections the course designs share. */}
+      <CertificateTracks course={course} heading={head("tracks")} />
 
       {/* The rail is sticky within this wrapper, so it pins across the
           programme sections and releases before the footer blocks. */}
       <div className="relative">
-        <SectionRail skin="certificate" />
+        <SectionRail skin="certificate" sections={written?.sections} />
 
-        <CertOverview course={course} />
-        <CertModules course={course} />
-        <CertLearn course={course} />
-        <CertWhy course={course} />
-        <CertWho course={course} />
-        <CertTools course={course} />
-        <CertReviews course={course} />
-        <CertFaqs faqs={faqs} />
-        <CertificateEnquiry course={course} reference={reference} />
+        <CertOverview course={course} heading={head("overview")} />
+        <CertModules course={course} heading={head("modules")} />
+        <CertLearn course={course} heading={head("learn")} />
+        <CertWhy course={course} heading={head("why")} />
+        <CertWho course={course} heading={head("who")} />
+        <CertTools course={course} heading={head("tools")} />
+
+        {/* Written-only sections. The brief has copy for each; a derived
+            programme has none, and renders nothing here. */}
+        {written && (
+          <>
+            <CertCertification items={written.certification} heading={head("certification")} />
+            <CertScope items={written.scope} heading={head("scope")} />
+            <CertProjects items={written.projects} heading={head("projects")} />
+            <CertInstitute
+              items={written.institute}
+              comparison={written.comparison}
+              heading={head("institute")}
+            />
+            <CertModes items={written.modes} heading={head("modes")} />
+          </>
+        )}
+
+        <CertReviews course={course} heading={head("reviews")} />
+        <CertFaqs faqs={faqs} heading={head("faqs")} />
+        <CertificateEnquiry
+          course={course}
+          reference={reference}
+          index={written ? String(written.sections.length).padStart(2, "0") : undefined}
+        />
       </div>
+
+      {written && <CertClosing closing={written.closing} />}
 
       {/* ---- Other certificate programmes ---------------------------------- */}
       <section className="border-t border-up-line bg-white py-20 lg:py-24">

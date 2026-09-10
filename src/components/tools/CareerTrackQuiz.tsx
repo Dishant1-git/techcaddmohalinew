@@ -126,6 +126,9 @@ const PRIMARY_COURSE: Record<CategoryKey, string> = {
   "cyber-cloud": "cyber-security",
   "ai-data": "artificial-intelligence",
   programming: "python-programming",
+  // The quiz only ever answers with a key from `categories`, which does not
+  // list this one; the entry exists because the record is exhaustive.
+  "office-skills": "basic-computer-office-skills",
 };
 
 const OPTION_LETTERS = ["A", "B", "C", "D"];

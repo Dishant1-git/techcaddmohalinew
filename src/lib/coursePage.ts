@@ -1,5 +1,96 @@
 import type { CategoryKey, Course } from "@/lib/courses";
 import { categories, categoryLabel, faqs as generalFaqs, testimonials } from "@/lib/courses";
+import {
+  aiPoweredMarketingAudience,
+  aiPoweredMarketingComparison,
+  aiPoweredMarketingDemand,
+  aiPoweredMarketingEligibility,
+  aiPoweredMarketingFaqs,
+  aiPoweredMarketingLearn,
+  aiPoweredMarketingReviews,
+  aiPoweredMarketingSectionCopy,
+  aiPoweredMarketingSeo,
+  aiPoweredMarketingWhyChoose,
+} from "@/lib/content/aiPoweredMarketing";
+import {
+  chatgptAiToolsAudience,
+  chatgptAiToolsComparison,
+  chatgptAiToolsDemand,
+  chatgptAiToolsEligibility,
+  chatgptAiToolsFaqs,
+  chatgptAiToolsLearn,
+  chatgptAiToolsReviews,
+  chatgptAiToolsSectionCopy,
+  chatgptAiToolsSeo,
+  chatgptAiToolsWhyChoose,
+} from "@/lib/content/chatgptAiTools";
+import {
+  ragAudience,
+  ragComparison,
+  ragDemand,
+  ragEligibility,
+  ragFaqs,
+  ragLearn,
+  ragReviews,
+  ragSectionCopy,
+  ragSeo,
+  ragWhyChoose,
+} from "@/lib/content/rag";
+import {
+  aiPoweredCoursesAudience,
+  aiPoweredCoursesComparison,
+  aiPoweredCoursesDemand,
+  aiPoweredCoursesEligibility,
+  aiPoweredCoursesFaqs,
+  aiPoweredCoursesLearn,
+  aiPoweredCoursesReviews,
+  aiPoweredCoursesSectionCopy,
+  aiPoweredCoursesSeo,
+  aiPoweredCoursesWhyChoose,
+} from "@/lib/content/aiPoweredCourses";
+import {
+  allAiCoursesAudience,
+  allAiCoursesComparison,
+  allAiCoursesDemand,
+  allAiCoursesEligibility,
+  allAiCoursesFaqs,
+  allAiCoursesLearn,
+  allAiCoursesReviews,
+  allAiCoursesSectionCopy,
+  allAiCoursesSeo,
+  allAiCoursesWhyChoose,
+} from "@/lib/content/allAiCourses";
+import {
+  mernCertificateAudience,
+  mernCertificateEligibility,
+  mernCertificateFaqs,
+  mernCertificateWhyChoose,
+} from "@/lib/content/mernCertificate";
+import {
+  dataScienceCertificateAudience,
+  dataScienceCertificateEligibility,
+  dataScienceCertificateFaqs,
+  dataScienceCertificateWhyChoose,
+} from "@/lib/content/dataScienceCertificate";
+import {
+  agenticAiCertificateAudience,
+  agenticAiCertificateEligibility,
+  agenticAiCertificateFaqs,
+  agenticAiCertificateWhyChoose,
+} from "@/lib/content/agenticAiCertificate";
+import {
+  cyberSecurityCertificateAudience,
+  cyberSecurityCertificateEligibility,
+  cyberSecurityCertificateFaqs,
+  cyberSecurityCertificateWhyChoose,
+} from "@/lib/content/cyberSecurityCertificate";
+import {
+  basicComputerOfficeSkillsAudience,
+  basicComputerOfficeSkillsEligibility,
+  basicComputerOfficeSkillsFaqs,
+  basicComputerOfficeSkillsReviews,
+  basicComputerOfficeSkillsWhyChoose,
+} from "@/lib/content/basicComputerOfficeSkills";
 
 /**
  * Everything the /courses/[slug] detail page renders beyond what `courses.ts`
@@ -33,6 +124,27 @@ function seeded(key: string) {
     h ^= h << 5;
     return Math.abs(h % 100000) / 100000;
   };
+}
+
+/* -------------------------------------------------------------------------- *
+ *                            Which copy to render                             *
+ * -------------------------------------------------------------------------- */
+
+/**
+ * The key every written block in this file is stored under.
+ *
+ * A course's slug, unless its record carries a `contentKey` — which is how one
+ * course reached from two menus shows two different pages. The AI menu's
+ * override map can hand `/courses/ai/data-science` a record keyed
+ * `data-science--ai`, and every lookup below then finds the copy written for
+ * that key while `/courses/course/data-science` keeps the catalogue's.
+ *
+ * Nothing has to be written for a new key: each lookup falls back to the copy
+ * derived from the course record, and the record itself is what the override
+ * changed, so a menu gets a page of its own either way.
+ */
+export function contentKey(course: Course) {
+  return course.contentKey ?? course.slug;
 }
 
 /* -------------------------------------------------------------------------- *
@@ -78,7 +190,7 @@ export type CourseImage = { src: string; alt: string };
 export const courseImages: Record<string, CourseImage> = {};
 
 export function courseImage(course: Course): CourseImage | undefined {
-  return courseImages[course.slug];
+  return courseImages[contentKey(course)];
 }
 
 /** The category's gradient, reused from the catalogue so nothing drifts. */
@@ -147,6 +259,11 @@ export type LearnDetail = {
 };
 
 const learnDetailBySlug: Record<string, LearnDetail> = {
+  "ai-powered-marketing": aiPoweredMarketingLearn,
+  "chatgpt-ai-tools": chatgptAiToolsLearn,
+  rag: ragLearn,
+  "ai-powered-courses": aiPoweredCoursesLearn,
+  "all-ai-courses": allAiCoursesLearn,
   "agentic-ai": {
     intro:
       "This isn't a theory-only syllabus. The program runs as a single ladder of 33 modules with three exit points — 3, 6, and 9 months — and every module ends with a graded deliverable that goes straight into your portfolio. Module 01 starts at Python from the first line, so no programming background is required to join our Mohali batch; from Module 02 onward, every session is agent engineering.",
@@ -482,7 +599,7 @@ const learnDetailBySlug: Record<string, LearnDetail> = {
 };
 
 export function learnDetail(course: Course): LearnDetail | undefined {
-  return learnDetailBySlug[course.slug];
+  return learnDetailBySlug[contentKey(course)];
 }
 
 /* -------------------------------------------------------------------------- *
@@ -501,9 +618,14 @@ export type SectionCopy = {
   /** "At a glance" rows, rendered beside the enquiry form where a page has them. */
   facts?: { label: string; value: string }[];
 };
-type SectionKey = "learn" | "why" | "who" | "enquire";
+type SectionKey = "hero" | "learn" | "why" | "who" | "tools" | "scope" | "enquire";
 
 const sectionCopyBySlug: Record<string, Partial<Record<SectionKey, SectionCopy>>> = {
+  "ai-powered-marketing": aiPoweredMarketingSectionCopy,
+  "chatgpt-ai-tools": chatgptAiToolsSectionCopy,
+  rag: ragSectionCopy,
+  "ai-powered-courses": aiPoweredCoursesSectionCopy,
+  "all-ai-courses": allAiCoursesSectionCopy,
   "agentic-ai": {
     learn: {
       title: "What you will actually build in this Agentic AI course in Mohali",
@@ -648,7 +770,7 @@ const sectionCopyBySlug: Record<string, Partial<Record<SectionKey, SectionCopy>>
 };
 
 export function sectionCopy(course: Course, section: SectionKey): SectionCopy | undefined {
-  return sectionCopyBySlug[course.slug]?.[section];
+  return sectionCopyBySlug[contentKey(course)]?.[section];
 }
 
 /* -------------------------------------------------------------------------- *
@@ -664,6 +786,16 @@ export function sectionCopy(course: Course, section: SectionKey): SectionCopy | 
 
 /** "Why choose this program" cards, replacing the generic six. */
 const whyChooseBySlug: Record<string, { icon: string; title: string; body: string }[]> = {
+  "ai-powered-marketing": aiPoweredMarketingWhyChoose,
+  "chatgpt-ai-tools": chatgptAiToolsWhyChoose,
+  rag: ragWhyChoose,
+  "ai-powered-courses": aiPoweredCoursesWhyChoose,
+  "all-ai-courses": allAiCoursesWhyChoose,
+  "mern-full-stack--certificate": mernCertificateWhyChoose,
+  "data-science--certificate": dataScienceCertificateWhyChoose,
+  "agentic-ai--certificate": agenticAiCertificateWhyChoose,
+  "cyber-security--certificate": cyberSecurityCertificateWhyChoose,
+  "basic-computer-office-skills--certificate": basicComputerOfficeSkillsWhyChoose,
   // The first six answer "why this program"; the seven after them answer
   // "why Techcadd".
   "agentic-ai": [
@@ -2110,6 +2242,16 @@ const whyChooseBySlug: Record<string, { icon: string; title: string; body: strin
 
 /** "Who can join" cards, replacing the category default. */
 const audienceBySlug: Record<string, { title: string; body: string; icon: string }[]> = {
+  "ai-powered-marketing": aiPoweredMarketingAudience,
+  "chatgpt-ai-tools": chatgptAiToolsAudience,
+  rag: ragAudience,
+  "ai-powered-courses": aiPoweredCoursesAudience,
+  "all-ai-courses": allAiCoursesAudience,
+  "mern-full-stack--certificate": mernCertificateAudience,
+  "data-science--certificate": dataScienceCertificateAudience,
+  "agentic-ai--certificate": agenticAiCertificateAudience,
+  "cyber-security--certificate": cyberSecurityCertificateAudience,
+  "basic-computer-office-skills--certificate": basicComputerOfficeSkillsAudience,
   "agentic-ai": [
     {
       icon: "users",
@@ -3191,6 +3333,16 @@ const audienceBySlug: Record<string, { title: string; body: string; icon: string
 
 /** "What you need to start", replacing the generic eligibility list. */
 const eligibilityBySlug: Record<string, string[]> = {
+  "ai-powered-marketing": aiPoweredMarketingEligibility,
+  "chatgpt-ai-tools": chatgptAiToolsEligibility,
+  rag: ragEligibility,
+  "ai-powered-courses": aiPoweredCoursesEligibility,
+  "all-ai-courses": allAiCoursesEligibility,
+  "mern-full-stack--certificate": mernCertificateEligibility,
+  "data-science--certificate": dataScienceCertificateEligibility,
+  "agentic-ai--certificate": agenticAiCertificateEligibility,
+  "cyber-security--certificate": cyberSecurityCertificateEligibility,
+  "basic-computer-office-skills--certificate": basicComputerOfficeSkillsEligibility,
   "agentic-ai": [
     "No programming experience needed — Module 01 teaches Python from the first line",
     "Open from any stream after 12th — Science, Commerce or Arts",
@@ -3387,6 +3539,11 @@ const eligibilityBySlug: Record<string, string[]> = {
 
 /** Hiring context for the future-scope section, where a course has its own. */
 const demandBySlug: Record<string, string> = {
+  "ai-powered-marketing": aiPoweredMarketingDemand,
+  "chatgpt-ai-tools": chatgptAiToolsDemand,
+  rag: ragDemand,
+  "ai-powered-courses": aiPoweredCoursesDemand,
+  "all-ai-courses": allAiCoursesDemand,
   "cyber-security":
     "Every company now depends on digital infrastructure, which makes every one of them a potential target — and Mohali's IT City, together with the wider Chandigarh tricity, is hiring for SOC, VAPT and security-support roles as fast as that infrastructure grows.",
   "cloud-computing":
@@ -3447,6 +3604,11 @@ const demandBySlug: Record<string, string> = {
 
 /** Page-level SEO, where a course page has been written to a keyword brief. */
 export const courseSeo: Record<string, { title: string; description: string }> = {
+  "ai-powered-marketing": aiPoweredMarketingSeo,
+  "chatgpt-ai-tools": chatgptAiToolsSeo,
+  rag: ragSeo,
+  "ai-powered-courses": aiPoweredCoursesSeo,
+  "all-ai-courses": allAiCoursesSeo,
   "generative-ai": {
     title: "Generative AI Course in Mohali | Techcadd Training Institute",
     description:
@@ -3603,8 +3765,20 @@ export const courseSeo: Record<string, { title: string; description: string }> =
  *                               Why choose us                                 *
  * -------------------------------------------------------------------------- */
 
+/**
+ * The written title/description pair for a page, or undefined when the course
+ * has none and the page should derive its own.
+ *
+ * Keyed like everything else here, so a menu with its own copy for a shared
+ * course gets its own tag and meta description too rather than competing in
+ * search with the same page under another menu.
+ */
+export function courseSeoFor(course: Course) {
+  return courseSeo[contentKey(course)];
+}
+
 export function whyChoose(course: Course) {
-  const written = whyChooseBySlug[course.slug];
+  const written = whyChooseBySlug[contentKey(course)];
   if (written) return written;
 
   return [
@@ -3778,14 +3952,36 @@ const audienceByCategory: Record<CategoryKey, { title: string; body: string; ico
       body: "Professionals from non-IT backgrounds who need one first, solid programming language.",
     },
   ],
+  "office-skills": [
+    {
+      icon: "users",
+      title: "Absolute beginners",
+      body: "No prior computer experience needed — the track starts at switching the machine on and builds from there.",
+    },
+    {
+      icon: "certificate",
+      title: "Government exam candidates",
+      body: "Anyone sitting a recruitment exam with an English or Punjabi typing test, trained to the benchmark speed and accuracy.",
+    },
+    {
+      icon: "building",
+      title: "Shopkeepers & small business owners",
+      body: "Owners who want to run their own GST billing and books in Tally instead of paying to outsource it.",
+    },
+    {
+      icon: "briefcase",
+      title: "Office & admin entrants",
+      body: "Anyone starting in office, admin, billing or data-entry work across Mohali's retail, trading, healthcare and services employers.",
+    },
+  ],
 };
 
 export function whoCanJoin(course: Course) {
-  return audienceBySlug[course.slug] ?? audienceByCategory[course.category];
+  return audienceBySlug[contentKey(course)] ?? audienceByCategory[course.category];
 }
 
 export function eligibility(course: Course) {
-  const written = eligibilityBySlug[course.slug];
+  const written = eligibilityBySlug[contentKey(course)];
   if (written) return written;
 
   const base = [
@@ -3809,6 +4005,16 @@ export function eligibility(course: Course) {
 
 /** Course FAQs written for a specific page, replacing the derived set. */
 const faqsBySlug: Record<string, { q: string; a: string }[]> = {
+  "ai-powered-marketing": aiPoweredMarketingFaqs,
+  "chatgpt-ai-tools": chatgptAiToolsFaqs,
+  rag: ragFaqs,
+  "ai-powered-courses": aiPoweredCoursesFaqs,
+  "all-ai-courses": allAiCoursesFaqs,
+  "mern-full-stack--certificate": mernCertificateFaqs,
+  "data-science--certificate": dataScienceCertificateFaqs,
+  "agentic-ai--certificate": agenticAiCertificateFaqs,
+  "cyber-security--certificate": cyberSecurityCertificateFaqs,
+  "basic-computer-office-skills--certificate": basicComputerOfficeSkillsFaqs,
   "agentic-ai": [
     {
       q: "What is Agentic AI?",
@@ -5416,7 +5622,7 @@ const faqsBySlug: Record<string, { q: string; a: string }[]> = {
 };
 
 export function courseFaqs(course: Course) {
-  const written = faqsBySlug[course.slug];
+  const written = faqsBySlug[contentKey(course)];
   if (written) return written;
 
   const label = categoryLabel[course.category].toLowerCase();
@@ -5471,6 +5677,12 @@ export type CourseReview = {
 
 /** Reviews collected for a specific course page, replacing the rotated set. */
 const reviewsBySlug: Record<string, CourseReview[]> = {
+  "basic-computer-office-skills--certificate": basicComputerOfficeSkillsReviews,
+  "ai-powered-marketing": aiPoweredMarketingReviews,
+  "chatgpt-ai-tools": chatgptAiToolsReviews,
+  rag: ragReviews,
+  "ai-powered-courses": aiPoweredCoursesReviews,
+  "all-ai-courses": allAiCoursesReviews,
   "agentic-ai": [
     {
       name: "Simran Kaur",
@@ -8596,7 +8808,7 @@ const reviewsBySlug: Record<string, CourseReview[]> = {
 };
 
 export function courseReviews(course: Course): CourseReview[] {
-  const written = reviewsBySlug[course.slug];
+  const written = reviewsBySlug[contentKey(course)];
   if (written) return written;
 
   const rnd = seeded(course.slug);
@@ -8833,6 +9045,29 @@ const scopeByCategory: Record<CategoryKey, ScopeProfile> = {
       "Freelance development",
     ],
   },
+  /**
+   * The one profile with no counterpart in `src/lib/salaryData.ts` — the
+   * estimator covers technical tracks, and entry-level office, billing and
+   * data-entry work is not one of them. The Punjab band is therefore the
+   * Tricity market range for those roles rather than an echo of that file; the
+   * other two markets still apply its multipliers, so the shape matches.
+   */
+  "office-skills": {
+    demand:
+      "Mohali's retail, trading, real estate, healthcare and government-adjacent employers hire for basic office competence first, and a candidate who can run Excel confidently, keep books in Tally, or type at government-test speed is often chosen over one who can't.",
+    salary: [
+      { market: "Punjab / Tricity", fresher: "₹1.2 – 2.4 LPA", experienced: "₹2.4 – 4.2 LPA" },
+      { market: "Delhi NCR", fresher: "₹1.5 – 3 LPA", experienced: "₹3 – 5.3 LPA" },
+      { market: "Remote / Freelance", fresher: "₹1.3 – 2.5 LPA", experienced: "₹3.2 – 5.7 LPA" },
+    ],
+    industries: [
+      "Retail and trading businesses",
+      "Real estate and property offices",
+      "Healthcare clinics and diagnostics",
+      "Government-adjacent and administrative offices",
+      "Print shops and design studios",
+    ],
+  },
 };
 
 export function futureScope(course: Course) {
@@ -8840,7 +9075,7 @@ export function futureScope(course: Course) {
   return {
     roles: course.roles,
     ...profile,
-    demand: demandBySlug[course.slug] ?? profile.demand,
+    demand: demandBySlug[contentKey(course)] ?? profile.demand,
   };
 }
 
@@ -8899,6 +9134,11 @@ export const comparison: { aspect: string; icon: string; us: string; them: strin
  * column still says "most institutes" rather than naming anyone.
  */
 const comparisonBySlug: Record<string, typeof comparison> = {
+  "ai-powered-marketing": aiPoweredMarketingComparison,
+  "chatgpt-ai-tools": chatgptAiToolsComparison,
+  rag: ragComparison,
+  "ai-powered-courses": aiPoweredCoursesComparison,
+  "all-ai-courses": allAiCoursesComparison,
   "cyber-security": [
     {
       aspect: "Who teaches",
@@ -10393,5 +10633,5 @@ const comparisonBySlug: Record<string, typeof comparison> = {
 
 /** The comparison rows for a course — its own where written, ours otherwise. */
 export function comparisonFor(course: Course) {
-  return comparisonBySlug[course.slug] ?? comparison;
+  return comparisonBySlug[contentKey(course)] ?? comparison;
 }

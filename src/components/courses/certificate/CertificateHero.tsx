@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import type { Course } from "@/lib/courses";
 import { categoryArt, courseHighlights, ratingSummary } from "@/lib/coursePage";
+import type { WrittenCertificateHero } from "@/lib/content/mernCertificate";
 import { site } from "@/lib/site";
 import Icon from "@/components/ui/Icon";
 import SectionLink from "@/components/courses/detail/SectionLink";
@@ -25,15 +26,22 @@ import { Guilloche, Seal, SecurityBorder, Signature } from "@/components/courses
 export default function CertificateHero({
   course,
   serial,
+  written,
 }: {
   course: Course;
   serial: string;
+  /**
+   * A programme written to its own brief states its own headline, lead, proof
+   * points, particulars and buttons. Without one every line below is derived
+   * from the course record, exactly as it always was.
+   */
+  written?: WrittenCertificateHero;
 }) {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const art = categoryArt(course);
   const rating = ratingSummary(course);
-  const highlights = courseHighlights(course);
+  const highlights = written?.highlights ?? courseHighlights(course);
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const docRotate = useTransform(scrollYProgress, [0, 1], [0, -5]);
@@ -41,7 +49,7 @@ export default function CertificateHero({
   const copyY = useTransform(scrollYProgress, [0, 1], [0, 45]);
   const watermarkY = useTransform(scrollYProgress, [0, 1], [0, -90]);
 
-  const words = `${course.title} certificate programme`.split(" ");
+  const words = (written?.title ?? `${course.title} certificate programme`).split(" ");
 
   return (
     <section
@@ -118,8 +126,38 @@ export default function CertificateHero({
               transition={{ duration: 0.8, delay: 0.35, ease: EASE }}
               className="mt-6 max-w-xl text-base leading-relaxed text-up-soft/75 sm:text-lg"
             >
-              {course.blurb}
+              {written?.lead ?? course.blurb}
             </motion.p>
+
+            {/* The brief's proof points, if it wrote any — the four claims it
+                wants read before the particulars. */}
+            {written?.points && (
+              <motion.ul
+                initial="hidden"
+                animate="show"
+                variants={{ show: { transition: { staggerChildren: 0.07, delayChildren: 0.4 } } }}
+                className="mt-7 grid max-w-xl gap-2.5 sm:grid-cols-2"
+              >
+                {written.points.map((p) => (
+                  <motion.li
+                    key={p}
+                    variants={{
+                      hidden: { opacity: 0, x: -12 },
+                      show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: EASE } },
+                    }}
+                    className="flex items-start gap-2.5 text-sm leading-snug text-up-soft/80"
+                  >
+                    <Icon
+                      name="check"
+                      size={13}
+                      strokeWidth={3.2}
+                      className="mt-0.5 shrink-0 text-up-gold"
+                    />
+                    {p}
+                  </motion.li>
+                ))}
+              </motion.ul>
+            )}
 
             {/* Credential particulars, set as a formal record. */}
             <motion.dl
@@ -156,7 +194,7 @@ export default function CertificateHero({
                 to="enquire"
                 className="group inline-flex items-center gap-2 border-2 border-up-gold bg-up-gold px-8 py-4 text-sm font-bold tracking-wide text-hero-950 transition-all hover:-translate-y-0.5 hover:bg-transparent hover:text-up-gold"
               >
-                Register for this programme
+                {written?.primaryCta ?? "Register for this programme"}
                 <Icon
                   name="arrowRight"
                   size={17}
@@ -167,7 +205,8 @@ export default function CertificateHero({
                 href={site.phoneHref}
                 className="inline-flex items-center gap-2 border-b border-white/25 px-1 py-2 text-sm font-semibold text-white transition-colors hover:border-up-gold hover:text-up-gold"
               >
-                <Icon name="phone" size={15} /> {site.phone}
+                <Icon name="phone" size={15} />
+                {written?.secondaryCta ? `${written.secondaryCta} · ${site.phone}` : site.phone}
               </a>
             </motion.div>
           </motion.div>

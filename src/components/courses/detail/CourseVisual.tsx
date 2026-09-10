@@ -94,7 +94,7 @@ export default function CourseVisual({ course }: { course: Course }) {
               )}
               <span>{course.level}</span>
               <span className="h-1 w-1 rounded-full bg-white/30" />
-              <span>Mohali &amp; live online</span>
+              <span>{course.campus ?? "Mohali"} &amp; live online</span>
             </p>
           </figcaption>
         </div>

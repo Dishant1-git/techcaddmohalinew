@@ -25,9 +25,16 @@ const label = "mb-1.5 block text-[0.62rem] font-bold uppercase tracking-[0.2em] 
 export default function CertificateEnquiry({
   course,
   reference,
+  index,
 }: {
   course: Course;
   reference: string;
+  /**
+   * The stage number in the left rule. Nine on a derived page, which renders
+   * eight numbered sections before this one; a written page that renders more
+   * of them passes its own so the count stays honest.
+   */
+  index?: string;
 }) {
   const reduce = useReducedMotion();
   const { status, error, captcha, captchaLoading, refreshCaptcha, onSubmit, reset } = useEnquiry(
@@ -45,7 +52,7 @@ export default function CertificateEnquiry({
           <div>
             <div className="flex items-center gap-4">
               <span className="font-display text-[0.7rem] font-bold tracking-[0.2em] text-up-accent">
-                09
+                {index ?? "09"}
               </span>
               <span className="text-[0.66rem] font-bold uppercase tracking-[0.26em] text-up-muted">
                 Registration

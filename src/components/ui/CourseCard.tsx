@@ -1,11 +1,19 @@
 import Link from "next/link";
 import { categoryLabel, type Course } from "@/lib/courses";
+import { variants } from "@/lib/courseVariants";
 import Icon from "@/components/ui/Icon";
 
-export default function CourseCard({ course }: { course: Course }) {
+export default function CourseCard({
+  course,
+  basePath = variants.catalogue.basePath,
+}: {
+  course: Course;
+  /** Which menu's pages the card links into. Defaults to the catalogue. */
+  basePath?: string;
+}) {
   return (
     <Link
-      href={`/courses/${course.slug}`}
+      href={`${basePath}/${course.slug}`}
       className="card-hover group relative flex flex-col overflow-hidden rounded-3xl border border-line bg-white"
     >
       <div className="relative overflow-hidden bg-hero-950 px-7 py-8">

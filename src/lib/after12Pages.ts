@@ -57,6 +57,16 @@ export type After12Page = {
     items: WrittenItem[];
   };
 
+  /**
+   * The mid-page call to talk to someone, sitting between "why now" and the
+   * credential. A band rather than a numbered stage: it interrupts the read,
+   * it does not add to it.
+   */
+  advisor: { title: string; body: string; cta: string };
+
+  /** What the student actually leaves with on paper. */
+  certificate: { title: string; intro: string; items: WrittenItem[] };
+
   takesYou: {
     title: string;
     intro: string;
@@ -92,6 +102,7 @@ const cloudComputing: After12Page = {
     { id: "tools", label: "Tools" },
     { id: "who", label: "Who can join" },
     { id: "why-now", label: "Why now" },
+    { id: "certificate", label: "Certification" },
     { id: "scope", label: "Where it takes you" },
     { id: "projects", label: "Projects" },
     { id: "why", label: "Why techcadd" },
@@ -513,6 +524,40 @@ const cloudComputing: After12Page = {
     ],
   },
 
+  advisor: {
+    title: "Talk to a course advisor",
+    body: "Ten minutes on the phone settles more than an hour of reading — eligibility, batch timings, fees, and whether this programme fits the degree or the job you already have.",
+    cta: "Book a free demo class",
+  },
+
+  certificate: {
+    title: "Get certified in the Cloud Computing Program",
+    intro:
+      "Complete the course with a portfolio of live projects and receive an industry-recognised certificate, plus a documented internship letter accepted by Punjab universities.",
+    items: [
+      {
+        icon: "certificate",
+        title: "Industry Certificate",
+        body: "Recognised by employers across Punjab and beyond.",
+      },
+      {
+        icon: "briefcase",
+        title: "Internship Letter",
+        body: "Based on real client work, not a simulation.",
+      },
+      {
+        icon: "layers",
+        title: "Portfolio of Projects",
+        body: "Live work you can show in any interview.",
+      },
+      {
+        icon: "target",
+        title: "Placement Support",
+        body: "CV reviews, mock interviews and hiring drives once you finish.",
+      },
+    ],
+  },
+
   takesYou: {
     title: "Where This Course Takes You",
     intro:
@@ -638,22 +683,22 @@ const cloudComputing: After12Page = {
       {
         title: "Digital Marketing Course",
         body: "Learn SEO, Google Ads, social media marketing, content marketing, analytics, and AI-powered digital marketing strategies.",
-        href: "/after-12th/digital-marketing",
+        href: "/courses/after12th/digital-marketing",
       },
       {
         title: "Web Development Course",
         body: "Build modern websites and web applications while learning frontend and backend development fundamentals.",
-        href: "/after-12th/web-development",
+        href: "/courses/after12th/web-development",
       },
       {
         title: "Artificial Intelligence Course",
         body: "Understand AI concepts and work with practical tools and technologies used to build intelligent applications.",
-        href: "/after-12th/artificial-intelligence",
+        href: "/courses/after12th/artificial-intelligence",
       },
       {
         title: "MERN Stack Course",
         body: "Learn MongoDB, Express.js, React.js, and Node.js while building full-stack web applications and real-world projects.",
-        href: "/after-12th/mern-full-stack",
+        href: "/courses/after12th/mern-full-stack",
       },
       {
         title: "Basic Computer Course",
@@ -743,9 +788,508 @@ const cloudComputing: After12Page = {
   },
 };
 
+const cloudComputingDiploma: After12Page = {
+  sections: [
+    { id: "overview", label: "Overview" },
+    { id: "learn", label: "What you learn" },
+    { id: "modules", label: "Curriculum" },
+    { id: "tools", label: "Tools" },
+    { id: "who", label: "Who can join" },
+    { id: "why-now", label: "Why now" },
+    { id: "scope", label: "Where it takes you" },
+    { id: "projects", label: "Projects" },
+    { id: "why", label: "Why techcadd" },
+    { id: "reviews", label: "Reviews" },
+    { id: "faqs", label: "FAQs" },
+    { id: "enquire", label: "Enquire" },
+  ],
+
+  hero: {
+    badge: "9-Month Job-Oriented Diploma",
+    title: "Best After 12th 9-Month Cloud Computing Diploma Program in Mohali",
+    paragraphs: [
+      "Looking for the best Cloud Computing Diploma Program in Mohali? Techcadd offers a job-oriented, 9-month Cloud Computing Diploma designed for students, graduates, IT professionals and job seekers across Mohali, Chandigarh and nearby areas.",
+      "The diploma covers essential cloud computing concepts, cloud infrastructure, virtualization, networking, storage, security, cloud deployment models and popular cloud platforms — structured to build industry-relevant, job-ready knowledge whether you're a complete beginner or an IT student sharpening practical cloud skills.",
+    ],
+  },
+
+  program: {
+    title: "Cloud Computing Diploma Program Course in Mohali",
+    paragraphs: [
+      "Training at techcadd goes beyond theory. Students get hands-on practice with cloud environments, practical assignments, real-world scenarios, doubt-clearing support and placement assistance to help them prepare for roles such as Cloud Support Engineer, Cloud Administrator, Cloud Engineer, DevOps Associate and Cloud Operations Executive.",
+      "If you're searching for a trusted Cloud Computing Institute in Mohali that combines practical learning with career support, this 9-month diploma is built for you.",
+    ],
+    highlightsTitle: "Key Highlights",
+    highlights: [
+      { label: "Duration", value: "9 Months" },
+      { label: "Mode", value: "Classroom & Online" },
+      { label: "Eligibility", value: "12th Pass / Graduate, Any Stream" },
+      { label: "Level", value: "Beginner-Friendly" },
+      { label: "Covers", value: "Infrastructure, Virtualization, Networking, Storage & Security" },
+      { label: "Training", value: "Practical & Job-Oriented" },
+      { label: "Includes", value: "Certificate + Placement Assistance" },
+    ],
+  },
+
+  overview: {
+    title: "Course Overview",
+    paragraphs: [
+      "This Cloud Computing Diploma in Mohali covers essential cloud computing concepts, cloud infrastructure, virtualization, networking, storage, security, cloud deployment models and popular cloud platforms. Whether you're a complete beginner or an IT student looking to build practical cloud skills, the program is structured to develop industry-relevant and job-ready knowledge over nine months.",
+      "Training goes beyond theory. Students get hands-on practice with cloud environments, practical assignments, real-world scenarios, doubt-clearing support and placement assistance to help them prepare for roles such as Cloud Support Engineer, Cloud Administrator, Cloud Engineer, DevOps Associate and Cloud Operations Executive.",
+      "If you're searching for a trusted Cloud Computing Institute in Mohali that combines practical learning with career support, this diploma program is built for you.",
+    ],
+  },
+
+  learn: {
+    title: "What You’ll Learn",
+    intro:
+      "This program is structured to take learners from cloud computing fundamentals to a practical understanding of modern cloud environments.",
+    items: [
+      {
+        title: "Cloud Computing Fundamentals",
+        body: "Understand what cloud computing is, how it works, its benefits, its limitations, and why organisations use cloud technology.",
+      },
+      {
+        title: "Cloud Service Models",
+        body: "Learn about IaaS, PaaS and SaaS, and understand how different cloud services are used by businesses.",
+      },
+      {
+        title: "Cloud Deployment Models",
+        body: "Understand public cloud, private cloud, hybrid cloud, and their practical use cases.",
+      },
+      {
+        title: "Virtualization",
+        body: "Learn the fundamentals of virtualization, virtual machines, hypervisors and virtual infrastructure.",
+      },
+      {
+        title: "Cloud Networking",
+        body: "Understand networking concepts required for cloud environments, including virtual networks, IP addressing, connectivity and network security.",
+      },
+      {
+        title: "Cloud Storage",
+        body: "Learn different cloud storage concepts and how organisations manage data in cloud environments.",
+      },
+      {
+        title: "Cloud Compute Services",
+        body: "Understand cloud-based computing resources and how virtual computing environments are created and managed.",
+      },
+      {
+        title: "Cloud Security",
+        body: "Learn fundamental cloud security concepts including access control, authentication, permissions, data protection and security best practices.",
+      },
+      {
+        title: "Cloud Administration",
+        body: "Understand the basics of managing cloud resources, users, services and infrastructure.",
+      },
+      {
+        title: "Cloud Deployment",
+        body: "Learn the fundamentals of deploying applications and services in cloud environments.",
+      },
+      {
+        title: "Monitoring & Troubleshooting",
+        body: "Understand how cloud resources are monitored, and how common infrastructure and connectivity issues can be identified.",
+      },
+      {
+        title: "Practical Projects",
+        body: "Apply your learning through practical cloud-based assignments and real-world scenarios to build confidence and strengthen your portfolio.",
+      },
+    ],
+  },
+
+  curriculum: {
+    title: "Course Curriculum",
+    intro:
+      "The 9-month Cloud Computing Diploma follows a structured, beginner-friendly progression — from cloud fundamentals through infrastructure, security and administration, to deployment and a portfolio project.",
+    modules: [
+      {
+        title: "Cloud Computing Fundamentals",
+        points: [
+          "What cloud computing is and how it works",
+          "Benefits, limitations and business drivers",
+          "How organisations use cloud technology",
+        ],
+      },
+      {
+        title: "Cloud Service Models",
+        points: ["IaaS", "PaaS", "SaaS", "Choosing a model for a given use case"],
+      },
+      {
+        title: "Cloud Deployment Models",
+        points: ["Public cloud", "Private cloud", "Hybrid cloud", "Practical use cases"],
+      },
+      {
+        title: "Virtualization",
+        points: ["Virtual machines", "Hypervisors", "Virtual infrastructure", "Running multiple workloads on shared hardware"],
+      },
+      {
+        title: "Cloud Networking",
+        points: ["Virtual networks", "IP addressing and connectivity", "Network security fundamentals"],
+      },
+      {
+        title: "Cloud Storage",
+        points: ["Cloud storage concepts", "Data management in the cloud", "Backup and recovery basics"],
+      },
+      {
+        title: "Cloud Compute Services",
+        points: ["Cloud-based computing resources", "Creating virtual computing environments", "Managing compute resources"],
+      },
+      {
+        title: "Cloud Security",
+        points: ["Access control and authentication", "Permissions and data protection", "Security best practices"],
+      },
+      {
+        title: "Cloud Administration",
+        points: ["Managing cloud resources and users", "Managing services and infrastructure", "Day-to-day administration tasks"],
+      },
+      {
+        title: "Cloud Deployment",
+        points: ["Deploying applications to the cloud", "Deploying services in cloud environments", "Deployment fundamentals"],
+      },
+      {
+        title: "Monitoring & Troubleshooting",
+        points: ["Monitoring cloud resources", "Identifying common infrastructure issues", "Identifying common connectivity issues"],
+      },
+      {
+        title: "Practical Capstone Project",
+        points: [
+          "Applying cloud fundamentals to a real scenario",
+          "Practical cloud-based assignments",
+          "Building portfolio-ready project work",
+        ],
+      },
+    ],
+    practical: {
+      title: "Practical Training",
+      body: "Throughout the 9 months, learners apply every major concept through practical assignments, real-world scenarios and cloud-based project work rather than theory alone.",
+    },
+    outcome: {
+      label: "Outcome",
+      body: "By completing the diploma, students will have a solid, practical foundation in cloud infrastructure, virtualization, networking, storage, security, administration and deployment — along with project experience to support entry into cloud and IT infrastructure roles.",
+    },
+  },
+
+  tools: {
+    title: "Tools",
+    items: [
+      { name: "Cloud Consoles", body: "Work with popular cloud platforms and their management consoles." },
+      { name: "Virtualization Software", body: "Practice with virtual machines and hypervisors used in cloud infrastructure." },
+      { name: "Networking Utilities", body: "Configure virtual networks, IP addressing and connectivity." },
+      { name: "Cloud Storage Tools", body: "Manage cloud-based data, backups and recovery." },
+      { name: "Monitoring Dashboards", body: "Track cloud resource usage and troubleshoot common issues." },
+      { name: "Git & GitHub", body: "Track changes and manage project work through version control." },
+    ],
+  },
+
+  who: {
+    title: "Who Can Do This Course",
+    items: [
+      {
+        title: "12th Pass Students",
+        body: "Students from Science, Commerce or Arts backgrounds can explore cloud computing as a career-oriented technology skill, starting from computer networks and cloud fundamentals.",
+        icon: "users",
+      },
+      {
+        title: "College Students — BCA, B.Tech, BSc-IT, MCA",
+        body: "Supplement your academic knowledge with practical cloud computing skills, strengthen your resume, and prepare for IT careers.",
+        icon: "certificate",
+      },
+      {
+        title: "Graduates Starting a Career in IT",
+        body: "Learn the fundamentals of cloud technology and explore opportunities in cloud support, cloud administration and IT infrastructure.",
+        icon: "rocket",
+      },
+      {
+        title: "Job Seekers",
+        body: "Build a stronger technical profile with an in-demand skill and prepare for entry-level cloud and infrastructure positions.",
+        icon: "briefcase",
+      },
+      {
+        title: "Working IT Professionals",
+        body: "IT support executives, system administrators and networking professionals can upgrade their skill set and move toward cloud-focused roles.",
+        icon: "terminal",
+      },
+      {
+        title: "Aspiring Cloud & DevOps Professionals",
+        body: "Use this diploma as a practical foundation for a career as a Cloud Engineer, Cloud Administrator, DevOps Associate or Cloud Support Engineer.",
+        icon: "cloud",
+      },
+    ],
+  },
+
+  worth: {
+    title: "Why This Programme Is Worth Your Year",
+    items: [
+      {
+        title: "Practical, Hands-On Cloud Learning",
+        body: "Students don't just learn cloud terminology — they get practical exposure to cloud concepts, infrastructure, storage, networking, virtualization and security.",
+        icon: "layers",
+      },
+      {
+        title: "Beginner-to-Job-Ready Curriculum",
+        body: "A structured progression, beginning with cloud fundamentals and gradually moving toward infrastructure, deployment, security, administration and practical operations.",
+        icon: "terminal",
+      },
+      {
+        title: "Industry-Relevant Cloud Skills",
+        body: "The program focuses on skills relevant to modern IT environments — how organisations use cloud platforms for computing, storage, applications, networking and business operations.",
+        icon: "cloud",
+      },
+      {
+        title: "Interview & Placement Support",
+        body: "Resume-building guidance, interview preparation, mock interviews and placement assistance to improve job readiness — not just a completed diploma.",
+        icon: "briefcase",
+      },
+    ],
+  },
+
+  whyNow: {
+    kicker: "Why now",
+    title: "Cloud Skills for a Cloud-First IT Industry.",
+    paragraphs: [
+      "Cloud computing is a core part of modern IT infrastructure. Learning cloud technologies can help you build a stronger technical profile and prepare for entry-level cloud and infrastructure positions.",
+      "This 9-month diploma starts from fundamentals and moves gradually toward practical understanding of infrastructure, deployment-related topics and real cloud environments — no advanced cloud experience needed to begin.",
+    ],
+    listTitle: "Start Before the Industry Moves Further",
+    items: [
+      {
+        title: "Cloud is core infrastructure now",
+        body: "Modern IT environments run on cloud platforms for computing, storage, applications and networking.",
+      },
+      {
+        title: "Practical skills stand out",
+        body: "Hands-on exposure to cloud concepts and infrastructure builds a stronger technical profile than tutorials alone.",
+      },
+      {
+        title: "A foundation for specialisation",
+        body: "Cloud fundamentals lead naturally into DevOps, cloud security and infrastructure-focused careers.",
+      },
+      {
+        title: "Learn locally in Mohali",
+        body: "Accessible to learners from Mohali, Chandigarh, Kharar, Zirakpur and nearby areas without needing to relocate.",
+      },
+    ],
+  },
+
+  takesYou: {
+    title: "Where This Course Takes You",
+    intro:
+      "The 9-Month Cloud Computing Diploma gives you a practical foundation to move from a beginner toward entry-level opportunities in cloud and IT infrastructure.",
+    listTitle: "From Beginner to Cloud-Ready",
+    steps: [
+      {
+        title: "Start with the fundamentals",
+        body: "Build your foundation in cloud concepts, service models, deployment models and virtualization.",
+      },
+      {
+        title: "Move into infrastructure",
+        body: "Get hands-on with cloud networking, storage, compute services, security and administration.",
+      },
+      {
+        title: "Deploy and troubleshoot",
+        body: "Apply your skills by deploying applications, monitoring resources and troubleshooting real scenarios.",
+      },
+      {
+        title: "Build your portfolio",
+        body: "Complete a practical capstone project you can showcase to employers and discuss in interviews.",
+      },
+    ],
+  },
+
+  projects: {
+    title: "Hands-on Projects You Will Ship",
+    items: [
+      {
+        title: "Cloud Infrastructure Setup",
+        body: "Provision and configure basic cloud infrastructure, covering compute, storage and networking components.",
+      },
+      {
+        title: "Virtualization Lab",
+        body: "Set up and manage virtual machines to understand hypervisors and virtual infrastructure in practice.",
+      },
+      {
+        title: "Cloud Networking Project",
+        body: "Configure a virtual network with IP addressing, connectivity and basic network security controls.",
+      },
+      {
+        title: "Cloud Storage & Backup",
+        body: "Set up cloud storage, manage data and configure a backup and recovery workflow.",
+      },
+      {
+        title: "Cloud Security Configuration",
+        body: "Apply access control, authentication and data-protection practices to a cloud environment.",
+      },
+      {
+        title: "Final Capstone Deployment",
+        body: "Deploy and monitor a real-world cloud scenario end to end, then document it for your portfolio and interviews.",
+      },
+    ],
+  },
+
+  approach: {
+    title: "Learn It. Build It. Get Job-Ready.",
+    paragraphs: [
+      "Cloud computing is best learned by doing. Over nine months, you move from concepts to hands-on practice with real cloud environments, assignments and scenarios.",
+      "Every topic is paired with practical exercises, so what you understand in class becomes something you can actually configure, deploy and troubleshoot.",
+    ],
+    items: [
+      {
+        title: "Learn It",
+        body: "Understand cloud fundamentals, service models, deployment models, virtualization, networking, storage, security and administration.",
+        icon: "layers",
+      },
+      {
+        title: "Build It",
+        body: "Apply your knowledge through practical assignments, real-world scenarios and a portfolio-ready capstone project.",
+        icon: "cube",
+      },
+    ],
+  },
+
+  whyUs: {
+    kicker: "Why techcadd",
+    title: "Why Learn Cloud Computing at Techcadd, Mohali",
+    intro:
+      "Choosing the right institute makes a real difference when learning technical skills. Here's what makes Techcadd a practical choice for Cloud Computing training in Mohali.",
+    items: [
+      {
+        title: "Experienced, Industry-Aware Trainers",
+        body: "Trainers focus on practical understanding through demonstrations, assignments and troubleshooting, not just completing theoretical topics.",
+        icon: "terminal",
+      },
+      {
+        title: "Small-Batch Personal Attention",
+        body: "Manageable batches let students ask questions and get individual guidance when they hit technical difficulties.",
+        icon: "users",
+      },
+      {
+        title: "Hands-On, Project-Oriented Teaching",
+        body: "Practical tasks involving cloud infrastructure, networking, storage, security and deployment concepts, not memorised definitions.",
+        icon: "cube",
+      },
+      {
+        title: "Flexible for Students & Professionals",
+        body: "Batch timings accommodate college students as well as working professionals upgrading their IT skills.",
+        icon: "clock",
+      },
+      {
+        title: "Placement Support",
+        body: "Resume guidance, interview preparation, mock interviews and placement assistance to help you prepare for the job market.",
+        icon: "briefcase",
+      },
+    ],
+  },
+
+  popular: {
+    title: "Popular Courses",
+    intro: "Explore other career-focused programmes at techcadd and build practical skills for today's technology-driven industry.",
+    items: [
+      {
+        title: "Digital Marketing Course",
+        body: "Learn SEO, Google Ads, social media marketing, content marketing, analytics and AI-powered digital marketing strategies.",
+        href: "/after-12th/digital-marketing",
+      },
+      {
+        title: "Web Development Course",
+        body: "Build modern websites and web applications while learning frontend and backend development fundamentals.",
+        href: "/after-12th/web-development",
+      },
+      {
+        title: "Artificial Intelligence Course",
+        body: "Understand AI concepts and work with practical tools and technologies used to build intelligent applications.",
+        href: "/after-12th/artificial-intelligence",
+      },
+      {
+        title: "MERN Stack Course",
+        body: "Learn MongoDB, Express.js, React.js and Node.js while building full-stack web applications and real-world projects.",
+        href: "/after-12th/mern-full-stack",
+      },
+      {
+        title: "3-Month Cloud Computing Program",
+        body: "A shorter, AWS-focused cloud computing track for learners who want a faster entry point.",
+        href: "/after-12th/cloud-computing",
+      },
+    ],
+  },
+
+  faqs: [
+    {
+      q: "Is prior cloud computing experience required to join the Cloud Computing Diploma in Mohali?",
+      a: "No. The program is designed for beginners as well as learners with basic IT knowledge. The course starts with cloud computing fundamentals before progressing toward infrastructure, networking, storage, security and administration.",
+    },
+    {
+      q: "Who can enroll in the Cloud Computing Diploma Program?",
+      a: "12th pass students, BCA/B.Tech/BSc-IT/MCA students, graduates, job seekers, working professionals, IT support professionals and learners interested in cloud careers can enroll.",
+    },
+    {
+      q: "What will I learn in a Cloud Computing Diploma?",
+      a: "You can learn cloud fundamentals, service models, deployment models, virtualization, cloud networking, storage, compute resources, security, administration, monitoring, troubleshooting and practical cloud concepts.",
+    },
+    {
+      q: "Is this Cloud Computing Diploma suitable for beginners?",
+      a: "Yes. The program starts with fundamental concepts and gradually introduces more advanced cloud topics, making it suitable for learners who are new to cloud computing.",
+    },
+    {
+      q: "Does Techcadd provide practical cloud training in Mohali?",
+      a: "Yes. The program focuses on practical learning through assignments, demonstrations, hands-on exercises, troubleshooting activities and real-world cloud scenarios.",
+    },
+    {
+      q: "Will I get a certificate after completing the course?",
+      a: "Yes, students completing the program receive a course completion certificate from Techcadd, subject to the institute's certification requirements.",
+    },
+    {
+      q: "Does Techcadd provide placement assistance?",
+      a: "Yes. Techcadd provides placement-oriented support including resume guidance, interview preparation, mock interviews and placement assistance.",
+    },
+    {
+      q: "What jobs can I pursue after learning Cloud Computing?",
+      a: "Depending on your skills and further specialisation, career paths can include Cloud Support Engineer, Cloud Administrator, Cloud Engineer, Cloud Operations Executive, DevOps Associate and IT Infrastructure roles.",
+    },
+    {
+      q: "Are flexible batch timings available?",
+      a: "Yes. Techcadd offers flexible learning schedules designed to accommodate college students and working professionals.",
+    },
+    {
+      q: "Is Cloud Computing a good career option after graduation?",
+      a: "Cloud computing can be a strong technical career path for learners interested in IT infrastructure, networking, servers, applications and modern technology environments. Additional specialisation and practical experience can further improve career opportunities.",
+    },
+    {
+      q: "Can BCA and B.Tech students join this program?",
+      a: "Yes. BCA, B.Tech, BSc-IT, MCA and other students interested in cloud technologies can join the program to gain practical skills alongside their academic education.",
+    },
+    {
+      q: "Where can I learn Cloud Computing in Mohali?",
+      a: "Techcadd provides Cloud Computing Diploma training in Mohali, with practical learning, mentor support, flexible batches and placement-oriented guidance.",
+    },
+  ],
+
+  enquiry: {
+    title: "Start Your Cloud Computing Career Journey in Mohali",
+    paragraphs: [
+      "Stop relying only on theoretical tutorials. Learn cloud computing through structured training, practical exercises, mentor guidance and career-focused preparation at Techcadd, Mohali.",
+      "Not ready to fill a form yet? Leave your number and a Techcadd counsellor will call you back to answer your questions — no pressure, no obligation.",
+    ],
+  },
+
+  fit: {
+    title: "Not Sure If the Cloud Computing Diploma Is the Right Fit?",
+    paragraphs: [
+      "Choosing a technology career after 12th — or a career switch later on — can feel confusing. If you're interested in cloud infrastructure, virtualization, networking or security, this diploma can give you the practical foundation to get started.",
+      "You don't need previous cloud experience. The 9-Month Cloud Computing Diploma Program in Mohali starts with the basics and gradually takes you into infrastructure, deployment and real-world practical projects.",
+    ],
+    ctaTitle: "Take the Next Step",
+    points: [
+      "12th pass, graduate or working professional? You can start.",
+      "No advanced cloud experience? No problem.",
+      "Want practical, job-oriented skills? Build them through hands-on training.",
+      "Want career guidance? Get resume, interview and placement support.",
+    ],
+  },
+};
+
 /** Slugs whose After-12th page is written rather than derived. */
 export const after12Pages: Record<string, After12Page> = {
   "cloud-computing": cloudComputing,
+  "cloud-computing-diploma": cloudComputingDiploma,
 };
 
 export function after12Page(slug: string): After12Page | undefined {

@@ -617,7 +617,7 @@ export default function Navbar({
                       aria-expanded={hasMenu(item) ? isOpen : undefined}
                       className={
                         item.pill
-                          ? "accent-fill relative mx-1 flex items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-2 text-[0.82rem] font-semibold transition-all hover:-translate-y-0.5 2xl:mx-1.5 2xl:px-5 2xl:text-[0.9rem]"
+                          ? "brand-fill relative mx-1 flex items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-2 text-[0.82rem] font-semibold transition-all hover:-translate-y-0.5 2xl:mx-1.5 2xl:px-5 2xl:text-[0.9rem]"
                           : `relative flex items-center gap-1 whitespace-nowrap py-2 font-medium transition-colors ${linkSize} ${
                               isCurrent || isOpen ? activeTone : linkTone
                             }`
@@ -671,7 +671,7 @@ export default function Navbar({
               <button
                 type="button"
                 onClick={openEnquiry}
-                className={`accent-fill hidden items-center gap-2 whitespace-nowrap rounded-full font-bold transition-all hover:-translate-y-0.5 sm:inline-flex ${
+                className={`brand-fill hidden items-center gap-2 whitespace-nowrap rounded-full font-bold transition-all hover:-translate-y-0.5 sm:inline-flex ${
                   scrolled
                     ? "px-5 py-2.5 text-[0.82rem] 2xl:px-6 2xl:text-[0.85rem]"
                     : "px-5 py-3 text-[0.85rem] 2xl:px-7 2xl:text-[0.9rem]"
@@ -821,7 +821,7 @@ export default function Navbar({
                 setMobileOpen(false);
                 openEnquiry();
               }}
-              className="accent-fill flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-sm font-bold"
+              className="brand-fill flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-sm font-bold"
             >
               Book Demo <Icon name="arrowRight" size={16} />
             </button>

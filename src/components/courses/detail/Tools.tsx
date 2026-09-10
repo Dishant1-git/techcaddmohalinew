@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import type { Course } from "@/lib/courses";
+import { sectionCopy } from "@/lib/coursePage";
 import { techMarkFor } from "@/lib/techMarks";
 import Icon from "@/components/ui/Icon";
 import TechMark from "@/components/ui/TechMark";
@@ -32,6 +33,7 @@ export default function Tools({ course }: { course: Course }) {
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const drift = useTransform(scrollYProgress, [0, 1], [26, -26]);
+  const copy = sectionCopy(course, "tools");
 
   return (
     <section id="tools" className="relative scroll-mt-36 overflow-hidden py-20 lg:py-28" ref={ref}>
@@ -78,8 +80,11 @@ export default function Tools({ course }: { course: Course }) {
         <SectionTitle
           align="center"
           eyebrow="Tools"
-          title="Tools & technologies you will use"
-          subtitle="The exact stack used in the labs, the live project and — more to the point — in the jobs this course leads to."
+          title={copy?.title ?? "Tools & technologies you will use"}
+          subtitle={
+            copy?.intro ??
+            "The exact stack used in the labs, the live project and — more to the point — in the jobs this course leads to."
+          }
         />
 
         <motion.div
@@ -112,6 +117,20 @@ export default function Tools({ course }: { course: Course }) {
             );
           })}
         </motion.div>
+
+        {/* A course whose tool list is a set of categories rather than a fixed
+            stack says so here, under the chips it qualifies. */}
+        {copy?.note && (
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.7, ease: EASE }}
+            className="mx-auto mt-10 max-w-2xl text-center text-sm leading-relaxed text-up-muted"
+          >
+            {copy.note}
+          </motion.p>
+        )}
 
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}

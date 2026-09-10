@@ -19,6 +19,9 @@ const WATERMARK: Record<CategoryKey, string> = {
   "digital-marketing": "GROWTH",
   "cad-design": "CAD",
   programming: "CODE",
+  // No tile of its own — `categories` does not list this key, so nothing here
+  // reads it. It is present because the record is exhaustive over CategoryKey.
+  "office-skills": "OFFICE",
 };
 
 const BADGE: Record<string, string> = {

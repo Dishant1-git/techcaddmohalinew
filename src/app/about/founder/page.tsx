@@ -208,24 +208,26 @@ export default function FounderPage() {
 
       {/* ============================= PULL QUOTE =============================
           The reference's full-bleed statement band, in the accent. */}
-      <section className="relative overflow-hidden bg-accent-yellow py-20 text-hero-950 lg:py-28">
+      <section className="relative overflow-hidden bg-brand-100 py-20 text-hero-950 lg:py-28">
         <span
           aria-hidden
-          className="pointer-events-none absolute -left-4 top-2 select-none font-display text-[14rem] font-extrabold leading-none text-hero-950/10 lg:text-[20rem]"
+          className="pointer-events-none absolute -left-4 top-2 select-none font-display text-[14rem] font-extrabold leading-none text-up-accent/15 lg:text-[20rem]"
         >
           &ldquo;
         </span>
 
-        <div className="container-x relative mx-auto max-w-4xl text-center">
+        <div className="container-x relative mx-auto max-w-3xl text-center">
+          {/* No <br/> here. `data-anim="words"` rebuilds this element's children
+              into per-word spans, and an element child comes through as one
+              opaque unit — the break stopped breaking and the words either side
+              of it ran together. The measure above does the wrapping instead. */}
           <blockquote
             data-anim="words"
             className="font-display text-[2rem] font-extrabold uppercase leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl"
           >
-            You learn it
-            <br />
-            by building it.
+            You learn it by building it.
           </blockquote>
-          <p className="mt-8 text-[0.72rem] font-bold uppercase tracking-[0.24em] text-hero-950/70">
+          <p className="mt-8 text-[0.72rem] font-bold uppercase tracking-[0.24em] text-hero-950/60">
             {founder.name} · {founder.role}
           </p>
         </div>
