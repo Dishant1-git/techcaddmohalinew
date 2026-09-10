@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { categoryLabel, courses, featuredCourses } from "@/lib/courses";
+import { variants } from "@/lib/courseVariants";
 import Icon from "@/components/ui/Icon";
 
 /** Ghosted word behind each card, the way the reference watermarks its tiles. */
@@ -65,7 +66,7 @@ export default function FeaturedCourses() {
           {featuredCourses().map((course) => (
             <Link
               key={course.slug}
-              href={`/courses/${course.slug}`}
+              href={`${variants.catalogue.basePath}/${course.slug}`}
               className="group relative flex min-h-[20rem] flex-col overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/50 p-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(255,255,255,0.4),0_28px_60px_-28px_rgba(11,26,77,0.4)] backdrop-blur-2xl backdrop-saturate-150 transition-transform duration-500 hover:-translate-y-1.5"
             >
               {/* Accent bloom tinting the glass from inside */}

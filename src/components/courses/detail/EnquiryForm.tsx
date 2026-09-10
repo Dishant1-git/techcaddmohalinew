@@ -143,7 +143,7 @@ export default function EnquiryForm({ course }: { course: Course }) {
               title={copy?.title ?? "Ask about this course"}
               subtitle={
                 copy?.intro ??
-                `Send a quick enquiry about ${course.title} and a counsellor from the Mohali centre will get back to you — usually the same working day.`
+                `Send a quick enquiry about ${course.title} and a counsellor from the ${course.campus ?? "Mohali"} centre will get back to you — usually the same working day.`
               }
             />
 
@@ -257,7 +257,7 @@ export default function EnquiryForm({ course }: { course: Course }) {
                     <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-up-soft/75">
                       We have received your enquiry about{" "}
                       <strong className="font-semibold text-white">{course.title}</strong>. A
-                      counsellor from the Mohali centre will contact you within one working day
+                      counsellor from the {course.campus ?? "Mohali"} centre will contact you within one working day
                       with batch dates, fees and the demo class schedule.
                     </p>
 

@@ -57,6 +57,24 @@ export type After12Page = {
     items: WrittenItem[];
   };
 
+  /**
+   * The mid-page call to talk to someone, sitting between "why now" and the
+   * credential. A band rather than a numbered stage: it interrupts the read,
+   * it does not add to it.
+   *
+   * Optional: a page that leaves it out simply does not break for a phone call.
+   */
+  advisor?: { title: string; body: string; cta: string };
+
+  /**
+   * What the student actually leaves with on paper.
+   *
+   * Optional, like `advisor`. A brief that omits this also omits `certificate`
+   * from `sections` above, and the route renumbers the remaining stages so the
+   * page counts 1..n without a gap where this one would have been.
+   */
+  certificate?: { title: string; intro: string; items: WrittenItem[] };
+
   takesYou: {
     title: string;
     intro: string;
@@ -92,6 +110,7 @@ const cloudComputing: After12Page = {
     { id: "tools", label: "Tools" },
     { id: "who", label: "Who can join" },
     { id: "why-now", label: "Why now" },
+    { id: "certificate", label: "Certification" },
     { id: "scope", label: "Where it takes you" },
     { id: "projects", label: "Projects" },
     { id: "why", label: "Why techcadd" },
@@ -513,6 +532,40 @@ const cloudComputing: After12Page = {
     ],
   },
 
+  advisor: {
+    title: "Talk to a course advisor",
+    body: "Ten minutes on the phone settles more than an hour of reading — eligibility, batch timings, fees, and whether this programme fits the degree or the job you already have.",
+    cta: "Book a free demo class",
+  },
+
+  certificate: {
+    title: "Get certified in the Cloud Computing Program",
+    intro:
+      "Complete the course with a portfolio of live projects and receive an industry-recognised certificate, plus a documented internship letter accepted by Punjab universities.",
+    items: [
+      {
+        icon: "certificate",
+        title: "Industry Certificate",
+        body: "Recognised by employers across Punjab and beyond.",
+      },
+      {
+        icon: "briefcase",
+        title: "Internship Letter",
+        body: "Based on real client work, not a simulation.",
+      },
+      {
+        icon: "layers",
+        title: "Portfolio of Projects",
+        body: "Live work you can show in any interview.",
+      },
+      {
+        icon: "target",
+        title: "Placement Support",
+        body: "CV reviews, mock interviews and hiring drives once you finish.",
+      },
+    ],
+  },
+
   takesYou: {
     title: "Where This Course Takes You",
     intro:
@@ -638,22 +691,22 @@ const cloudComputing: After12Page = {
       {
         title: "Digital Marketing Course",
         body: "Learn SEO, Google Ads, social media marketing, content marketing, analytics, and AI-powered digital marketing strategies.",
-        href: "/after-12th/digital-marketing",
+        href: "/courses/after12th/digital-marketing",
       },
       {
         title: "Web Development Course",
         body: "Build modern websites and web applications while learning frontend and backend development fundamentals.",
-        href: "/after-12th/web-development",
+        href: "/courses/after12th/web-development",
       },
       {
         title: "Artificial Intelligence Course",
         body: "Understand AI concepts and work with practical tools and technologies used to build intelligent applications.",
-        href: "/after-12th/artificial-intelligence",
+        href: "/courses/after12th/artificial-intelligence",
       },
       {
         title: "MERN Stack Course",
         body: "Learn MongoDB, Express.js, React.js, and Node.js while building full-stack web applications and real-world projects.",
-        href: "/after-12th/mern-full-stack",
+        href: "/courses/after12th/mern-full-stack",
       },
       {
         title: "Basic Computer Course",

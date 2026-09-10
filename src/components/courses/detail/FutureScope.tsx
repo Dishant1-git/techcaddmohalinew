@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { Course } from "@/lib/courses";
-import { futureScope } from "@/lib/coursePage";
+import { futureScope, sectionCopy } from "@/lib/coursePage";
 import Icon from "@/components/ui/Icon";
 import SectionTitle from "@/components/courses/detail/SectionTitle";
 import SectionLink from "@/components/courses/detail/SectionLink";
@@ -21,6 +21,7 @@ import { Reveal, Stagger, StaggerItem } from "@/components/courses/detail/Motion
  */
 export default function FutureScope({ course }: { course: Course }) {
   const { roles, demand, salary, industries } = futureScope(course);
+  const copy = sectionCopy(course, "scope");
 
   return (
     <section id="scope" className="relative scroll-mt-36 bg-hero-950 py-20 text-white lg:py-28">
@@ -150,8 +151,8 @@ export default function FutureScope({ course }: { course: Course }) {
 
               <div className="mt-7 rounded-2xl border border-white/12 bg-white/5 p-5">
                 <p className="text-sm leading-relaxed text-up-soft/75">
-                  Our placement cell runs drives with hiring partners across Mohali, Chandigarh and
-                  Panchkula, and keeps calling them until you are placed.
+                  {copy?.note ??
+                    "Our placement cell runs drives with hiring partners across Mohali, Chandigarh and Panchkula, and keeps calling them until you are placed."}
                 </p>
                 <SectionLink
                   to="enquire"

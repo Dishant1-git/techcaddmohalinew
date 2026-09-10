@@ -1,4 +1,10 @@
 import type { Course } from "@/lib/courses";
+import { contentKey } from "@/lib/coursePage";
+import { mernCertificateTracks } from "@/lib/content/mernCertificate";
+import { dataScienceCertificateTracks } from "@/lib/content/dataScienceCertificate";
+import { agenticAiCertificateTracks } from "@/lib/content/agenticAiCertificate";
+import { cyberSecurityCertificateTracks } from "@/lib/content/cyberSecurityCertificate";
+import { basicComputerOfficeSkillsTracks } from "@/lib/content/basicComputerOfficeSkills";
 
 /**
  * The three lengths a certificate programme can be taken at.
@@ -26,7 +32,27 @@ export type ProgrammeTrack = {
   stats: { label: string; value: string }[];
 };
 
+/**
+ * Tracks written for one programme, replacing the derived three.
+ *
+ * Keyed the same way every written block in `@/lib/coursePage` is — by the
+ * record's `contentKey` — so a menu that gave a course its own brief can name
+ * its own tiers, and every course without one keeps the derived set below.
+ */
+const tracksByKey: Record<string, ProgrammeTrack[]> = {
+  "mern-full-stack--certificate": mernCertificateTracks,
+  "data-science--certificate": dataScienceCertificateTracks,
+  "agentic-ai--certificate": agenticAiCertificateTracks,
+  "cyber-security--certificate": cyberSecurityCertificateTracks,
+  // Not three lengths but three widths: this brief is five short courses, so
+  // its tiers are how many of them you take.
+  "basic-computer-office-skills--certificate": basicComputerOfficeSkillsTracks,
+};
+
 export function tracksFor(course: Course): ProgrammeTrack[] {
+  const written = tracksByKey[contentKey(course)];
+  if (written) return written;
+
   const modules = course.modules.length;
   const tools = course.tools.length;
   const field = course.title;

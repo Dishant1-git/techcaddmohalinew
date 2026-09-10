@@ -9,7 +9,7 @@ import CtaBanner from "@/components/home/CtaBanner";
 import RelatedLinks from "@/components/ui/RelatedLinks";
 import { relatedForPost } from "@/lib/related";
 import { getBlogComments } from "@/lib/cms/content";
-import { withHeadings } from "@/lib/cms/headings";
+import { withHeadings, MIN_HEADINGS_FOR_TOC } from "@/lib/cms/headings";
 import TableOfContents from "@/components/content/TableOfContents";
 import Comments from "@/components/blog/Comments";
 
@@ -50,6 +50,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   */
   const { html: bodyHtml, headings } = withHeadings(post.bodyHtml);
   const comments = await getBlogComments(post.slug);
+  const showToc = headings.length >= MIN_HEADINGS_FOR_TOC;
+
 
   return (
     <>
@@ -57,8 +59,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_20%_0%,#123285_0%,transparent_60%),radial-gradient(ellipse_60%_60%_at_90%_40%,#1c53d1_0%,transparent_55%)] opacity-85" />
         <div className="absolute inset-0 grid-lines" />
 
-        <div className="container-x relative max-w-3xl">
-          <nav data-anim="fade" className="mb-6 flex flex-wrap items-center gap-2 text-xs text-up-soft/60">
+        {/* Centred, so the hero sits over the article column rather than
+            starting at the page edge while the prose begins further in. */}
+        <div className="container-x relative max-w-3xl text-center">
+          <nav
+            data-anim="fade"
+            className="mb-6 flex flex-wrap items-center justify-center gap-2 text-xs text-up-soft/60"
+          >
             <Link href="/" className="transition-colors hover:text-white">
               Home
             </Link>
@@ -88,7 +95,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             {post.title}
           </h1>
 
-          <div data-anim="up" data-anim-delay="0.15" className="mt-6 flex items-center gap-3 text-sm text-up-soft/70">
+          <div
+            data-anim="up"
+            data-anim-delay="0.15"
+            className="mt-6 flex items-center justify-center gap-3 text-sm text-up-soft/70"
+          >
             <span>{post.author}</span>
             <span className="h-1 w-1 rounded-full bg-up-soft/40" />
             <span>{formatDate(post.date)}</span>
@@ -102,10 +113,26 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="container-x">
           {/* The rail sits beside the article on a wide screen and above it on
               a narrow one, where a sticky column would eat the viewport. */}
-          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-14">
-            <aside className="order-first hidden lg:block">
-              <TableOfContents headings={headings} />
-            </aside>
+          {/*
+            The rail's column only exists when there is a rail.
+
+            It was always reserved, so an article with too few headings to
+            index kept a 15rem empty track beside it and the text sat well
+            right of centre. With no rail the article is simply a centred
+            column, which is what it looked like before the rail existed.
+          */}
+          <div
+            className={
+              showToc
+                ? "mx-auto grid max-w-6xl gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-14"
+                : "mx-auto max-w-3xl"
+            }
+          >
+            {showToc && (
+              <aside className="order-first hidden lg:block">
+                <TableOfContents headings={headings} />
+              </aside>
+            )}
 
             <div className="min-w-0 max-w-3xl">
           <span

@@ -43,7 +43,7 @@ export default function AiSpotlight() {
 
             <div data-anim="up" data-anim-delay="0.15" className="mt-9 flex flex-wrap gap-4">
               <Link
-                href="/courses/artificial-intelligence"
+                href="/courses/ai/artificial-intelligence"
                 className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent-glow to-hero-glow px-7 py-3.5 text-sm font-bold text-hero-950 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent-glow/30"
               >
                 Explore AI courses

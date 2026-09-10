@@ -11,6 +11,7 @@ import {
   whoCanJoin,
   whyChoose,
 } from "@/lib/coursePage";
+import type { WrittenHeading } from "@/lib/content/mernCertificate";
 import { techMarkFor } from "@/lib/techMarks";
 import Icon from "@/components/ui/Icon";
 import TechMark from "@/components/ui/TechMark";
@@ -131,7 +132,13 @@ const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
  *                              1 · Programme brief                            *
  * -------------------------------------------------------------------------- */
 
-export function CertOverview({ course }: { course: Course }) {
+export function CertOverview({
+  course,
+  heading,
+}: {
+  course: Course;
+  heading?: WrittenHeading;
+}) {
   const reduce = useReducedMotion();
 
   const particulars: [string, string][] = [
@@ -148,18 +155,33 @@ export function CertOverview({ course }: { course: Course }) {
     <section id="overview" className="relative scroll-mt-36 overflow-hidden bg-white py-20 lg:py-28">
       <div className="container-x">
         <RuledHeading
-          index="01"
-          eyebrow="Programme brief"
-          title="What this certificate covers"
-          intro={`A ${course.duration ? `${course.duration.toLowerCase()} ` : ""}${course.level.toLowerCase()} programme, assessed on project work and closed with a verifiable credential.`}
+          index={heading?.index ?? "01"}
+          eyebrow={heading?.eyebrow ?? "Programme brief"}
+          title={heading?.title ?? "What this certificate covers"}
+          intro={
+            heading?.intro ??
+            `A ${course.duration ? `${course.duration.toLowerCase()} ` : ""}${course.level.toLowerCase()} programme, assessed on project work and closed with a verifiable credential.`
+          }
         />
 
         <div className="mt-14 grid gap-14 lg:grid-cols-[1.25fr_0.75fr] lg:gap-20">
           {/* Body copy, opened with a drop cap. */}
           <Wipe delay={0.15}>
-            <p className="text-base leading-[1.9] text-up-ink/80 [&::first-letter]:float-left [&::first-letter]:mr-3 [&::first-letter]:mt-1 [&::first-letter]:font-display [&::first-letter]:text-[3.4rem] [&::first-letter]:font-extrabold [&::first-letter]:leading-[0.8] [&::first-letter]:text-up-accent">
-              {course.overview}
-            </p>
+            {/* An overview written as more than one paragraph is separated by a
+                blank line, as it is everywhere else in the catalogue. The drop
+                cap belongs to the first paragraph only. */}
+            {course.overview.split("\n\n").map((para, i) => (
+              <p
+                key={i}
+                className={`text-base leading-[1.9] text-up-ink/80 ${
+                  i === 0
+                    ? "[&::first-letter]:float-left [&::first-letter]:mr-3 [&::first-letter]:mt-1 [&::first-letter]:font-display [&::first-letter]:text-[3.4rem] [&::first-letter]:font-extrabold [&::first-letter]:leading-[0.8] [&::first-letter]:text-up-accent"
+                    : "mt-6"
+                }`}
+              >
+                {para}
+              </p>
+            ))}
 
             <div className="mt-10 border-t border-up-line pt-8">
               <p className="text-[0.66rem] font-bold uppercase tracking-[0.22em] text-up-muted">
@@ -246,7 +268,13 @@ export function CertOverview({ course }: { course: Course }) {
  *                            2 · Syllabus of record                           *
  * -------------------------------------------------------------------------- */
 
-export function CertModules({ course }: { course: Course }) {
+export function CertModules({
+  course,
+  heading,
+}: {
+  course: Course;
+  heading?: WrittenHeading;
+}) {
   const [open, setOpen] = useState<number | null>(0);
   const reduce = useReducedMotion();
   const topics = course.modules.reduce((n, m) => n + m.points.length, 0);
@@ -255,10 +283,13 @@ export function CertModules({ course }: { course: Course }) {
     <section id="modules" className="relative scroll-mt-36 bg-subtle py-20 lg:py-28">
       <div className="container-x">
         <RuledHeading
-          index="02"
-          eyebrow="Syllabus of record"
-          title="The articles of this programme"
-          intro={`${course.modules.length} modules and ${topics} topics. Each one is assessed, and each closes in work that goes into the portfolio submitted with the certificate.`}
+          index={heading?.index ?? "02"}
+          eyebrow={heading?.eyebrow ?? "Syllabus of record"}
+          title={heading?.title ?? "The articles of this programme"}
+          intro={
+            heading?.intro ??
+            `${course.modules.length} modules and ${topics} topics. Each one is assessed, and each closes in work that goes into the portfolio submitted with the certificate.`
+          }
         />
 
         <div className="mt-14 border-t border-up-line">
@@ -346,7 +377,7 @@ export function CertModules({ course }: { course: Course }) {
  *                           3 · Competencies certified                        *
  * -------------------------------------------------------------------------- */
 
-export function CertLearn({ course }: { course: Course }) {
+export function CertLearn({ course, heading }: { course: Course; heading?: WrittenHeading }) {
   const reduce = useReducedMotion();
   const points = learningPoints(course);
 
@@ -354,10 +385,13 @@ export function CertLearn({ course }: { course: Course }) {
     <section id="learn" className="relative scroll-mt-36 bg-white py-20 lg:py-28">
       <div className="container-x">
         <RuledHeading
-          index="03"
-          eyebrow="Competencies certified"
-          title="What you learn in this programme"
-          intro="Every competency below is taught hands-on and assessed before the certificate is issued."
+          index={heading?.index ?? "03"}
+          eyebrow={heading?.eyebrow ?? "Competencies certified"}
+          title={heading?.title ?? "What you learn in this programme"}
+          intro={
+            heading?.intro ??
+            "Every competency below is taught hands-on and assessed before the certificate is issued."
+          }
         />
 
         <div className="mt-14 grid gap-x-12 gap-y-0 sm:grid-cols-2 lg:grid-cols-3">
@@ -391,7 +425,7 @@ export function CertLearn({ course }: { course: Course }) {
  *                         4 · Why this credential holds                       *
  * -------------------------------------------------------------------------- */
 
-export function CertWhy({ course }: { course: Course }) {
+export function CertWhy({ course, heading }: { course: Course; heading?: WrittenHeading }) {
   const reduce = useReducedMotion();
   const reasons = whyChoose(course);
 
@@ -405,11 +439,14 @@ export function CertWhy({ course }: { course: Course }) {
 
       <div className="container-x relative">
         <RuledHeading
-          index="04"
+          index={heading?.index ?? "04"}
           tone="dark"
-          eyebrow="Standing"
-          title="Why this certificate carries weight"
-          intro="A credential is only worth the work behind it. This is the work behind this one."
+          eyebrow={heading?.eyebrow ?? "Standing"}
+          title={heading?.title ?? "Why this certificate carries weight"}
+          intro={
+            heading?.intro ??
+            "A credential is only worth the work behind it. This is the work behind this one."
+          }
         />
 
         <div className="mt-14 grid gap-x-14 gap-y-10 md:grid-cols-2">
@@ -441,7 +478,7 @@ export function CertWhy({ course }: { course: Course }) {
  *                          5 · Eligibility & admission                        *
  * -------------------------------------------------------------------------- */
 
-export function CertWho({ course }: { course: Course }) {
+export function CertWho({ course, heading }: { course: Course; heading?: WrittenHeading }) {
   const reduce = useReducedMotion();
   const audience = whoCanJoin(course);
   const criteria = eligibility(course);
@@ -450,10 +487,13 @@ export function CertWho({ course }: { course: Course }) {
     <section id="who" className="relative scroll-mt-36 bg-subtle py-20 lg:py-28">
       <div className="container-x">
         <RuledHeading
-          index="05"
-          eyebrow="Eligibility & admission"
-          title="Who this programme admits"
-          intro={`${course.title} is a ${course.level.toLowerCase()} programme. These are the candidates it is written for.`}
+          index={heading?.index ?? "05"}
+          eyebrow={heading?.eyebrow ?? "Eligibility & admission"}
+          title={heading?.title ?? "Who this programme admits"}
+          intro={
+            heading?.intro ??
+            `${course.title} is a ${course.level.toLowerCase()} programme. These are the candidates it is written for.`
+          }
         />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
@@ -528,17 +568,20 @@ export function CertWho({ course }: { course: Course }) {
  *                          6 · Instruments & software                         *
  * -------------------------------------------------------------------------- */
 
-export function CertTools({ course }: { course: Course }) {
+export function CertTools({ course, heading }: { course: Course; heading?: WrittenHeading }) {
   const reduce = useReducedMotion();
 
   return (
     <section id="tools" className="relative scroll-mt-36 bg-white py-20 lg:py-28">
       <div className="container-x">
         <RuledHeading
-          index="06"
-          eyebrow="Instruments & software"
-          title="The stack examined in this programme"
-          intro="Licensed in every lab, and named on the syllabus record issued with your certificate."
+          index={heading?.index ?? "06"}
+          eyebrow={heading?.eyebrow ?? "Instruments & software"}
+          title={heading?.title ?? "The stack examined in this programme"}
+          intro={
+            heading?.intro ??
+            "Licensed in every lab, and named on the syllabus record issued with your certificate."
+          }
         />
 
         <div className="mt-14 border border-up-line bg-subtle p-8 sm:p-10">
@@ -585,7 +628,7 @@ export function CertTools({ course }: { course: Course }) {
  *                               7 · Alumni record                             *
  * -------------------------------------------------------------------------- */
 
-export function CertReviews({ course }: { course: Course }) {
+export function CertReviews({ course, heading }: { course: Course; heading?: WrittenHeading }) {
   const reduce = useReducedMotion();
   const reviews = courseReviews(course);
   const { average, reviewCount, buckets } = ratingBreakdown(course);
@@ -594,10 +637,13 @@ export function CertReviews({ course }: { course: Course }) {
     <section id="reviews" className="relative scroll-mt-36 bg-subtle py-20 lg:py-28">
       <div className="container-x">
         <RuledHeading
-          index="07"
-          eyebrow="Alumni record"
-          title="What holders of this certificate say"
-          intro="Graduates of this programme, on what made the difference once they were in interviews."
+          index={heading?.index ?? "07"}
+          eyebrow={heading?.eyebrow ?? "Alumni record"}
+          title={heading?.title ?? "What holders of this certificate say"}
+          intro={
+            heading?.intro ??
+            "Graduates of this programme, on what made the difference once they were in interviews."
+          }
         />
 
         <div className="mt-14 grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-16">
@@ -687,7 +733,13 @@ export function CertReviews({ course }: { course: Course }) {
  *                            8 · Notes & conditions                           *
  * -------------------------------------------------------------------------- */
 
-export function CertFaqs({ faqs }: { faqs: { q: string; a: string }[] }) {
+export function CertFaqs({
+  faqs,
+  heading,
+}: {
+  faqs: { q: string; a: string }[];
+  heading?: WrittenHeading;
+}) {
   const [open, setOpen] = useState<number | null>(0);
   const reduce = useReducedMotion();
 
@@ -695,10 +747,13 @@ export function CertFaqs({ faqs }: { faqs: { q: string; a: string }[] }) {
     <section id="faqs" className="relative scroll-mt-36 bg-white py-20 lg:py-28">
       <div className="container-x">
         <RuledHeading
-          index="08"
-          eyebrow="Notes & conditions"
-          title="Questions about this certificate"
-          intro="Still unsure? A ten-minute call with a counsellor usually settles it faster than any brochure."
+          index={heading?.index ?? "08"}
+          eyebrow={heading?.eyebrow ?? "Notes & conditions"}
+          title={heading?.title ?? "Questions about this certificate"}
+          intro={
+            heading?.intro ??
+            "Still unsure? A ten-minute call with a counsellor usually settles it faster than any brochure."
+          }
         />
 
         <div className="mt-14 border-t border-up-line">
