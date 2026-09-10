@@ -4,6 +4,12 @@ import { mernCertificateOverride } from "@/lib/content/mernCertificate";
 import { dataScienceCertificateOverride } from "@/lib/content/dataScienceCertificate";
 import { agenticAiCertificateOverride } from "@/lib/content/agenticAiCertificate";
 import { cyberSecurityCertificateOverride } from "@/lib/content/cyberSecurityCertificate";
+import { cloudComputingCertificateOverride } from "@/lib/content/cloudComputingCertificate";
+import { digitalMarketingCertificateOverride } from "@/lib/content/digitalMarketingCertificate";
+import { artificialIntelligenceCertificateOverride } from "@/lib/content/artificialIntelligenceCertificate";
+import { flutterCertificateOverride } from "@/lib/content/flutterCertificate";
+import { dataAnalyticsCertificateOverride } from "@/lib/content/dataAnalyticsCertificate";
+import { fullStackDevelopmentCertificateOverride } from "@/lib/content/fullStackDevelopmentCertificate";
 import { basicComputerOfficeSkillsCourse } from "@/lib/content/basicComputerOfficeSkills";
 
 /**
@@ -73,15 +79,26 @@ export const certificateOverrides: CourseOverrides = {
   "mern-full-stack": mernCertificateOverride,
   "data-science": dataScienceCertificateOverride,
   "cyber-security": cyberSecurityCertificateOverride,
+  "cloud-computing": cloudComputingCertificateOverride,
+  "digital-marketing": digitalMarketingCertificateOverride,
+  "artificial-intelligence": artificialIntelligenceCertificateOverride,
+  "data-analytics": dataAnalyticsCertificateOverride,
 
   /**
-   * Agentic AI is the one written brief here for a course this menu does not
-   * list in `certificateSlugs` — it sits in the AI menu. The route prerenders
-   * every course, so `/courses/certificate-programs/agentic-ai` resolves and
-   * now renders this brief; add the slug above if the menu should link to it
-   * as well.
+   * Agentic AI, Flutter and Full Stack Development are written briefs here
+   * for courses this menu does not list in `certificateSlugs` — Agentic AI
+   * sits in the AI menu, Flutter and Full Stack Development in the Courses
+   * menu's Development category (distinct from `mern-full-stack` above,
+   * which is its own named track). The route prerenders every course, so
+   * `/courses/certificate-programs/agentic-ai`,
+   * `/courses/certificate-programs/flutter` and
+   * `/courses/certificate-programs/full-stack-development` resolve and now
+   * render these briefs; add the slug above if the menu should link to any of
+   * them as well.
    */
   "agentic-ai": agenticAiCertificateOverride,
+  flutter: flutterCertificateOverride,
+  "full-stack-development": fullStackDevelopmentCertificateOverride,
 };
 
 /** The records behind those links, fetched from the catalogue by slug. */

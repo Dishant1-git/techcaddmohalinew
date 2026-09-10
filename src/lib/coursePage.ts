@@ -85,6 +85,42 @@ import {
   cyberSecurityCertificateWhyChoose,
 } from "@/lib/content/cyberSecurityCertificate";
 import {
+  cloudComputingCertificateAudience,
+  cloudComputingCertificateEligibility,
+  cloudComputingCertificateFaqs,
+  cloudComputingCertificateWhyChoose,
+} from "@/lib/content/cloudComputingCertificate";
+import {
+  digitalMarketingCertificateAudience,
+  digitalMarketingCertificateEligibility,
+  digitalMarketingCertificateFaqs,
+  digitalMarketingCertificateWhyChoose,
+} from "@/lib/content/digitalMarketingCertificate";
+import {
+  artificialIntelligenceCertificateAudience,
+  artificialIntelligenceCertificateEligibility,
+  artificialIntelligenceCertificateFaqs,
+  artificialIntelligenceCertificateWhyChoose,
+} from "@/lib/content/artificialIntelligenceCertificate";
+import {
+  flutterCertificateAudience,
+  flutterCertificateEligibility,
+  flutterCertificateFaqs,
+  flutterCertificateWhyChoose,
+} from "@/lib/content/flutterCertificate";
+import {
+  dataAnalyticsCertificateAudience,
+  dataAnalyticsCertificateEligibility,
+  dataAnalyticsCertificateFaqs,
+  dataAnalyticsCertificateWhyChoose,
+} from "@/lib/content/dataAnalyticsCertificate";
+import {
+  fullStackDevelopmentCertificateAudience,
+  fullStackDevelopmentCertificateEligibility,
+  fullStackDevelopmentCertificateFaqs,
+  fullStackDevelopmentCertificateWhyChoose,
+} from "@/lib/content/fullStackDevelopmentCertificate";
+import {
   basicComputerOfficeSkillsAudience,
   basicComputerOfficeSkillsEligibility,
   basicComputerOfficeSkillsFaqs,
@@ -795,6 +831,12 @@ const whyChooseBySlug: Record<string, { icon: string; title: string; body: strin
   "data-science--certificate": dataScienceCertificateWhyChoose,
   "agentic-ai--certificate": agenticAiCertificateWhyChoose,
   "cyber-security--certificate": cyberSecurityCertificateWhyChoose,
+  "cloud-computing--certificate": cloudComputingCertificateWhyChoose,
+  "digital-marketing--certificate": digitalMarketingCertificateWhyChoose,
+  "artificial-intelligence--certificate": artificialIntelligenceCertificateWhyChoose,
+  "flutter--certificate": flutterCertificateWhyChoose,
+  "data-analytics--certificate": dataAnalyticsCertificateWhyChoose,
+  "full-stack-development--certificate": fullStackDevelopmentCertificateWhyChoose,
   "basic-computer-office-skills--certificate": basicComputerOfficeSkillsWhyChoose,
   // The first six answer "why this program"; the seven after them answer
   // "why Techcadd".
@@ -2251,6 +2293,12 @@ const audienceBySlug: Record<string, { title: string; body: string; icon: string
   "data-science--certificate": dataScienceCertificateAudience,
   "agentic-ai--certificate": agenticAiCertificateAudience,
   "cyber-security--certificate": cyberSecurityCertificateAudience,
+  "cloud-computing--certificate": cloudComputingCertificateAudience,
+  "digital-marketing--certificate": digitalMarketingCertificateAudience,
+  "artificial-intelligence--certificate": artificialIntelligenceCertificateAudience,
+  "flutter--certificate": flutterCertificateAudience,
+  "data-analytics--certificate": dataAnalyticsCertificateAudience,
+  "full-stack-development--certificate": fullStackDevelopmentCertificateAudience,
   "basic-computer-office-skills--certificate": basicComputerOfficeSkillsAudience,
   "agentic-ai": [
     {
@@ -3342,6 +3390,12 @@ const eligibilityBySlug: Record<string, string[]> = {
   "data-science--certificate": dataScienceCertificateEligibility,
   "agentic-ai--certificate": agenticAiCertificateEligibility,
   "cyber-security--certificate": cyberSecurityCertificateEligibility,
+  "cloud-computing--certificate": cloudComputingCertificateEligibility,
+  "digital-marketing--certificate": digitalMarketingCertificateEligibility,
+  "artificial-intelligence--certificate": artificialIntelligenceCertificateEligibility,
+  "flutter--certificate": flutterCertificateEligibility,
+  "data-analytics--certificate": dataAnalyticsCertificateEligibility,
+  "full-stack-development--certificate": fullStackDevelopmentCertificateEligibility,
   "basic-computer-office-skills--certificate": basicComputerOfficeSkillsEligibility,
   "agentic-ai": [
     "No programming experience needed — Module 01 teaches Python from the first line",
@@ -4014,6 +4068,12 @@ const faqsBySlug: Record<string, { q: string; a: string }[]> = {
   "data-science--certificate": dataScienceCertificateFaqs,
   "agentic-ai--certificate": agenticAiCertificateFaqs,
   "cyber-security--certificate": cyberSecurityCertificateFaqs,
+  "cloud-computing--certificate": cloudComputingCertificateFaqs,
+  "digital-marketing--certificate": digitalMarketingCertificateFaqs,
+  "artificial-intelligence--certificate": artificialIntelligenceCertificateFaqs,
+  "flutter--certificate": flutterCertificateFaqs,
+  "data-analytics--certificate": dataAnalyticsCertificateFaqs,
+  "full-stack-development--certificate": fullStackDevelopmentCertificateFaqs,
   "basic-computer-office-skills--certificate": basicComputerOfficeSkillsFaqs,
   "agentic-ai": [
     {

@@ -48,6 +48,72 @@ import {
   cyberSecurityCertificateSections,
 } from "@/lib/content/cyberSecurityCertificate";
 import {
+  cloudComputingCertificateCertification,
+  cloudComputingCertificateClosing,
+  cloudComputingCertificateHeadings,
+  cloudComputingCertificateHero,
+  cloudComputingCertificateInstitute,
+  cloudComputingCertificateModes,
+  cloudComputingCertificateProjects,
+  cloudComputingCertificateScope,
+  cloudComputingCertificateSections,
+} from "@/lib/content/cloudComputingCertificate";
+import {
+  digitalMarketingCertificateCertification,
+  digitalMarketingCertificateClosing,
+  digitalMarketingCertificateHeadings,
+  digitalMarketingCertificateHero,
+  digitalMarketingCertificateInstitute,
+  digitalMarketingCertificateModes,
+  digitalMarketingCertificateProjects,
+  digitalMarketingCertificateScope,
+  digitalMarketingCertificateSections,
+} from "@/lib/content/digitalMarketingCertificate";
+import {
+  artificialIntelligenceCertificateCertification,
+  artificialIntelligenceCertificateClosing,
+  artificialIntelligenceCertificateHeadings,
+  artificialIntelligenceCertificateHero,
+  artificialIntelligenceCertificateInstitute,
+  artificialIntelligenceCertificateModes,
+  artificialIntelligenceCertificateProjects,
+  artificialIntelligenceCertificateScope,
+  artificialIntelligenceCertificateSections,
+} from "@/lib/content/artificialIntelligenceCertificate";
+import {
+  dataAnalyticsCertificateCertification,
+  dataAnalyticsCertificateClosing,
+  dataAnalyticsCertificateHeadings,
+  dataAnalyticsCertificateHero,
+  dataAnalyticsCertificateInstitute,
+  dataAnalyticsCertificateModes,
+  dataAnalyticsCertificateProjects,
+  dataAnalyticsCertificateScope,
+  dataAnalyticsCertificateSections,
+} from "@/lib/content/dataAnalyticsCertificate";
+import {
+  fullStackDevelopmentCertificateCertification,
+  fullStackDevelopmentCertificateClosing,
+  fullStackDevelopmentCertificateHeadings,
+  fullStackDevelopmentCertificateHero,
+  fullStackDevelopmentCertificateInstitute,
+  fullStackDevelopmentCertificateModes,
+  fullStackDevelopmentCertificateProjects,
+  fullStackDevelopmentCertificateScope,
+  fullStackDevelopmentCertificateSections,
+} from "@/lib/content/fullStackDevelopmentCertificate";
+import {
+  flutterCertificateCertification,
+  flutterCertificateClosing,
+  flutterCertificateHeadings,
+  flutterCertificateHero,
+  flutterCertificateInstitute,
+  flutterCertificateModes,
+  flutterCertificateProjects,
+  flutterCertificateScope,
+  flutterCertificateSections,
+} from "@/lib/content/flutterCertificate";
+import {
   basicComputerOfficeSkillsCertification,
   basicComputerOfficeSkillsClosing,
   basicComputerOfficeSkillsHeadings,
@@ -157,6 +223,84 @@ const writtenPages: Record<string, WrittenCertificatePage> = {
     institute: cyberSecurityCertificateInstitute,
     modes: cyberSecurityCertificateModes,
     closing: cyberSecurityCertificateClosing,
+  },
+
+  // No `comparison`: this brief argues the point in prose only.
+  "cloud-computing--certificate": {
+    hero: cloudComputingCertificateHero,
+    headings: cloudComputingCertificateHeadings,
+    sections: cloudComputingCertificateSections,
+    certification: cloudComputingCertificateCertification,
+    scope: cloudComputingCertificateScope,
+    projects: cloudComputingCertificateProjects,
+    institute: cloudComputingCertificateInstitute,
+    modes: cloudComputingCertificateModes,
+    closing: cloudComputingCertificateClosing,
+  },
+
+  // No `comparison`: this brief argues the point in prose only.
+  "digital-marketing--certificate": {
+    hero: digitalMarketingCertificateHero,
+    headings: digitalMarketingCertificateHeadings,
+    sections: digitalMarketingCertificateSections,
+    certification: digitalMarketingCertificateCertification,
+    scope: digitalMarketingCertificateScope,
+    projects: digitalMarketingCertificateProjects,
+    institute: digitalMarketingCertificateInstitute,
+    modes: digitalMarketingCertificateModes,
+    closing: digitalMarketingCertificateClosing,
+  },
+
+  // No `comparison`: this brief argues the point in prose only.
+  "artificial-intelligence--certificate": {
+    hero: artificialIntelligenceCertificateHero,
+    headings: artificialIntelligenceCertificateHeadings,
+    sections: artificialIntelligenceCertificateSections,
+    certification: artificialIntelligenceCertificateCertification,
+    scope: artificialIntelligenceCertificateScope,
+    projects: artificialIntelligenceCertificateProjects,
+    institute: artificialIntelligenceCertificateInstitute,
+    modes: artificialIntelligenceCertificateModes,
+    closing: artificialIntelligenceCertificateClosing,
+  },
+
+  // No `comparison`: this brief argues the point in prose only.
+  "flutter--certificate": {
+    hero: flutterCertificateHero,
+    headings: flutterCertificateHeadings,
+    sections: flutterCertificateSections,
+    certification: flutterCertificateCertification,
+    scope: flutterCertificateScope,
+    projects: flutterCertificateProjects,
+    institute: flutterCertificateInstitute,
+    modes: flutterCertificateModes,
+    closing: flutterCertificateClosing,
+  },
+
+  // No `comparison`: this brief argues the point in prose only.
+  "data-analytics--certificate": {
+    hero: dataAnalyticsCertificateHero,
+    headings: dataAnalyticsCertificateHeadings,
+    sections: dataAnalyticsCertificateSections,
+    certification: dataAnalyticsCertificateCertification,
+    scope: dataAnalyticsCertificateScope,
+    projects: dataAnalyticsCertificateProjects,
+    institute: dataAnalyticsCertificateInstitute,
+    modes: dataAnalyticsCertificateModes,
+    closing: dataAnalyticsCertificateClosing,
+  },
+
+  // No `comparison`: this brief argues the point in prose only.
+  "full-stack-development--certificate": {
+    hero: fullStackDevelopmentCertificateHero,
+    headings: fullStackDevelopmentCertificateHeadings,
+    sections: fullStackDevelopmentCertificateSections,
+    certification: fullStackDevelopmentCertificateCertification,
+    scope: fullStackDevelopmentCertificateScope,
+    projects: fullStackDevelopmentCertificateProjects,
+    institute: fullStackDevelopmentCertificateInstitute,
+    modes: fullStackDevelopmentCertificateModes,
+    closing: fullStackDevelopmentCertificateClosing,
   },
 
   /**
