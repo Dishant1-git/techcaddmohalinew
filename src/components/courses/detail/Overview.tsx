@@ -33,7 +33,7 @@ export default function Overview({ course }: { course: Course }) {
             <SectionTitle
               eyebrow="Overview"
               title="About this programme"
-              subtitle={`A ${course.duration ? `${course.duration} ` : ""}${course.level.toLowerCase()} track taught at our Sector 75 campus in Mohali and live online, built around what employers in this field are hiring for right now.`}
+              subtitle={`A ${course.duration ? `${course.duration} ` : ""}${course.level.toLowerCase()} track taught at ${course.campus ? `our ${course.campus} centre` : "our Sector 75 campus in Mohali"} and live online, built around what employers in this field are hiring for right now.`}
             />
 
             {/* A course written to a keyword brief carries several paragraphs

@@ -29,7 +29,7 @@ export const capabilities: Capability[] = [
     key: "ai",
     label: "AI & Machine Learning",
     blurb: "Models trained, tuned and shipped — not notebooks that only run once.",
-    href: "/courses/artificial-intelligence",
+    href: "/courses/course/artificial-intelligence",
     tools: [
       { name: "TensorFlow", role: "Model training", mark: "tensorflow" },
       { name: "PyTorch", role: "Deep learning", mark: "pytorch" },
@@ -45,7 +45,7 @@ export const capabilities: Capability[] = [
     key: "fullstack",
     label: "Full-Stack Engineering",
     blurb: "One codebase from database to deployed URL, reviewed like production work.",
-    href: "/courses/mern-full-stack",
+    href: "/courses/course/mern-full-stack",
     tools: [
       { name: "React", role: "Interfaces", mark: "react" },
       { name: "Next.js", role: "App framework", mark: "nextjs" },
@@ -61,7 +61,7 @@ export const capabilities: Capability[] = [
     key: "data",
     label: "Data & Analytics",
     blurb: "Questions turned into queries, dashboards and decisions leadership acts on.",
-    href: "/courses/data-analytics",
+    href: "/courses/course/data-analytics",
     tools: [
       { name: "Python", role: "Analysis", mark: "python" },
       { name: "pandas", role: "Dataframes", mark: "pandas" },
@@ -77,7 +77,7 @@ export const capabilities: Capability[] = [
     key: "cloud",
     label: "Cloud & DevOps",
     blurb: "Pipelines, containers and infrastructure that survive a Monday deploy.",
-    href: "/courses/cloud-computing",
+    href: "/courses/course/cloud-computing",
     tools: [
       { name: "AWS", role: "Cloud platform", mark: "aws" },
       { name: "Docker", role: "Containers", mark: "docker" },
@@ -93,7 +93,7 @@ export const capabilities: Capability[] = [
     key: "cyber",
     label: "Cyber Security",
     blurb: "Attack and defence in an isolated lab, with reports a client would accept.",
-    href: "/courses/cyber-security",
+    href: "/courses/course/cyber-security",
     tools: [
       { name: "Kali Linux", role: "Testing distro", short: "K", color: "#557C94" },
       { name: "Wireshark", role: "Packet analysis", short: "W", color: "#1679A7" },
@@ -109,7 +109,7 @@ export const capabilities: Capability[] = [
     key: "marketing",
     label: "Digital Marketing",
     blurb: "Real budgets on real ad accounts, measured against real revenue.",
-    href: "/courses/digital-marketing",
+    href: "/courses/course/digital-marketing",
     tools: [
       { name: "Google Ads", role: "Paid search", mark: "googleads" },
       { name: "Meta Ads", role: "Paid social", mark: "meta" },

@@ -87,6 +87,68 @@ const nextConfig: NextConfig = {
      */
     dangerouslyAllowLocalIP: cmsIsLocal(),
   },
+
+  /**
+   * Every menu's course pages now live one segment below `/courses`, so the
+   * URL says which menu a page belongs to — `/courses/course/<slug>`,
+   * `/courses/ai/<slug>`, `/courses/certificate-programs/<slug>` and
+   * `/courses/after12th/<slug>`. The paths they used before are kept alive as
+   * 308s so no existing link, bookmark or indexed URL breaks.
+   *
+   * Order matters: the first match wins, so the AI menu's own page is claimed
+   * before the catalogue catch-all sees it.
+   */
+  async redirects() {
+    return [
+      {
+        source: "/courses/chatgpt-ai-tools",
+        destination: "/courses/ai/chatgpt-ai-tools",
+        permanent: true,
+      },
+      {
+        source: "/courses/ai-powered-marketing",
+        destination: "/courses/ai/ai-powered-marketing",
+        permanent: true,
+      },
+      {
+        source: "/courses/agentic-ai",
+        destination: "/courses/ai/agentic-ai",
+        permanent: true,
+      },
+      // Prompt Engineering is the AI menu's course and is listed in no other
+      // panel, so `/courses/course/[slug]` no longer builds it. Both paths it
+      // could have been reached by land on the one page that exists.
+      {
+        source: "/courses/prompt-engineering",
+        destination: "/courses/ai/prompt-engineering",
+        permanent: true,
+      },
+      {
+        source: "/courses/course/prompt-engineering",
+        destination: "/courses/ai/prompt-engineering",
+        permanent: true,
+      },
+      // Everything else that used to sit directly under /courses is a
+      // catalogue page. The lookahead keeps the four new menu segments out of
+      // it, so /courses/ai/<slug> is never rewritten to /courses/course/ai.
+      {
+        source:
+          "/courses/:slug((?!course$|ai$|certificate-programs$|after12th$)[a-z0-9-]+)",
+        destination: "/courses/course/:slug",
+        permanent: true,
+      },
+      {
+        source: "/certificate-programs/:slug",
+        destination: "/courses/certificate-programs/:slug",
+        permanent: true,
+      },
+      {
+        source: "/after-12th/:slug",
+        destination: "/courses/after12th/:slug",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

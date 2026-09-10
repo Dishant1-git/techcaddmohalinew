@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { categoryLabel } from "@/lib/courses";
-// The catalogue comes from the CMS layer, which falls back to the static list.
-import { getCourse, getCourses } from "@/lib/cms/content";
-import { courseFaqs, courseSeo, ratingSummary } from "@/lib/coursePage";
+import { aiCourse, aiCourses, aiRouteCourses } from "@/lib/content/ai";
+import { variants } from "@/lib/courseVariants";
+import { courseFaqs, courseSeoFor, ratingSummary, sectionCopy } from "@/lib/coursePage";
 import { site } from "@/lib/site";
 import CourseCard from "@/components/ui/CourseCard";
 import CtaBanner from "@/components/home/CtaBanner";
@@ -29,28 +29,25 @@ import CourseFaqs from "@/components/courses/detail/CourseFaqs";
 import EnquiryForm from "@/components/courses/detail/EnquiryForm";
 
 /**
- * Slug-driven course page.
+ * The AI menu's course pages, at `/courses/ai/<slug>`.
  *
- * Every section below is a pure function of the course record, so adding a
- * course to `src/lib/courses.ts` is all it takes to get a full page at
- * `/courses/<slug>` — hero, overview, modules, skills, why-choose, audience,
- * tools, certification, future scope, the comparison, reviews, FAQs and an
- * enquiry form that already knows which course it is for.
+ * The same design and the same sections as the catalogue route — hero,
+ * overview, modules, skills, why-choose, audience, tools, certification,
+ * future scope, the comparison, reviews, FAQs and an enquiry form — rendered
+ * for the courses the AI panel in `@/lib/site` lists. Some of those belong to
+ * this menu alone: their records are not in the catalogue but in
+ * `@/lib/content/ai`, so no other menu can grow a page for them.
+ *
+ * The menu's own list is the sibling `page.tsx`.
  *
  * The sections animate with Framer Motion rather than the site-wide GSAP
  * `data-anim` system, which is why nothing here carries those attributes.
  */
 
-/**
- * Prerendered slugs.
- *
- * Read through the CMS layer so a course added there gets a static page too.
- * `dynamicParams` is left at its default, so a course published after a build
- * still renders on first request rather than 404-ing until the next deploy.
- */
-export async function generateStaticParams() {
-  const courses = await getCourses();
-  return courses.map((c) => ({ slug: c.slug }));
+const variant = variants.ai;
+
+export function generateStaticParams() {
+  return aiRouteCourses.map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({
@@ -59,38 +56,39 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const course = await getCourse(slug);
+  const course = aiCourse(slug);
   if (!course) return { title: "Course not found" };
 
   // A page written to its own keyword brief supplies its own tag and
   // description; every other course keeps the derived pair.
-  const seo = courseSeo[course.slug];
+  const seo = courseSeoFor(course);
   const title = seo?.title ?? `${course.title} Course in Mohali`;
   const description =
     seo?.description ??
     `${course.blurb}${course.duration ? ` ${course.duration}` : ""} programme at techcadd Mohali with live projects, internship and placement assistance.`;
 
   return {
-    title,
+    // A written title is the complete tag the page was briefed with, down to
+    // its own brand suffix — the layout template must not append a second one.
+    title: seo ? { absolute: seo.title } : title,
     description,
-    alternates: { canonical: `/courses/${course.slug}` },
+    alternates: { canonical: `${variant.basePath}/${course.slug}` },
     openGraph: {
       title: seo ? title : `${title} | techcadd Mohali`,
       description,
-      url: `${site.url}/courses/${course.slug}`,
+      url: `${site.url}${variant.basePath}/${course.slug}`,
       type: "article",
     },
   };
 }
 
-export default async function CoursePage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function AiCoursePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const courses = await getCourses();
-  const course = courses.find((c) => c.slug === slug);
+  const course = aiCourse(slug);
   if (!course) notFound();
 
-  const related = courses.filter((c) => c.category === course.category && c.slug !== course.slug);
-  const fallback = courses.filter((c) => c.slug !== course.slug);
+  const related = aiCourses.filter((c) => c.category === course.category && c.slug !== course.slug);
+  const fallback = aiCourses.filter((c) => c.slug !== course.slug);
   const suggestions = (related.length ? related : fallback).slice(0, 3);
 
   const rating = ratingSummary(course);
@@ -104,9 +102,11 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
     {
       "@context": "https://schema.org",
       "@type": "Course",
-      name: `${course.title} Course in Mohali`,
+      // The page's own H1 where it has one, so a course taught from another
+      // centre is not published to search as a Mohali course.
+      name: sectionCopy(course, "hero")?.title ?? `${course.title} Course in Mohali`,
       description: course.overview,
-      url: `${site.url}/courses/${course.slug}`,
+      url: `${site.url}${variant.basePath}/${course.slug}`,
       provider: {
         "@type": "EducationalOrganization",
         name: site.legalName,
@@ -125,11 +125,15 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
         // Omitted rather than emitted empty for a course that advertises no
         // fixed length — a blank courseWorkload is a schema warning.
         ...(course.duration ? { courseWorkload: course.duration } : {}),
-        location: {
-          "@type": "Place",
-          name: `${site.legalName}, ${site.city}`,
-          address: `${site.address.line1}, ${site.address.line2}, ${site.address.line3}`,
-        },
+        // A course taught from another centre says so, and stops short of the
+        // Mohali street address rather than asserting one it does not have.
+        location: course.campus
+          ? { "@type": "Place", name: `${site.legalName}, ${course.campus}` }
+          : {
+              "@type": "Place",
+              name: `${site.legalName}, ${site.city}`,
+              address: `${site.address.line1}, ${site.address.line2}, ${site.address.line3}`,
+            },
       },
     },
     {
@@ -187,7 +191,10 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
         <div className="container-x">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h2 data-anim="words" className="font-display text-2xl font-extrabold text-up-ink sm:text-3xl">
+              <h2
+                data-anim="words"
+                className="font-display text-2xl font-extrabold text-up-ink sm:text-3xl"
+              >
                 Students also consider
               </h2>
               <div
@@ -201,13 +208,21 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
               className="group inline-flex items-center gap-2 text-sm font-semibold text-up-accent"
             >
               View all courses
-              <Icon name="arrowRight" size={16} className="transition-transform group-hover:translate-x-1" />
+              <Icon
+                name="arrowRight"
+                size={16}
+                className="transition-transform group-hover:translate-x-1"
+              />
             </Link>
           </div>
 
-          <div data-anim="up" data-anim-stagger className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div
+            data-anim="up"
+            data-anim-stagger
+            className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+          >
             {suggestions.map((c) => (
-              <CourseCard key={c.slug} course={c} />
+              <CourseCard key={c.slug} course={c} basePath={variant.basePath} />
             ))}
           </div>
         </div>

@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import type { Course } from "@/lib/courses";
 import { tracksFor } from "@/lib/certificateTracks";
+import type { WrittenHeading } from "@/lib/content/mernCertificate";
 import Icon from "@/components/ui/Icon";
 import { EASE } from "@/components/courses/detail/Motion";
 import { Guilloche, Seal } from "@/components/courses/certificate/Motifs";
@@ -21,7 +22,13 @@ import { RuledHeading, Wipe } from "@/components/courses/certificate/Certificate
  * Reuses `RuledHeading` and `Wipe` from the sections file so this reads as part
  * of the same document rather than a lookalike built alongside it.
  */
-export default function CertificateTracks({ course }: { course: Course }) {
+export default function CertificateTracks({
+  course,
+  heading,
+}: {
+  course: Course;
+  heading?: WrittenHeading;
+}) {
   const reduce = useReducedMotion();
   const tracks = tracksFor(course);
 
@@ -34,10 +41,13 @@ export default function CertificateTracks({ course }: { course: Course }) {
 
       <div className="container-x relative">
         <RuledHeading
-          index="—"
-          eyebrow="Programme lengths"
-          title="Take it over three, six or nine months"
-          intro={`The same ${course.title} syllabus at three depths. The subject does not change; how far you take it, and the paperwork you leave with, does.`}
+          index={heading?.index ?? "—"}
+          eyebrow={heading?.eyebrow ?? "Programme lengths"}
+          title={heading?.title ?? "Take it over three, six or nine months"}
+          intro={
+            heading?.intro ??
+            `The same ${course.title} syllabus at three depths. The subject does not change; how far you take it, and the paperwork you leave with, does.`
+          }
         />
 
         <div className="mt-14 grid gap-6 lg:grid-cols-3 lg:gap-7">

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import type { Course } from "@/lib/courses";
-import { courseHighlights } from "@/lib/coursePage";
+import { courseHighlights, sectionCopy } from "@/lib/coursePage";
 import { site } from "@/lib/site";
 import Icon from "@/components/ui/Icon";
 import { EASE } from "@/components/courses/detail/Motion";
@@ -42,7 +42,11 @@ export default function CourseHero({
   const orbY = useTransform(scrollYProgress, [0, 1], [0, -120]);
 
   const highlights = courseHighlights(course);
-  const words = `${course.title} course in Mohali`.split(" ");
+  // A page written to its own brief supplies its own H1 — a course taught from
+  // another centre cannot be headlined "in Mohali". Everything else keeps the
+  // derived heading.
+  const heading = sectionCopy(course, "hero")?.title ?? `${course.title} course in Mohali`;
+  const words = heading.split(" ");
 
   return (
     <section

@@ -2,7 +2,14 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
-import { categories, categoryLabel, courses as builtInCourses, type CategoryKey, type Course } from "@/lib/courses";
+import {
+  categories,
+  categoryLabel,
+  courses as builtInCourses,
+  type CategoryKey,
+  type Course,
+} from "@/lib/courses";
+import { catalogueBasePath } from "@/lib/content/courses";
 import CourseCard from "@/components/ui/CourseCard";
 import Icon from "@/components/ui/Icon";
 
@@ -102,7 +109,11 @@ export default function CourseExplorer({
         {visible.length > 0 ? (
           <div ref={gridRef} className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {visible.map((course) => (
-              <CourseCard key={course.slug} course={course} />
+              <CourseCard
+                key={course.slug}
+                course={course}
+                basePath={catalogueBasePath(course.slug)}
+              />
             ))}
           </div>
         ) : (

@@ -11,14 +11,14 @@ import RelatedLinks from "@/components/ui/RelatedLinks";
 import { relatedForBranch } from "@/lib/related";
 
 const branchCourses = [
-  { title: "Artificial Intelligence & Machine Learning", href: "/courses/artificial-intelligence" },
-  { title: "Data Science & Analytics", href: "/courses/data-science" },
-  { title: "Full-Stack Web Development", href: "/courses/mern-full-stack" },
-  { title: "Python Programming", href: "/courses/python-programming" },
-  { title: "Digital Marketing & SEO", href: "/courses/digital-marketing" },
-  { title: "Cybersecurity & Ethical Hacking", href: "/courses/cyber-security" },
-  { title: "Cloud Computing", href: "/courses/cloud-computing" },
-  { title: "Web Designing & UI", href: "/courses/web-designing" },
+  { title: "Artificial Intelligence & Machine Learning", href: "/courses/course/artificial-intelligence" },
+  { title: "Data Science & Analytics", href: "/courses/course/data-science" },
+  { title: "Full-Stack Web Development", href: "/courses/course/mern-full-stack" },
+  { title: "Python Programming", href: "/courses/course/python-programming" },
+  { title: "Digital Marketing & SEO", href: "/courses/course/digital-marketing" },
+  { title: "Cybersecurity & Ethical Hacking", href: "/courses/course/cyber-security" },
+  { title: "Cloud Computing", href: "/courses/course/cloud-computing" },
+  { title: "Web Designing & UI", href: "/courses/course/web-designing" },
 ];
 
 const studentBenefits = [

@@ -1,5 +1,30 @@
 export type Course = {
   slug: string;
+  /**
+   * Which written content the page pulls from `@/lib/coursePage` — the SEO
+   * pair, the learn detail, the section copy, the why-choose cards, the
+   * audience, the eligibility, the FAQs, the reviews and the comparison are
+   * all keyed by this rather than by `slug`.
+   *
+   * Unset on every catalogue record, and it should stay that way: a course
+   * keyed by its own slug is the normal case. A menu that wants its own copy
+   * for a course the other menus also list sets this in its override map
+   * under `@/lib/content`, so `/courses/ai/data-science` and
+   * `/courses/course/data-science` can be written differently while staying
+   * one course at one slug. A key nothing is written for is not an error —
+   * every section falls back to the copy derived from the record.
+   */
+  contentKey?: string;
+  /**
+   * The centre that teaches this version of the course, when it is not the
+   * Mohali campus every catalogue record is written around.
+   *
+   * Set it in a menu's override map and the page says so wherever the design
+   * names a city — the overview standfirst, the course card in the hero, the
+   * enquiry copy — instead of sending an Amritsar reader to Sector 75. Left
+   * unset, which is the case for the whole catalogue, nothing changes.
+   */
+  campus?: string;
   title: string;
   category: CategoryKey;
   /**
@@ -30,7 +55,16 @@ export type CategoryKey =
   | "cyber-cloud"
   | "digital-marketing"
   | "cad-design"
-  | "programming";
+  | "programming"
+  /**
+   * Deliberately absent from `categories` below. That array drives the home
+   * page's category grid and the explorer's filter tabs, both of which count
+   * catalogue courses — and no catalogue course carries this key. It belongs
+   * to the Certificate Programs menu's own Basic Computer & Office Skills
+   * record in `@/lib/content/basicComputerOfficeSkills`, which is why it needs
+   * a label below but no tile of its own.
+   */
+  | "office-skills";
 
 export const categories: {
   key: CategoryKey;
@@ -93,6 +127,7 @@ export const categoryLabel: Record<CategoryKey, string> = {
   "digital-marketing": "Digital Marketing",
   "cad-design": "CAD & Design",
   programming: "Programming",
+  "office-skills": "Office Skills",
 };
 
 export const courses: Course[] = [
