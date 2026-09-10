@@ -147,6 +147,17 @@ export const after12Overrides: CourseOverrides = {
     duration: "4 Months",
     level: "Beginner",
   },
+
+  /**
+   * The catalogue spans "3 – 9 Months" at "Beginner → Advanced" because the
+   * menu runs Artificial Intelligence at three lengths; this item is the
+   * 4-month one — "Duration: 4 months", "Eligibility: 12th pass, any stream".
+   * The 6-month certificate and 9-month diploma carry their own records.
+   */
+  "artificial-intelligence": {
+    duration: "4 Months",
+    level: "Beginner",
+  },
 };
 
 /**

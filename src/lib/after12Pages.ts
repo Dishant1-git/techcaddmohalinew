@@ -18202,6 +18202,546 @@ const fullStackDevelopmentDiploma: After12Page = {
   },
 };
 
+const artificialIntelligence: After12Page = {
+  sections: [
+    { id: "overview", label: "Overview" },
+    { id: "learn", label: "What you learn" },
+    { id: "modules", label: "Curriculum" },
+    { id: "tools", label: "Tools" },
+    { id: "who", label: "Who can join" },
+    { id: "why-now", label: "Why now" },
+    { id: "certificate", label: "Certification" },
+    { id: "scope", label: "Career paths" },
+    { id: "projects", label: "Projects" },
+    { id: "why", label: "Why techcadd" },
+    { id: "reviews", label: "Reviews" },
+    { id: "faqs", label: "FAQs" },
+    { id: "enquire", label: "Enquire" },
+  ],
+
+  hero: {
+    badge: "Start right after school",
+    title: "After 12th 4-Month Artificial Intelligence Program in Mohali",
+    paragraphs: [
+      "A focused, four-month route into practical AI work — Python and machine-learning foundations, deep learning, large language models, retrieval-augmented generation, and AI agents — ending with one deployed application you can show in an interview, not just describe in one.",
+    ],
+  },
+
+  program: {
+    title: "4-Month Artificial Intelligence Program in Mohali",
+    // The brief writes no separate programme paragraph; these two state what it
+    // covers and how it is sequenced, in its own words.
+    paragraphs: [
+      "Python and machine-learning foundations, deep learning, large language models, retrieval-augmented generation and AI agents, across four months of hands-on build work.",
+      "The course moves in a deliberate sequence — foundations before frameworks, understanding before frameworks, and building before deploying.",
+    ],
+    highlightsTitle: "Key Highlights",
+    highlights: [
+      { label: "Eligibility", value: "12th pass, any stream" },
+      { label: "Duration", value: "4 months" },
+      { label: "Format", value: "Practical-first, theory alongside" },
+      { label: "Includes", value: "Certificate + placement support" },
+    ],
+  },
+
+  // The brief writes no course-overview block; these three paragraphs state
+  // what the four months do, from its own facts.
+  overview: {
+    title: "Course Overview",
+    paragraphs: [
+      "The programme is built the way the work is done: the applied-math and programming layer first, then the models, then the systems built around them, then deployment.",
+      "Months one and two put Python, engineering practice and the maths under your hands before any framework appears — NumPy, Pandas, statistics and scikit-learn, then neural networks, CNNs and the transformer mechanics behind every modern chatbot.",
+      "Months three and four are where it becomes employable work: prompting across four model providers, vector search and full RAG architecture, agent-building with LangChain, LangGraph, CrewAI and MCP, and finally a containerised application deployed to the cloud.",
+    ],
+  },
+
+  // The brief lists no learning outcomes; these six are drawn from what each
+  // month actually produces.
+  learn: {
+    title: "What You'll Learn",
+    intro:
+      "Six capabilities the four months are built around — each one something you can demonstrate, not just describe.",
+    items: [
+      {
+        title: "Write Python Like a Developer",
+        body: "Python from scratch with object-oriented programming, exception handling, Git and GitHub, APIs and JSON, and FastAPI basics — the engineering layer, not just syntax.",
+      },
+      {
+        title: "Build and Evaluate Models",
+        body: "NumPy, Pandas, statistics and probability, and scikit-learn fundamentals, then neural networks, CNNs and transfer learning in PyTorch.",
+      },
+      {
+        title: "Understand What an LLM Actually Does",
+        body: "Tokenization, embeddings, context windows and attention — the mechanics behind every modern chatbot, rather than prompting a black box.",
+      },
+      {
+        title: "Work Across Model Providers",
+        body: "Structured prompt engineering across OpenAI, Gemini, Claude and Grok APIs, plus local models via Ollama and routing between them with LiteLLM.",
+      },
+      {
+        title: "Ground a Model in Real Data",
+        body: "Vector databases, semantic search and full RAG architecture with hybrid search and re-ranking.",
+      },
+      {
+        title: "Ship It",
+        body: "Interfaces in Streamlit, Gradio or Chainlit, containerised with Docker and deployed to AWS, Azure AI or Google Vertex AI.",
+      },
+    ],
+  },
+
+  curriculum: {
+    title: "Program Structure: What Four Months Actually Covers",
+    intro:
+      "The course moves in a deliberate sequence — foundations before frameworks, understanding before frameworks, and building before deploying.",
+    // Each month keeps the brief's own framing line, followed by the topics it
+    // names broken out as their own entries.
+    modules: [
+      {
+        title: "Month 1 — Python, Math & AI Foundations",
+        points: [
+          "Python programming from scratch, and the applied-math layer every AI course skips too fast.",
+          "Python programming from scratch",
+          "Git / GitHub",
+          "Object-oriented programming",
+          "Exception handling",
+          "Working with APIs and JSON",
+          "FastAPI basics",
+          "NumPy",
+          "Pandas",
+          "Statistics and probability",
+          "scikit-learn fundamentals",
+        ],
+      },
+      {
+        title: "Month 2 — Deep Learning, NLP & LLM Internals",
+        points: [
+          "Neural networks through to the mechanics behind every modern chatbot.",
+          "Neural networks and CNNs in PyTorch",
+          "Transfer learning",
+          "Computer vision with OpenCV",
+          "Text processing and word embeddings",
+          "Transformer architecture",
+          "Tokenization",
+          "Embeddings",
+          "Context windows",
+          "Attention",
+        ],
+      },
+      {
+        title: "Month 3 — Prompting, LLM APIs, RAG & AI Agents",
+        points: [
+          "Structured prompt engineering across four providers, then retrieval and agents.",
+          "Structured prompt engineering",
+          "OpenAI, Gemini, Claude and Grok APIs",
+          "Local models via Ollama",
+          "Vector databases — FAISS, ChromaDB, Pinecone, Qdrant",
+          "Semantic search",
+          "Full RAG architecture with hybrid search and re-ranking",
+          "Agent-building with LangChain",
+          "LangGraph",
+          "CrewAI",
+          "Model Context Protocol (MCP)",
+        ],
+      },
+      {
+        title: "Month 4 — AI Applications, Deployment & Capstone",
+        points: [
+          "Building real interfaces, containerising them, and shipping one complete application.",
+          "Building real interfaces with Streamlit, Gradio or Chainlit",
+          "Containerising with Docker",
+          "Deploying to AWS, Azure AI or Google Vertex AI",
+          "One complete, end-to-end AI capstone — LLMs, RAG and agents integrated into a single deployed application",
+          "Documentation",
+          "GitHub portfolio",
+          "Mock interviews",
+        ],
+      },
+    ],
+    // Neither pair is written in the brief; both are stated from its own facts.
+    practical: {
+      title: "It Ends Deployed",
+      body: "Docker, cloud deployment and a documented capstone mean the final output is a working application with a live link, not a slide describing one.",
+    },
+    outcome: {
+      label: "Outcome",
+      body: "One complete, end-to-end AI application combining a language model, a RAG pipeline and an AI agent, deployed to the cloud with full documentation and a GitHub portfolio entry.",
+    },
+  },
+
+  // The brief names its toolchain across the four months rather than in a list
+  // of its own; every tool below is one it names, with the month it appears in.
+  tools: {
+    title: "Tools You Will Work With",
+    intro:
+      "Four months across four model providers, four vector databases and three cloud platforms — because real product teams rarely commit to just one.",
+    items: [
+      { name: "Python", body: "Month 1 — the language the whole course runs on." },
+      { name: "Git & GitHub", body: "Month 1 — version control and the portfolio it becomes." },
+      { name: "FastAPI", body: "Month 1 — the API layer behind your applications." },
+      { name: "NumPy", body: "Month 1 — arrays and the numeric layer under everything." },
+      { name: "Pandas", body: "Month 1 — loading, cleaning and analysing data." },
+      { name: "scikit-learn", body: "Month 1 — machine-learning fundamentals." },
+      { name: "PyTorch", body: "Month 2 — neural networks, CNNs and transfer learning." },
+      { name: "OpenCV", body: "Month 2 — computer vision." },
+      { name: "Hugging Face", body: "Month 2 — transformer models and tokenizers." },
+      { name: "OpenAI", body: "Month 3 — the first LLM API you call." },
+      { name: "Gemini", body: "Month 3 — a second provider to compare against." },
+      { name: "Claude", body: "Month 3 — a third, for long-context work." },
+      { name: "Grok", body: "Month 3 — a fourth provider in the same codebase." },
+      { name: "Ollama", body: "Month 3 — running models locally." },
+      { name: "LiteLLM", body: "Month 3 — routing between all of them." },
+      { name: "FAISS", body: "Month 3 — local similarity search." },
+      { name: "ChromaDB", body: "Month 3 — an embedded vector store." },
+      { name: "Pinecone", body: "Month 3 — the hosted vector database." },
+      { name: "Qdrant", body: "Month 3 — filtering alongside vector search." },
+      { name: "LangChain", body: "Month 3 — chains, prompts and tools." },
+      { name: "LangGraph", body: "Month 3 — stateful agent workflows." },
+      { name: "CrewAI", body: "Month 3 — multi-agent coordination." },
+      { name: "MCP", body: "Month 3 — Model Context Protocol for tool calling." },
+      { name: "Streamlit", body: "Month 4 — the fastest route to an interface." },
+      { name: "Gradio", body: "Month 4 — demo interfaces for models." },
+      { name: "Chainlit", body: "Month 4 — chat interfaces for AI apps." },
+      { name: "Docker", body: "Month 4 — containerising the application." },
+      { name: "AWS", body: "Month 4 — cloud deployment." },
+      { name: "Azure AI", body: "Month 4 — Microsoft's AI platform." },
+      { name: "Google Vertex AI", body: "Month 4 — Google's managed AI platform." },
+    ],
+  },
+
+  who: {
+    title: "Who This Program Is For",
+    items: [
+      {
+        title: "Students Straight After 12th",
+        body: "From any stream, with zero assumed coding background — can run alongside a college degree using a weekday or weekend batch.",
+        icon: "users",
+      },
+      {
+        title: "Graduating BCA / B.Sc / B.Tech Students",
+        body: "Who want a deployed AI project to walk into placement season with, instead of a resume built only on coursework.",
+        icon: "certificate",
+      },
+      {
+        title: "Working Professionals",
+        body: "In Mohali's IT and BPO sector, looking to move into AI-adjacent roles via the weekend track, without quitting a current job first.",
+        icon: "briefcase",
+      },
+      {
+        title: "Junior Developers or Data Analysts",
+        body: "Who already write some Python — the early foundation moves fast for this group, and the LLM/RAG/agent modules are the real destination.",
+        icon: "terminal",
+      },
+    ],
+  },
+
+  worth: {
+    title: "What Makes the Curriculum Different",
+    items: [
+      {
+        title: "Six model providers, not one",
+        body: "Working across OpenAI, Gemini, Claude, Grok and local Ollama models — plus LiteLLM for routing between them — matters more for employability than deep fluency in a single API, since real product teams rarely commit to just one provider.",
+        icon: "layers",
+      },
+      {
+        title: "Retrieval and agents are treated as core, not optional add-ons",
+        body: "A large share of current AI hiring in and around Mohali's IT Park is specifically for people who can build a working RAG pipeline or a tool-calling agent — not just prompt a chatbot.",
+        icon: "cube",
+      },
+      {
+        title: "It ends deployed",
+        body: "Docker, cloud deployment, and a documented capstone mean the final output is a working application with a live link, not a slide describing one.",
+        icon: "rocket",
+      },
+    ],
+  },
+
+  whyNow: {
+    kicker: "Why now",
+    title: "Why This Program Fits Mohali Specifically",
+    paragraphs: [
+      "Mohali's IT Park (Quark City and the surrounding sectors) and the wider tricity tech ecosystem have shifted hard toward AI-integrated product work over the past two years — companies aren't just hiring \"developers\" anymore, they're hiring people who can wire a large language model into a real application, ground it in company data, and ship it safely.",
+      "That shift has outpaced what most degree programs teach. A B.Tech or BCA syllabus in the region still moves slowly toward AI topics, while local product teams and IT-park companies are already hiring for LLM integration, RAG pipelines, and AI agent development today. This program is built to put a 12th-pass or early-degree student directly into that gap — with four months of hands-on build work instead of a four-year wait.",
+    ],
+    // The brief names what those companies are hiring for inside its own
+    // paragraphs; each line below is one of them, with the month that covers it.
+    listTitle: "What local teams are hiring for",
+    items: [
+      { title: "LLM integration", body: "Month 3 — four provider APIs, local models and routing between them." },
+      { title: "RAG pipelines", body: "Month 3 — vector databases, hybrid search and re-ranking." },
+      { title: "AI agent development", body: "Month 3 — LangChain, LangGraph, CrewAI and MCP tool calling." },
+      { title: "Grounding a model in company data", body: "Month 3 — full RAG architecture over your own documents." },
+      { title: "Shipping it safely", body: "Month 4 — containerised, deployed and documented, not left on a laptop." },
+    ],
+  },
+
+  advisor: {
+    title: "Talk to a Course Advisor",
+    body: "Ten minutes with the techcadd team settles eligibility, batch timings, fees and which of the three AI tracks fits — before you commit four months to it.",
+    cta: "Book a Free Demo",
+  },
+
+  certificate: {
+    title: "Certification & Placement Support",
+    intro:
+      "Students receive an industry-recognised course completion certificate and a separate capstone project certificate, along with a documented internship letter based on real project work. Placement support includes CV review, mock interviews, portfolio preparation, and hiring drives with partner companies across the tricity region.",
+    // The brief writes this as one paragraph; the four cards below are the four
+    // things it names, kept in its own wording.
+    items: [
+      {
+        icon: "certificate",
+        title: "Course Completion Certificate",
+        body: "An industry-recognised certificate for completing the four-month programme.",
+      },
+      {
+        icon: "cube",
+        title: "Capstone Project Certificate",
+        body: "A separate certificate for the end-to-end AI application you build and deploy.",
+      },
+      {
+        icon: "building",
+        title: "Internship Letter",
+        body: "A documented internship letter based on real project work.",
+      },
+      {
+        icon: "briefcase",
+        title: "Placement Support",
+        body: "CV review, mock interviews, portfolio preparation, and hiring drives with partner companies across the tricity region.",
+      },
+    ],
+  },
+
+  takesYou: {
+    title: "Career Paths This Opens",
+    // The brief writes this as a two-column table; the intro states what the
+    // six rows have in common.
+    intro:
+      "Six roles the four months point at, from the model layer through to the deployed product.",
+    listTitle: "Role and what it involves",
+    steps: [
+      {
+        title: "AI Engineer",
+        body: "Building and shipping systems with models embedded — retrieval, agents, APIs, deployment.",
+      },
+      {
+        title: "Machine Learning Engineer",
+        body: "Model-focused work: PyTorch, neural networks, computer vision, transfer learning.",
+      },
+      {
+        title: "LLM Engineer",
+        body: "Owning the model layer — tokenization, context windows, multi-provider routing, cost/latency tradeoffs.",
+      },
+      {
+        title: "AI Agent Developer",
+        body: "Tool-calling systems, multi-agent coordination via LangChain/LangGraph/CrewAI.",
+      },
+      {
+        title: "AI Application Developer",
+        body: "Full product build — FastAPI backend, deployed interface, containerised and cloud-hosted.",
+      },
+      {
+        title: "Junior AI Developer",
+        body: "Entry-level support role on a live AI feature, prompt tuning, evaluation data curation.",
+      },
+    ],
+  },
+
+  // The brief describes only the capstone; the five builds before it are the
+  // work each month already produces, named here so the run-up is visible.
+  projects: {
+    title: "What You Build Along the Way",
+    items: [
+      {
+        title: "First API Service",
+        body: "A working FastAPI service that reads and returns JSON, version-controlled on GitHub. Month 1 · Python · FastAPI · Git",
+      },
+      {
+        title: "Machine Learning Model",
+        body: "A trained and evaluated scikit-learn model over a real dataset prepared with NumPy and Pandas. Month 1 · scikit-learn · Pandas · NumPy",
+      },
+      {
+        title: "Computer Vision Build",
+        body: "A CNN in PyTorch with transfer learning, applied to images through OpenCV. Month 2 · PyTorch · OpenCV",
+      },
+      {
+        title: "RAG Pipeline",
+        body: "A retrieval system over your own documents with a vector database, hybrid search and re-ranking. Month 3 · FAISS/Chroma/Pinecone/Qdrant",
+      },
+      {
+        title: "Tool-Calling Agent",
+        body: "An agent that uses tools and completes a multi-step task, built with LangGraph, CrewAI and MCP. Month 3 · LangChain · LangGraph · CrewAI · MCP",
+      },
+      {
+        title: "End-to-End AI Capstone",
+        body: "One complete application — LLMs, RAG and agents integrated, containerised and deployed to the cloud, backed by documentation, a GitHub portfolio and mock interviews. Month 4 · Docker · AWS / Azure AI / Vertex AI",
+      },
+    ],
+  },
+
+  // The brief states the sequence but writes no cycle of its own; these four
+  // stages are that sequence, named.
+  approach: {
+    title: "Foundations. Frameworks. Build. Deploy.",
+    paragraphs: [
+      "Foundations before frameworks, understanding before frameworks, and building before deploying — applied to every topic in the course.",
+    ],
+    items: [
+      {
+        title: "Foundations",
+        body: "The programming, engineering practice and applied maths under the topic, before any library is introduced.",
+        icon: "layers",
+      },
+      {
+        title: "Understanding",
+        body: "What the model or system is actually doing — tokenization, attention, retrieval — before a framework hides it.",
+        icon: "search",
+      },
+      {
+        title: "Build",
+        body: "Write the thing yourself, with the framework, until it works on your own data.",
+        icon: "terminal",
+      },
+      {
+        title: "Deploy",
+        body: "Containerise it, put it on a cloud platform, document it, and be able to hand over the link.",
+        icon: "rocket",
+      },
+    ],
+  },
+
+  // The brief writes no "why techcadd" block; these five points are its own
+  // claims about the programme, restated as reasons to take it here.
+  whyUs: {
+    kicker: "Why techcadd",
+    title: "Built for the Gap Mohali Is Hiring Into",
+    intro:
+      "Four months of hands-on build work aimed at what local product teams and IT-park companies are recruiting for today.",
+    items: [
+      {
+        title: "Four Months, Not Four Years",
+        body: "Built to put a 12th-pass or early-degree student directly into the gap between what degree syllabi teach and what local teams are hiring for.",
+        icon: "target",
+      },
+      {
+        title: "Practical-First",
+        body: "Theory runs alongside the build work rather than ahead of it, so every concept lands against something you are making.",
+        icon: "cube",
+      },
+      {
+        title: "No Assumed Background",
+        body: "It starts from Python fundamentals, adding OOP, APIs and applied maths before any machine-learning topic appears.",
+        icon: "layers",
+      },
+      {
+        title: "Batches That Fit Around a Degree",
+        body: "Weekday, evening and weekend options exist specifically so the programme can run in parallel with ongoing BCA, B.Sc or B.Tech coursework.",
+        icon: "clock",
+      },
+      {
+        title: "A Portfolio, Not a Transcript",
+        body: "You finish with a deployed application, documentation and a GitHub portfolio entry to take into placement season.",
+        icon: "briefcase",
+      },
+    ],
+  },
+
+  // The brief names no related programmes; these are this one's neighbours in
+  // the After 12th menu, using the slugs it reserves in `@/lib/site`.
+  popular: {
+    title: "Popular Courses",
+    intro: "The same subject at other lengths, and the tracks closest to it.",
+    items: [
+      {
+        title: "After 12th 6-Month Artificial Intelligence Certificate Program",
+        body: "The same core topics with room for machine-learning depth, a separated NLP block, a four-part agent track and a dedicated AI security module.",
+        href: "/after-12th/artificial-intelligence-certificate-program",
+      },
+      {
+        title: "After 12th 9-Month Artificial Intelligence Diploma Program",
+        body: "The full path — the data layer beneath AI, MLOps and fine-tuning above it, and a month reserved for an enterprise capstone.",
+        href: "/after-12th/artificial-intelligence-diploma-program",
+      },
+      {
+        title: "After 12th 3-Month Agentic AI Program",
+        body: "A shorter route straight at AI agents, tool usage and modern LLM application concepts.",
+        href: "/courses/after12th/agentic-ai",
+      },
+      {
+        title: "After 12th 6-Month Data Science Certificate Program",
+        body: "The data route to the same technologies — analysis, statistics, machine learning and generative AI.",
+        href: "/after-12th/data-science-certificate-program",
+      },
+      {
+        title: "After 12th 4-Month Data Analytics & Business Analysis Program",
+        body: "Excel, SQL, Power BI and business analysis for reporting-focused roles.",
+        href: "/courses/after12th/data-analytics",
+      },
+      {
+        title: "After 12th 3-Month Full Stack Development Program",
+        body: "Build the web applications AI features are usually delivered inside.",
+        href: "/courses/after12th/full-stack-development",
+      },
+    ],
+  },
+
+  faqs: [
+    {
+      q: "Is this program suitable for a complete beginner with no coding background?",
+      a: "Yes. It starts from Python fundamentals in Month 1, adding object-oriented programming, APIs, and applied math before any machine-learning or deep-learning topic is introduced.",
+    },
+    {
+      q: "How is this different from a standard data science course?",
+      a: "Data science focuses on analysing existing data. This program focuses on building AI-powered software — deep learning models, LLM integrations, retrieval pipelines, and autonomous agents — culminating in a deployed application rather than an analysis report.",
+    },
+    {
+      q: "Which AI models and tools will I actually use during the course?",
+      a: "OpenAI, Gemini, Claude, and Grok APIs, local models through Ollama, PyTorch and Hugging Face for model work, and LangChain, LangGraph, and CrewAI for agent development.",
+    },
+    {
+      q: "What exactly will I have built by the end of four months?",
+      a: "One complete, end-to-end AI application — the capstone — combining a language model, a RAG pipeline, and an AI agent, deployed to the cloud with full documentation and a GitHub portfolio entry.",
+    },
+    {
+      q: "Is a job guaranteed after completing the program?",
+      a: "No responsible training provider can guarantee employment, and it's worth being cautious of any Mohali institute that claims otherwise. What's realistic to expect is structured placement support — CV reviews, mock interviews, and hiring-partner drives — alongside a real, demonstrable project.",
+    },
+    {
+      q: "Can this run alongside a college degree?",
+      a: "Yes. Weekday, evening, and weekend batch options exist specifically so the program can run in parallel with ongoing BCA, B.Sc, or B.Tech coursework.",
+    },
+  ],
+
+  // The brief writes no contact block; the page already renders the centre's
+  // real details from `@/lib/site`, so only the wording is carried here.
+  enquiry: {
+    title: "Ask About the Artificial Intelligence Program in Mohali",
+    paragraphs: [
+      "Want to know which of the three AI tracks — four months, six months or the nine-month diploma — fits your background and the time you have?",
+      "Speak with a course advisor about batch timings, fees, eligibility, the capstone and the placement support that comes with it.",
+      "Location: Mohali, Punjab.",
+    ],
+  },
+
+  // The brief names no closing list; these are its own highlights, the facts a
+  // reader still deciding is weighing.
+  fit: {
+    title: "Not Sure If Four Months Is the Right Length?",
+    paragraphs: [
+      "A counselling session can help you compare the four-month programme against the six-month certificate and the nine-month diploma before you commit.",
+      "All three start from Python fundamentals with no assumed coding background — the difference is how much depth there is room for, and how far past the first deployed application you go.",
+    ],
+    ctaTitle: "Get Started Today",
+    points: [
+      "4 months, 12th pass, any stream",
+      "No assumed coding background — Python from scratch",
+      "PyTorch, CNNs, transfer learning and computer vision",
+      "Four model providers plus local models and routing",
+      "Vector databases, full RAG, LangGraph, CrewAI and MCP",
+      "Docker and deployment to AWS, Azure AI or Vertex AI",
+      "One deployed capstone, documented, with a GitHub portfolio",
+    ],
+  },
+};
+
 /** Slugs whose After-12th page is written rather than derived. */
 export const after12Pages: Record<string, After12Page> = {
   // After 12th 3-Month Program
@@ -18214,6 +18754,7 @@ export const after12Pages: Record<string, After12Page> = {
   "data-analytics": dataAnalytics,
   "data-science": dataScience,
   "cyber-security": cyberSecurity,
+  "artificial-intelligence": artificialIntelligence,
   "full-stack-development": fullStackDevelopment,
 
   // After 12th 6-Month Certificate Program
