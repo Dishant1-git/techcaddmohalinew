@@ -5677,6 +5677,46 @@ export type CourseReview = {
 
 /** Reviews collected for a specific course page, replacing the rotated set. */
 const reviewsBySlug: Record<string, CourseReview[]> = {
+  // The After 12th menu's own 4-month SEO + Performance Marketing programme,
+  // whose brief supplies its four reviews as written.
+  "digital-marketing-program-4-months": [
+    {
+      name: "Amanpreet Singh",
+      role: "SEO Trainee",
+      company: "Mohali",
+      quote:
+        "I had studied basic SEO before joining, but the projects helped me understand how keyword research, website optimisation and reporting connect. The audit project became one of the strongest pieces in my portfolio.",
+      rating: 5,
+      initials: "AS",
+    },
+    {
+      name: "Simran Kaur",
+      role: "PPC Executive",
+      company: "Chandigarh",
+      quote:
+        "Before the programme, Google Ads looked complicated. Building campaign structures and analysing search terms step by step made the process much easier to understand.",
+      rating: 5,
+      initials: "SK",
+    },
+    {
+      name: "Karan Sharma",
+      role: "Digital Marketing Executive",
+      company: "Mohali",
+      quote:
+        "Learning GA4 and creating a marketing dashboard helped me understand how agencies explain results to clients instead of only showing clicks and impressions.",
+      rating: 5,
+      initials: "KS",
+    },
+    {
+      name: "Navneet Arora",
+      role: "Freelance Marketer",
+      company: "Mohali",
+      quote:
+        "I wanted to offer SEO services to local businesses. The local SEO, Google Business Profile and reporting modules helped me create a clearer service package.",
+      rating: 5,
+      initials: "NA",
+    },
+  ],
   "basic-computer-office-skills--certificate": basicComputerOfficeSkillsReviews,
   "ai-powered-marketing": aiPoweredMarketingReviews,
   "chatgpt-ai-tools": chatgptAiToolsReviews,

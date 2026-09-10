@@ -388,7 +388,7 @@ export function WrittenTools({ step, tools }: { step: number; tools: After12Page
       <div className="absolute inset-0 grid-lines opacity-40" />
 
       <div className="container-x relative">
-        <StageHeading step={step} kicker="Your toolkit" title={tools.title} />
+        <StageHeading step={step} kicker="Your toolkit" title={tools.title} intro={tools.intro} />
       </div>
 
       {/* ---- Drifting belts --------------------------------------------- */}

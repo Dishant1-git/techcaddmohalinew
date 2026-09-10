@@ -403,8 +403,8 @@ export const navItems: NavItem[] = [
           ),
           after12(
             "a12-6m-flutter",
-            "Flutter App Development Certificate Program",
-            "flutter-app-development-certificate-program",
+            "Flutter App Development Diploma Certificate Program",
+            "flutter-app-development-diploma-certificate-program",
           ),
           after12("a12-6m-mern", "MERN Stack Certificate Program", "mern-stack-certificate-program"),
           after12("a12-6m-agentic", "Agentic AI Certificate Program", "agentic-ai-certificate-program"),

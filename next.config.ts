@@ -142,6 +142,14 @@ const nextConfig: NextConfig = {
         destination: "/courses/certificate-programs/:slug",
         permanent: true,
       },
+      // The 6-month Flutter programme was renamed to a diploma certificate and
+      // moved slug with it. This sits above the /after-12th/:slug rule below so
+      // the old address survives from either door.
+      {
+        source: "/courses/after12th/flutter-app-development-certificate-program",
+        destination: "/courses/after12th/flutter-app-development-diploma-certificate-program",
+        permanent: true,
+      },
       {
         source: "/after-12th/:slug",
         destination: "/courses/after12th/:slug",
