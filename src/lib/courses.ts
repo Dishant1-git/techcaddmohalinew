@@ -268,6 +268,52 @@ export const courses: Course[] = [
     roles: ["AI Engineer", "ML Engineer", "Data Scientist", "AI Product Analyst"],
   },
   {
+    slug: "artificial-intelligence-diploma-program",
+    title: "Artificial Intelligence Diploma",
+    category: "ai-data",
+    duration: "9 Months",
+    level: "Beginner",
+    badge: "New",
+    blurb:
+      "A 9-month, job-oriented Artificial Intelligence Diploma — Python, machine learning, deep learning, NLP, computer vision and Generative AI fundamentals, from basics to application development.",
+    overview:
+      "Techcadd's 9-Month Artificial Intelligence Diploma Program in Mohali is designed to help students and professionals build practical skills in Artificial Intelligence, Machine Learning, Python programming, data handling, AI algorithms, deep learning, natural language processing, computer vision and AI application development. Students learn through practical exercises, coding assignments, real-world AI use cases, projects and hands-on training. From understanding the fundamentals of Artificial Intelligence to developing machine learning models and AI-powered applications, the diploma helps learners develop practical and industry-relevant AI knowledge.",
+    modules: [
+      {
+        title: "AI Fundamentals & Python Programming",
+        points: ["AI vs Machine Learning vs Deep Learning", "Python variables, functions and OOP basics", "Python libraries for AI"],
+      },
+      {
+        title: "Data Handling & Preprocessing",
+        points: ["Data cleaning and handling missing values", "Data transformation, normalization and feature engineering", "NumPy, Pandas and Matplotlib"],
+      },
+      {
+        title: "Machine Learning & Algorithms",
+        points: ["Supervised and unsupervised learning", "Regression, classification and clustering", "Linear/Logistic Regression, Decision Trees, KNN, SVM and K-Means"],
+      },
+      {
+        title: "Deep Learning & Neural Networks",
+        points: ["Artificial neurons and activation functions", "Forward propagation and backpropagation concepts", "TensorFlow and PyTorch basics"],
+      },
+      {
+        title: "NLP & Computer Vision",
+        points: ["Text preprocessing, tokenization and sentiment analysis", "Image processing and classification fundamentals", "Object detection concepts"],
+      },
+      {
+        title: "Generative AI & AI Projects",
+        points: ["LLM fundamentals and prompt engineering basics", "Model training, evaluation and deployment fundamentals", "Practical AI capstone projects"],
+      },
+    ],
+    tools: ["Python", "NumPy, Pandas & Matplotlib", "Scikit-learn", "TensorFlow / PyTorch", "Jupyter Notebook / Google Colab", "OpenCV"],
+    outcomes: [
+      "Write Python and prepare real datasets with NumPy and Pandas before training a model",
+      "Train and evaluate machine learning models in Scikit-learn — regression, classification and clustering",
+      "Build a basic neural network and run fundamental NLP and computer vision tasks",
+      "Ship an AI capstone project — from data preparation to a working, portfolio-ready application",
+    ],
+    roles: ["AI Application Developer", "Machine Learning Associate", "AI Engineer", "Data Analyst"],
+  },
+  {
     slug: "generative-ai",
     title: "Generative AI",
     category: "ai-data",
@@ -434,6 +480,52 @@ export const courses: Course[] = [
       "Deploy a support agent with a cost-per-conversation report",
     ],
     roles: ["AI Engineer", "Agent Developer", "Automation Architect", "AI Consultant"],
+  },
+  {
+    slug: "agentic-ai-diploma-program",
+    title: "Agentic AI Diploma",
+    category: "ai-data",
+    duration: "9 Months",
+    level: "Beginner",
+    badge: "New",
+    blurb:
+      "A 9-month, job-oriented Agentic AI Diploma — Generative AI and LLM fundamentals through to AI agents, RAG, tool calling and multi-agent systems.",
+    overview:
+      "Techcadd's 9-Month Agentic AI Diploma Program in Mohali is a job-oriented diploma designed for students, graduates, developers, AI enthusiasts and working professionals who want to learn how modern AI agents are designed, developed and deployed. The diploma covers the fundamentals of Generative AI and Large Language Models, prompt engineering, AI agents, agent workflows, tool calling, APIs, automation, RAG, vector databases, memory, multi-agent systems and practical AI application development. Training goes beyond theory: students work on practical assignments and AI projects, learn to connect AI models with tools and APIs, and get placement assistance to help prepare for emerging AI-focused roles.",
+    modules: [
+      {
+        title: "AI & Generative AI Fundamentals",
+        points: ["Artificial Intelligence basics", "How Generative AI works", "Text generation, content creation and AI-powered software"],
+      },
+      {
+        title: "LLMs & Prompt Engineering",
+        points: ["Large Language Model fundamentals", "Structuring effective prompts", "Controlling AI outputs for different use cases"],
+      },
+      {
+        title: "AI Agents & Workflows",
+        points: ["What AI agents are and how they differ from chatbots", "Multi-step tasks using tools and external information", "Designing structured agent workflows"],
+      },
+      {
+        title: "Tool Calling & API Integration",
+        points: ["Connecting AI models to functions, APIs and services", "Databases and external tools", "Expanding AI application capabilities"],
+      },
+      {
+        title: "RAG & Vector Databases",
+        points: ["Retrieval-Augmented Generation concepts", "Embeddings and semantic search", "Vector databases for relevant information retrieval"],
+      },
+      {
+        title: "Memory, Multi-Agent Systems & Automation",
+        points: ["Incorporating memory across interactions", "Multi-agent collaboration", "AI automation for repetitive business tasks"],
+      },
+    ],
+    tools: ["Generative AI Platforms", "LLM APIs", "Prompt Engineering Tools", "Vector Databases", "REST APIs / Postman", "Automation & Workflow Tools"],
+    outcomes: [
+      "Write effective prompts and explain how LLMs generate and structure output",
+      "Build an AI agent that calls tools, APIs and external services to complete multi-step tasks",
+      "Implement a basic RAG pipeline using embeddings and a vector database",
+      "Design a simple multi-agent or automation workflow for a practical use case",
+    ],
+    roles: ["AI Application Developer", "Generative AI Developer", "AI Automation Specialist", "AI Engineer"],
   },
   {
     slug: "prompt-engineering",
@@ -1386,6 +1478,98 @@ export const courses: Course[] = [
       "Full Stack Developer",
       "API Developer",
     ],
+  },
+  {
+    slug: "mern-stack-diploma-program",
+    title: "MERN Stack Diploma",
+    category: "development",
+    duration: "9 Months",
+    level: "Beginner",
+    badge: "New",
+    blurb:
+      "A 9-month, job-oriented MERN Stack Diploma — HTML, CSS and JavaScript through to React.js, Node.js, Express.js and MongoDB, with full-stack projects.",
+    overview:
+      "Techcadd's 9-Month MERN Stack Diploma Program in Mohali is a job-oriented diploma designed for students, graduates, aspiring developers and job seekers across Mohali, Chandigarh and nearby areas. The diploma covers the complete web development journey — from HTML, CSS and JavaScript fundamentals to React.js, Node.js, Express.js and MongoDB — teaching students to build responsive websites, dynamic web applications, REST APIs, database-driven applications and full-stack projects. Training goes beyond theory: students work on practical assignments and real-world projects, receive doubt-clearing support, and get placement assistance to help prepare for roles such as MERN Stack Developer, Full Stack Developer, React Developer, Node.js Developer and Web Developer.",
+    modules: [
+      {
+        title: "HTML, CSS & Responsive Design",
+        points: ["Semantic HTML, forms and tables", "Flexbox, Grid and media queries", "Responsive layouts across screen sizes"],
+      },
+      {
+        title: "JavaScript & Modern ES6+",
+        points: ["Variables, functions, arrays and objects", "The DOM and interactive UI", "Arrow functions, destructuring, promises and async/await"],
+      },
+      {
+        title: "React.js",
+        points: ["Components, props and state", "Hooks and events", "Forms, routing and application structure"],
+      },
+      {
+        title: "Node.js & Express.js",
+        points: ["Server-side JavaScript fundamentals", "REST APIs, routes and middleware", "Requests, responses and backend structure"],
+      },
+      {
+        title: "MongoDB & REST APIs",
+        points: ["Database fundamentals and CRUD", "Storing and managing application data", "Connecting frontend and backend through APIs"],
+      },
+      {
+        title: "Authentication & Full-Stack Projects",
+        points: ["User authentication and protected routes", "Basic application security practices", "Complete full-stack capstone projects"],
+      },
+    ],
+    tools: ["HTML5, CSS3 & JavaScript", "React.js", "Node.js & Express.js", "MongoDB", "REST APIs / Postman", "Git & GitHub"],
+    outcomes: [
+      "Build responsive websites and modern React interfaces with components, hooks and routing",
+      "Design REST APIs in Node.js and Express.js, backed by a MongoDB database",
+      "Implement basic authentication, protected routes and application security practices",
+      "Ship a complete, portfolio-ready full-stack application end to end",
+    ],
+    roles: ["MERN Stack Developer", "Full Stack Developer", "React Developer", "Node.js Developer", "Web Developer"],
+  },
+  {
+    slug: "full-stack-development-diploma-program",
+    title: "Full Stack Development Diploma",
+    category: "development",
+    duration: "9 Months",
+    level: "Beginner",
+    badge: "New",
+    blurb:
+      "A 9-month, job-oriented Full Stack Development Diploma — HTML, CSS and JavaScript through to React, Node.js, Express.js, databases, APIs, authentication and deployment.",
+    overview:
+      "Techcadd's 9-Month Full Stack Development Diploma Program in Mohali provides a structured learning path covering frontend development, backend development, databases, APIs, authentication, version control, deployment and real-world project development. Students learn how the complete application works — from designing a user interface in the browser to writing backend logic, managing databases, connecting APIs, handling users and deploying applications. The program focuses on practical coding and project-based learning: assignments, coding exercises, debugging tasks, database operations, API integration and full-stack projects.",
+    modules: [
+      {
+        title: "HTML, CSS & Responsive Design",
+        points: ["Semantic HTML, forms and tables", "CSS box model, Flexbox and Grid", "Responsive, mobile-first layouts"],
+      },
+      {
+        title: "JavaScript & Modern JavaScript (ES6+)",
+        points: ["Variables, functions, arrays and objects", "The DOM, events and form handling", "Arrow functions, destructuring, async/await and API requests"],
+      },
+      {
+        title: "Frontend Development & React.js",
+        points: ["Components, props and state", "Hooks, forms and events", "Routing and API integration"],
+      },
+      {
+        title: "Backend Development, Node.js & Express.js",
+        points: ["Server concepts, routing and middleware", "REST API development", "Request/response handling and error handling"],
+      },
+      {
+        title: "Database Management, MongoDB & SQL",
+        points: ["Database concepts and CRUD operations", "MongoDB collections, documents and queries", "Relational database and SQL fundamentals"],
+      },
+      {
+        title: "Authentication, Git & Deployment",
+        points: ["Registration, login and authentication", "Git, GitHub and npm basics", "Deployment fundamentals and full-stack capstone project"],
+      },
+    ],
+    tools: ["HTML5, CSS3 & JavaScript", "React.js", "Node.js & Express.js", "MongoDB / SQL", "Git & GitHub", "Postman"],
+    outcomes: [
+      "Build responsive interfaces and modern React applications with components, hooks and routing",
+      "Design REST APIs in Node.js and Express.js, backed by a database of your choice",
+      "Implement authentication, protected routes and basic application security practices",
+      "Ship a complete, deployed full-stack application end to end for your portfolio",
+    ],
+    roles: ["Full Stack Developer", "MERN Stack Developer", "Front-End Developer", "Back-End Developer", "Web Application Developer"],
   },
   {
     slug: "mean-stack",
@@ -2684,6 +2868,52 @@ export const courses: Course[] = [
     ],
   },
   {
+    slug: "flutter-app-development-diploma-program",
+    title: "Flutter App Development Diploma",
+    category: "development",
+    duration: "9 Months",
+    level: "Beginner",
+    badge: "New",
+    blurb:
+      "A 9-month, job-oriented Flutter App Development Diploma — Dart, Flutter UI, navigation, APIs, Firebase and real application projects, from fundamentals to advanced.",
+    overview:
+      "Techcadd's 9-Month Flutter App Development Diploma Program in Mohali is a career-focused program designed for students, graduates, beginners and aspiring mobile app developers who want to build practical skills for the IT industry. The program covers the complete app development process, from designing user interfaces and writing Dart code to connecting applications with APIs, databases, Firebase and other backend services. Training goes beyond classroom theory — students work on practical assignments and real-world application projects while receiving mentor guidance, doubt-clearing support, interview preparation and career guidance.",
+    modules: [
+      {
+        title: "Dart Programming Fundamentals",
+        points: ["Variables, data types and operators", "Conditionals, loops and functions", "Collections, lists, maps and sets", "Object-oriented programming concepts"],
+      },
+      {
+        title: "Introduction to Flutter",
+        points: ["Flutter SDK and project structure", "Stateless and stateful widgets", "The widget tree and build method", "Hot reload and the development workflow"],
+      },
+      {
+        title: "Flutter UI & Responsive Design",
+        points: ["Layouts, rows, columns and cards", "Forms, input fields, lists and grids", "Responsive layouts across screen sizes"],
+      },
+      {
+        title: "Navigation, Forms & State",
+        points: ["Screen navigation and named routes", "Passing data between screens", "Form validation and state management concepts"],
+      },
+      {
+        title: "APIs, Firebase & Databases",
+        points: ["REST APIs, HTTP requests and JSON", "Firebase authentication and cloud data", "Local and cloud database concepts, CRUD operations"],
+      },
+      {
+        title: "Debugging, Git & Real Projects",
+        points: ["Debugging and error handling", "Git and version control basics", "A portfolio of real-world Flutter application projects"],
+      },
+    ],
+    tools: ["Dart", "Flutter SDK", "Android Studio / VS Code", "Firebase", "REST APIs / Postman", "Git & GitHub"],
+    outcomes: [
+      "Build application interfaces from Flutter widgets, layouts and responsive design principles",
+      "Navigate between screens, handle forms and manage application state",
+      "Connect a Flutter app to REST APIs and Firebase for authentication and live data",
+      "Debug, troubleshoot and ship a portfolio of real Flutter application projects",
+    ],
+    roles: ["Flutter Developer", "Mobile App Developer", "Cross-Platform App Developer", "Junior Software Developer"],
+  },
+  {
     slug: "cyber-security",
     title: "Cyber Security",
     category: "cyber-cloud",
@@ -2783,6 +3013,59 @@ export const courses: Course[] = [
       "IT Security Support Specialist",
       "Vulnerability Assessment Associate",
       "Security Consultant",
+    ],
+  },
+  {
+    slug: "cyber-security-diploma-program",
+    title: "Cyber Security Diploma",
+    category: "cyber-cloud",
+    duration: "9 Months",
+    level: "Beginner",
+    badge: "New",
+    blurb:
+      "A 9-month, job-oriented Cyber Security Diploma — networking, Linux, ethical hacking, vulnerability assessment, web and network security, incident response and digital forensics fundamentals.",
+    overview:
+      "Techcadd's 9-Month Cyber Security Diploma Program in Mohali is designed to help students and professionals build practical skills to protect computers, networks, applications, websites and digital data from cyber threats. The program covers essential cybersecurity concepts along with hands-on learning in network security, ethical hacking, vulnerability assessment, penetration testing, security monitoring and incident response. Students learn through practical exercises, real-world scenarios, cybersecurity tools and project-based training, developing industry-relevant knowledge from understanding common cyber attacks to identifying vulnerabilities and implementing security measures.",
+    modules: [
+      {
+        title: "Cyber Security & Networking Fundamentals",
+        points: ["The CIA triad, cyber threats and attack types", "IP addressing, TCP/IP, DNS and HTTP/HTTPS", "Authentication, authorization and security best practices"],
+      },
+      {
+        title: "Linux & System Security",
+        points: ["Linux command-line, users and permissions", "File systems, processes and services", "System hardening and Linux security basics"],
+      },
+      {
+        title: "Ethical Hacking",
+        points: ["Reconnaissance and information gathering", "Scanning and enumeration", "Vulnerability identification and ethical hacking methodology"],
+      },
+      {
+        title: "Vulnerability Assessment & Penetration Testing",
+        points: ["Security scanning and identifying weaknesses", "Penetration testing methodology and risk assessment", "Reporting vulnerabilities and remediation concepts"],
+      },
+      {
+        title: "Web & Network Security",
+        points: ["Common web vulnerabilities and OWASP concepts", "Firewalls, VPNs and network monitoring", "Intrusion detection and prevention concepts"],
+      },
+      {
+        title: "Incident Response & Digital Forensics",
+        points: ["Incident detection, analysis and containment", "Recovery and security incident reporting", "Digital forensics and investigation fundamentals"],
+      },
+    ],
+    tools: ["Kali Linux", "Nmap", "Wireshark", "Burp Suite", "Metasploit", "OWASP ZAP"],
+    outcomes: [
+      "Explain core cybersecurity concepts, common attack types and security best practices",
+      "Run reconnaissance, scanning and vulnerability-identification exercises in a controlled lab",
+      "Perform a basic vulnerability assessment and report findings with remediation steps",
+      "Recognise common web and network security weaknesses, and outline an incident-response process",
+    ],
+    roles: [
+      "Cyber Security Analyst",
+      "Ethical Hacking Associate",
+      "Security Testing Associate",
+      "Vulnerability Assessment Associate",
+      "Network Security Associate",
+      "SOC Analyst",
     ],
   },
   {
@@ -3325,6 +3608,63 @@ export const courses: Course[] = [
       "SEO Executive",
       "Social Media Executive",
       "Google Ads / PPC Specialist",
+      "Content Marketing Executive",
+      "Digital Marketing Analyst",
+    ],
+  },
+  {
+    slug: "digital-marketing-diploma-program",
+    title: "Digital Marketing Diploma",
+    category: "digital-marketing",
+    duration: "9 Months",
+    level: "Beginner",
+    badge: "New",
+    blurb:
+      "A 9-month, job-oriented Digital Marketing Diploma — SEO, social media, Google Ads, content, email marketing, analytics and lead generation, from fundamentals to strategy.",
+    overview:
+      "Techcadd's 9-Month Digital Marketing Diploma Program in Mohali is a practical, career-focused diploma designed for students, graduates, job seekers, working professionals, business owners, freelancers and beginners who want to build skills in the modern digital marketing industry. The diploma covers the major areas of online marketing, including SEO, social media marketing, Google Ads, pay-per-click advertising, content marketing, email marketing, Google Analytics, online reputation, lead generation and digital marketing strategy. Training goes beyond theory: students learn through practical assignments, campaign planning, keyword research, website optimization, social media activities, advertising exercises and real-world marketing projects.",
+    modules: [
+      {
+        title: "Digital Marketing & Website Fundamentals",
+        points: ["Digital marketing channels and the customer journey", "Digital marketing strategy and the marketing funnel", "Website structure, landing pages and conversion-focused pages"],
+      },
+      {
+        title: "SEO & Local SEO",
+        points: ["Keyword research, on-page and off-page SEO", "Technical SEO basics and SEO audits", "Google Business Profile and local SEO"],
+      },
+      {
+        title: "Google Search Console & Analytics",
+        points: ["Monitoring search performance, clicks and impressions", "Website traffic, sessions and engagement", "Reports and performance analysis"],
+      },
+      {
+        title: "Social Media & Meta Marketing",
+        points: ["Social media strategy and content calendars", "Facebook and Instagram page setup and content planning", "Meta advertising basics and audience targeting"],
+      },
+      {
+        title: "Google Ads, PPC & Display Advertising",
+        points: ["Search campaigns, keywords and ad groups", "Ad copy, bidding concepts and Quality Score", "Display and remarketing basics"],
+      },
+      {
+        title: "Content, Email Marketing & Lead Generation",
+        points: ["Content strategy, calendars and search-focused content", "Email campaigns and subscriber lists", "Lead generation funnels, landing pages and lead forms"],
+      },
+      {
+        title: "Reputation, Competitor Analysis & Strategy",
+        points: ["Online reputation and review response", "Competitor and keyword analysis", "Combining channels into one digital marketing strategy"],
+      },
+    ],
+    tools: ["Google Search Console", "Google Analytics", "Google Ads", "Google Business Profile", "Meta Business Suite", "Canva", "Email Marketing Platforms"],
+    outcomes: [
+      "Plan and run an SEO campaign — keyword research, on-page, off-page and local SEO",
+      "Build and manage a Google Ads campaign, from keywords to performance analysis",
+      "Create a social media content strategy and run a basic Meta advertising campaign",
+      "Report on marketing performance using Google Analytics and Search Console",
+    ],
+    roles: [
+      "Digital Marketing Executive",
+      "SEO Executive",
+      "Social Media Executive",
+      "PPC Executive",
       "Content Marketing Executive",
       "Digital Marketing Analyst",
     ],
