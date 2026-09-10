@@ -484,8 +484,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-<<<<<<< Updated upstream
-=======
       {/* Founder and the other About pages now stand on their own, so this is a
           way through to them rather than a second copy of their content. */}
       <section className="bg-subtle py-24 lg:py-32">
@@ -554,7 +552,6 @@ export default function AboutPage() {
         </div>
       </section>
 
->>>>>>> Stashed changes
       <WhyUs />
       <Testimonials />
       <RelatedLinks route="/about" />

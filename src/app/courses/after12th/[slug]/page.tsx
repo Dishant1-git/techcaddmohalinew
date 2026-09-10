@@ -91,6 +91,29 @@ export default async function After12thCoursePage({
   const written = after12Page(slug) ?? derivedAfter12Page(course, suggestions);
   const faqs = written.faqs;
 
+  // The certificate stage is optional, so stage numbers are derived from the
+  // stages this page actually renders rather than written by hand — a brief
+  // without a certificate counts 1..n straight through instead of leaving a gap
+  // where that number would have been.
+  const stages = [
+    "overview",
+    "learn",
+    "curriculum",
+    "tools",
+    "who",
+    "worth",
+    "whyNow",
+    ...(written.certificate ? ["certificate"] : []),
+    "scope",
+    "projects",
+    "approach",
+    "whyUs",
+    "reviews",
+    "faqs",
+    "enquiry",
+  ];
+  const step = (id: string) => stages.indexOf(id) + 1;
+
   const schema = [
     {
       "@context": "https://schema.org",
@@ -147,29 +170,35 @@ export default async function After12thCoursePage({
       <div className="relative">
         <SectionRail skin="pathway" sections={written.sections} />
 
-        <WrittenOverview step={1} overview={written.overview} roles={course.roles} />
-        <WrittenLearn step={2} learn={written.learn} />
-        <WrittenCurriculum step={3} curriculum={written.curriculum} />
-        <WrittenTools step={4} tools={written.tools} />
-        <WrittenWho step={5} who={written.who} />
-        <WrittenWorth step={6} worth={written.worth} />
-        <WrittenWhyNow step={7} whyNow={written.whyNow} />
+        <WrittenOverview step={step("overview")} overview={written.overview} roles={course.roles} />
+        <WrittenLearn step={step("learn")} learn={written.learn} />
+        <WrittenCurriculum step={step("curriculum")} curriculum={written.curriculum} />
+        <WrittenTools step={step("tools")} tools={written.tools} />
+        <WrittenWho step={step("who")} who={written.who} />
+        <WrittenWorth step={step("worth")} worth={written.worth} />
+        <WrittenWhyNow step={step("whyNow")} whyNow={written.whyNow} />
 
         {/* The page breaks here for a phone call before the credential. No
             step badge: the rail counts stages of the programme, and this is
-            an interruption. */}
-        <PathAdvisor advisor={written.advisor} />
+            an interruption. Omitted by a brief that writes no advisor block. */}
+        {written.advisor && <PathAdvisor advisor={written.advisor} />}
 
-        <WrittenCertificate step={8} certificate={written.certificate} />
-        <WrittenScope step={9} takesYou={written.takesYou} />
-        <WrittenProjects step={10} projects={written.projects} />
-        <WrittenApproach step={11} approach={written.approach} projects={written.projects.items} />
-        <WrittenWhyUs step={12} whyUs={written.whyUs} />
-        <PathReviews course={course} step={13} />
-        <PathFaqs faqs={faqs} step={14} title="Frequently Asked Questions" />
+        {written.certificate && (
+          <WrittenCertificate step={step("certificate")} certificate={written.certificate} />
+        )}
+        <WrittenScope step={step("scope")} takesYou={written.takesYou} />
+        <WrittenProjects step={step("projects")} projects={written.projects} />
+        <WrittenApproach
+          step={step("approach")}
+          approach={written.approach}
+          projects={written.projects.items}
+        />
+        <WrittenWhyUs step={step("whyUs")} whyUs={written.whyUs} />
+        <PathReviews course={course} step={step("reviews")} />
+        <PathFaqs faqs={faqs} step={step("faqs")} title="Frequently Asked Questions" />
         <PathwayEnquiry
           course={course}
-          step={15}
+          step={step("enquiry")}
           title={written.enquiry.title}
           paragraphs={written.enquiry.paragraphs}
         />

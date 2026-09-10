@@ -61,11 +61,19 @@ export type After12Page = {
    * The mid-page call to talk to someone, sitting between "why now" and the
    * credential. A band rather than a numbered stage: it interrupts the read,
    * it does not add to it.
+   *
+   * Optional: a page that leaves it out simply does not break for a phone call.
    */
-  advisor: { title: string; body: string; cta: string };
+  advisor?: { title: string; body: string; cta: string };
 
-  /** What the student actually leaves with on paper. */
-  certificate: { title: string; intro: string; items: WrittenItem[] };
+  /**
+   * What the student actually leaves with on paper.
+   *
+   * Optional, like `advisor`. A brief that omits this also omits `certificate`
+   * from `sections` above, and the route renumbers the remaining stages so the
+   * page counts 1..n without a gap where this one would have been.
+   */
+  certificate?: { title: string; intro: string; items: WrittenItem[] };
 
   takesYou: {
     title: string;

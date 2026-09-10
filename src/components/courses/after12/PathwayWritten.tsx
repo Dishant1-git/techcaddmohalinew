@@ -943,7 +943,9 @@ export function WrittenCertificate({
   certificate,
 }: {
   step: number;
-  certificate: After12Page["certificate"];
+  // Optional on the page type — a brief may write no certificate stage — but
+  // required here: the route renders this section only when there is one.
+  certificate: NonNullable<After12Page["certificate"]>;
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
