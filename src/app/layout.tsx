@@ -49,6 +49,23 @@ export const metadata: Metadata = {
     type: "website",
   },
   robots: { index: true, follow: true },
+  /**
+   * Both sizes are declared so the browser picks rather than rescales: 192 for
+   * the tab and the Android home screen, 512 for splash screens and anywhere
+   * the icon is shown large.
+   *
+   * This config only takes effect because there is no longer a `favicon.ico` in
+   * `src/app/` — Next's file conventions outrank `metadata.icons`, so the
+   * scaffold's default icon was winning over anything declared here.
+   */
+  icons: {
+    icon: [
+      { url: "/icon/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    shortcut: "/icon/icon-192.png",
+    apple: { url: "/icon/icon-192.png", sizes: "192x192", type: "image/png" },
+  },
 };
 
 export const viewport: Viewport = {
