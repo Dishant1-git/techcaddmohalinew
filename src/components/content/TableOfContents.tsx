@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { Heading } from "@/lib/cms/headings";
+import { MIN_HEADINGS_FOR_TOC, type Heading } from "@/lib/cms/headings";
 
 /**
  * The contents rail beside an article.
@@ -18,7 +18,7 @@ export default function TableOfContents({ headings }: { headings: Heading[] }) {
   const [active, setActive] = useState<string>(headings[0]?.id ?? "");
 
   useEffect(() => {
-    if (headings.length < 2) return;
+    if (headings.length < MIN_HEADINGS_FOR_TOC) return;
 
     const targets = headings
       .map((heading) => document.getElementById(heading.id))
@@ -48,7 +48,7 @@ export default function TableOfContents({ headings }: { headings: Heading[] }) {
     return () => observer.disconnect();
   }, [headings]);
 
-  if (headings.length < 2) return null;
+  if (headings.length < MIN_HEADINGS_FOR_TOC) return null;
 
   return (
     <nav aria-label="On this page" className="lg:sticky lg:top-28 lg:self-start">
