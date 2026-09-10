@@ -192,40 +192,7 @@ export default function PathwayHero({ course, page }: { course: Course; page: Af
             />
           )}
 
-          <h2 className="relative font-display text-2xl font-extrabold leading-snug text-white sm:text-3xl">
-            {page.program.title}
-          </h2>
-          <p className="relative mt-4 max-w-3xl text-sm leading-relaxed text-up-soft/70 sm:text-base">
-            {page.program.paragraphs[0]}
-          </p>
-
-          <p className="relative mt-8 text-[0.66rem] font-bold uppercase tracking-[0.2em] text-accent-yellow">
-            {page.program.highlightsTitle}
-          </p>
-
-          <motion.dl
-            initial="hidden"
-            animate="show"
-            variants={{ show: { transition: { staggerChildren: 0.07, delayChildren: 0.75 } } }}
-            className="relative mt-4 grid gap-x-10 gap-y-3 sm:grid-cols-2"
-          >
-            {page.program.highlights.map((h) => (
-              <motion.div
-                key={h.label}
-                variants={{
-                  hidden: { opacity: 0, x: -12 },
-                  show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: EASE } },
-                }}
-                className="flex items-start gap-2.5 text-sm"
-              >
-                <span className="mt-[0.45rem] h-1.5 w-1.5 shrink-0 rounded-full bg-accent-yellow" />
-                <dt className="font-bold text-white">{h.label}:</dt>
-                <dd className="text-up-soft/70">{h.value}</dd>
-              </motion.div>
-            ))}
-          </motion.dl>
-
-          <div className="relative mt-9 flex flex-wrap items-center gap-4">
+          <div className="relative flex flex-wrap items-center gap-4">
             <SectionLink
               to="enquire"
               className="group/cta inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent-yellow to-accent-glow px-8 py-3.5 text-sm font-extrabold text-hero-950 shadow-[0_0_36px_-8px_rgba(0,212,255,0.8)] transition-transform hover:-translate-y-0.5"

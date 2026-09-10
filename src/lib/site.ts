@@ -45,6 +45,13 @@ export type NavBadge = "New" | "Hot" | "Trending";
 export type NavChild = {
   label: string;
   href: string;
+  /**
+   * Stable React key, unique within its column — used instead of the array
+   * index so reordering a menu does not re-key every item after the change.
+   */
+  id?: string;
+  /** Course slug this item points at. `href` is derived from it, not typed twice. */
+  slug?: string;
   badge?: NavBadge;
   /** Explainer line — used by the `list` panel and the mobile drawer. */
   desc?: string;
@@ -121,6 +128,24 @@ export type NavItem = {
    */
   neverActive?: boolean;
 };
+
+/**
+ * One After 12th menu item.
+ *
+ * `href` is derived from `slug` so the path is written once — change the prefix
+ * here and all three columns follow. `/after-12th/<slug>` is a permanent
+ * redirect to `/courses/after12th/<slug>` (see `next.config.ts`), so these
+ * resolve for every slug that has a page.
+ *
+ * A slug is the course's own where that course has a page, and the kebab-cased
+ * item name where it does not — those are reserved for pages not yet written.
+ */
+const after12 = (id: string, label: string, slug: string): NavChild => ({
+  id,
+  label,
+  slug,
+  href: `/after-12th/${slug}`,
+});
 
 export const navItems: NavItem[] = [
   { label: "Home", href: "/" },
@@ -355,36 +380,103 @@ export const navItems: NavItem[] = [
         heading: "After 12th 3-Month Program",
         blurb: "One subject, one term, one live project",
         items: [
-          { label: "Web Designing Program", href: "/courses/after12th/web-designing" },
-          { label: "Python Programming Program", href: "/courses/after12th/python-programming" },
-          { label: "Generative AI Program", href: "/courses/after12th/generative-ai" },
-          { label: "Digital Marketing Program", href: "/courses/after12th/digital-marketing" },
-          { label: "AutoCAD Program", href: "/courses/after12th/autocad" },
-          { label: "Data Analytics Program", href: "/courses/after12th/data-analytics" },
-          { label: "Cloud Computing Program", href: "/courses/after12th/cloud-computing" },
+          after12("a12-3m-cloud", "Cloud Computing Program", "cloud-computing"),
+          after12("a12-3m-flutter", "Flutter App Development Program", "flutter"),
+          after12("a12-3m-mern", "MERN Stack Program", "mern-full-stack"),
+          after12("a12-3m-agentic", "Agentic AI Program", "agentic-ai"),
+          after12("a12-3m-dm3", "Digital Marketing Program (3 Months)", "digital-marketing"),
+          after12(
+            "a12-3m-dm4",
+            "Digital Marketing Program (4 Months)",
+            "digital-marketing-program-4-months",
+          ),
+          after12("a12-3m-analytics", "Data Analytics Program", "data-analytics"),
+          after12("a12-3m-datascience", "Data Science Program", "data-science"),
+          after12("a12-3m-cyber", "Cyber Security Program", "cyber-security"),
+          after12("a12-3m-ai", "Artificial Intelligence Program", "artificial-intelligence"),
+          after12("a12-3m-fullstack", "Full Stack Development Program", "full-stack-development"),
         ],
       },
       {
         heading: "After 12th 6-Month Program",
         blurb: "Half a year, finishing with a portfolio",
         items: [
-          { label: "Artificial Intelligence Certificate", href: "/courses/after12th/artificial-intelligence" },
-          { label: "MERN Full Stack Certificate", href: "/courses/after12th/mern-full-stack" },
-          { label: "Data Science Certificate", href: "/courses/after12th/data-science" },
-          { label: "Cyber Security Certificate", href: "/courses/after12th/cyber-security" },
-          { label: "Machine Learning Certificate", href: "/courses/after12th/machine-learning" },
+          after12(
+            "a12-6m-cloud",
+            "Cloud Computing Certificate Program",
+            "cloud-computing-certificate-program",
+          ),
+          after12(
+            "a12-6m-flutter",
+            "Flutter App Development Certificate Program",
+            "flutter-app-development-certificate-program",
+          ),
+          after12("a12-6m-mern", "MERN Stack Certificate Program", "mern-stack-certificate-program"),
+          after12("a12-6m-agentic", "Agentic AI Certificate Program", "agentic-ai-certificate-program"),
+          after12(
+            "a12-6m-dm",
+            "Digital Marketing Certificate Program",
+            "digital-marketing-certificate-program",
+          ),
+          after12(
+            "a12-6m-analytics",
+            "Data Analytics Certificate Program",
+            "data-analytics-certificate-program",
+          ),
+          after12(
+            "a12-6m-datascience",
+            "Data Science Certificate Program",
+            "data-science-certificate-program",
+          ),
+          after12(
+            "a12-6m-cyber",
+            "Cyber Security Certificate Program",
+            "cyber-security-certificate-program",
+          ),
+          after12(
+            "a12-6m-ai",
+            "Artificial Intelligence Certificate Program",
+            "artificial-intelligence-certificate-program",
+          ),
+          after12(
+            "a12-6m-fullstack",
+            "Full Stack Development Certificate Program",
+            "full-stack-development-certificate-program",
+          ),
         ],
       },
       {
         heading: "After 12th 9-Month Program",
         blurb: "The longest track, with placement preparation",
         items: [
-          { label: "AI + Full Stack Diploma", href: "/training#durations" },
-          { label: "Data Science Diploma", href: "/training#durations" },
-          { label: "Cyber Security Diploma", href: "/training#durations" },
-          { label: "Digital Marketing Diploma", href: "/training#durations" },
-          { label: "Cloud Computing Diploma", href: "/after-12th/cloud-computing-diploma", badge: "New" },
-          { label: "Two specialisations & a mentor", href: "/training#durations" },
+          after12("a12-9m-cloud", "Cloud Computing Diploma Program", "cloud-computing-diploma"),
+          after12(
+            "a12-9m-flutter",
+            "Flutter App Development Diploma Program",
+            "flutter-app-development-diploma-program",
+          ),
+          after12("a12-9m-mern", "MERN Stack Diploma Program", "mern-stack-diploma-program"),
+          after12("a12-9m-agentic", "Agentic AI Diploma Program", "agentic-ai-diploma-program"),
+          after12(
+            "a12-9m-dm",
+            "Digital Marketing Diploma Program",
+            "digital-marketing-diploma-program",
+          ),
+          after12(
+            "a12-9m-cyber",
+            "Cyber Security Diploma Program",
+            "cyber-security-diploma-program",
+          ),
+          after12(
+            "a12-9m-ai",
+            "Artificial Intelligence Diploma Program",
+            "artificial-intelligence-diploma-program",
+          ),
+          after12(
+            "a12-9m-fullstack",
+            "Full Stack Development Diploma Program",
+            "full-stack-development-diploma-program",
+          ),
         ],
       },
     ],

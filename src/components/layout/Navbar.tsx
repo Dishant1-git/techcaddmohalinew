@@ -201,7 +201,7 @@ function NumberedColumn({ group, index }: { group: NavGroup; index: number }) {
       <div className="mb-3 mt-4 h-px bg-up-line/70" />
       <ul>
         {group.items.map((child) => (
-          <li key={child.href + child.label}>
+          <li key={child.id ?? child.href + child.label}>
             <PanelLink child={child} />
           </li>
         ))}
@@ -790,7 +790,7 @@ export default function Navbar({
                             </p>
                             <ul className="pl-3">
                               {group.items.map((child) => (
-                                <li key={child.href + child.label}>
+                                <li key={child.id ?? child.href + child.label}>
                                   <PanelLink child={child} />
                                 </li>
                               ))}
